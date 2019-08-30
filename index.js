@@ -13,3 +13,25 @@ app.get("/getData", (req, res) => {
 app.get("/", (req, res) => res.send("Welcome to the Home Page"));
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+
+var mysql = require('mysql');
+var pool  = mysql.createPool({
+  connectionLimit : 10,
+  host            : 'localhost',
+  user            : '',
+  password        : '',
+  database        : 'aa-dbms'
+});
+
+pool.getConnection(function(err, connection) {
+  if (err) throw err; 
+
+  connection.query('SELECT * FROM products', function (error, results, fields) {
+
+    console.log(results)
+    connection.release();
+
+    if (error) throw error;
+
+  });
+});
