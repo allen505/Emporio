@@ -57,7 +57,7 @@ class App extends React.Component {
 		const { getFieldDecorator } = this.props.form;
 
 		return (
-			<Layout className="layout">
+			<Layout className="layout" style={{ minHeight: "100vh" }}>
 				<Header style={{ position: "fixed", zIndex: 1, width: "100%" }}>
 					<Menu
 						theme="dark"
@@ -77,7 +77,10 @@ class App extends React.Component {
 					}}
 				>
 					<Row type="flex" align="center">
-						<Col span={8}>
+						<Col
+							span={8}
+							style={{ padding: "60px", backgroundColor: "#ffffff", borderRadius: "15px" }}
+						>
 							<Form onSubmit={this.handleSubmit} className="login-form">
 								<Form.Item>
 									{getFieldDecorator("username", {
