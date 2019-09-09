@@ -7,7 +7,6 @@ import {
 	Layout,
 	Form,
 	Input,
-	Checkbox,
 	Button,
 	Row,
 	Col
@@ -57,17 +56,7 @@ class Login extends React.Component {
 		const { getFieldDecorator } = this.props.form;
 
 		return (
-			<Layout className="layout" style={{ minHeight: "100vh" }}>
-				<Header style={{ position: "fixed", zIndex: 1, width: "100%" }}>
-					<Menu
-						theme="dark"
-						mode="horizontal"
-						defaultSelectedKeys={["2"]}
-						style={{ lineHeight: "64px" }}
-					>
-						<Menu.Item key="1">Brand Name</Menu.Item>
-					</Menu>
-				</Header>
+			<Layout className="layout" style={{ minHeight: "100vh" }}>			
 
 				<Content
 					style={{
@@ -132,7 +121,7 @@ class Login extends React.Component {
 										Log in
 									</Button>
 									<br />
-									Or <a href="">register now!</a>
+									Or <a href="">Register now!</a>
 								</Form.Item>
 							</Form>
 						</Col>

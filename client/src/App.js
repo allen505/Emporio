@@ -1,27 +1,22 @@
 import React from "react";
-import ReactDom from "react-dom";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
-import {
-	Menu,
-	Icon,
-	Typography,
-	Layout,
-	Form,
-	Input,
-	Checkbox,
-	Button,
-	Row,
-	Col
-} from "antd";
+import { Button, Layout } from "antd";
 import "./App.css";
 
 import WrappedLogin from "./pages/Login";
+import Nav from "./pages/Navigator";
+import Error404 from "./pages/Error404"
 
-const { Title } = Typography;
-const { Header, Content, Footer } = Layout;
-
-// Fetch the data on first mount
+const Homepage = () => {
+	return (
+		<Link to="/login">
+			<Button type="primary" size="large">
+				Login
+			</Button>
+		</Link>
+	);
+};
 
 class App extends React.Component {
 	constructor(props) {
@@ -35,13 +30,11 @@ class App extends React.Component {
 		return (
 			<Router>
 				<div>
-					<ul>
-						<li>
-							<Link to="/login">Login</Link>
-						</li>
-					</ul>
+					<Nav />
 					<Switch>
+						<Route exact path="/" component={Homepage} />
 						<Route path="/login" component={WrappedLogin} />
+						<Route component={Error404} />
 					</Switch>
 				</div>
 			</Router>
