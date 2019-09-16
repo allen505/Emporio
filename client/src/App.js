@@ -6,15 +6,19 @@ import "./App.css";
 
 import WrappedLogin from "./pages/Login";
 import Nav from "./pages/Navigator";
-import Error404 from "./pages/Error404"
+import Error404 from "./pages/Error404";
+import Homepage from "./pages/Homepage"
 
-const Homepage = () => {
+const Homepage1 = () => {
 	return (
+		<div>
 		<Link to="/login">
 			<Button type="primary" size="large">
 				Login
 			</Button>
 		</Link>
+		<Link to = "/Homepage">Homepage</Link>
+		</div>
 	);
 };
 
@@ -32,8 +36,9 @@ class App extends React.Component {
 				<div>
 					<Nav />
 					<Switch>
-						<Route exact path="/" component={Homepage} />
+						<Route path="/Homepage" component={Homepage} />
 						<Route path="/login" component={WrappedLogin} />
+						<Route path="/" component={Homepage1} />
 						<Route component={Error404} />
 					</Switch>
 				</div>
