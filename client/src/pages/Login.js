@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDom from "react-dom";
 import {
-	Menu,
 	Icon,
 	Typography,
 	Layout,
@@ -9,7 +8,8 @@ import {
 	Input,
 	Button,
 	Row,
-	Col
+	Col,
+	message
 } from "antd";
 import "./Login.css";
 
@@ -25,27 +25,42 @@ class Login extends React.Component {
 			data: "Nothing recieved"
 		};
 	}
-	componentDidMount() {
-		this.getData();
-	}
 
-	getData = () => {
-		fetch("/getData")
-			.then(res => res.json())
-			.then(newData => {
-				this.setState({ data: newData });
-				console.log("The new data is: " + newData);
-			})
-			.catch(e => {
-				console.log(e);
-			});
+	success = () => {
+		message.success("Logged In Successfully");
+	};
+
+	error = () => {
+		message.error("Log in unsuccessful");
 	};
 
 	handleSubmit = e => {
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
 			if (!err) {
-				console.log("Received values of form: ", values);
+				// console.log("Received values of form: ", values);
+				let enteredDets = {
+					username: values.username,
+					password: values.password
+				};
+				var validate = () => {
+					fetch("/api/login", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json;charset=utf-8"
+						},
+						body: JSON.stringify(enteredDets)
+					})
+						.then(res => res.json())
+						.then(resp => {
+							if (resp == true) {
+								this.success();
+							} else {
+								this.error();
+							}
+						});
+				};
+				validate();
 			}
 		});
 	};
@@ -56,8 +71,7 @@ class Login extends React.Component {
 		const { getFieldDecorator } = this.props.form;
 
 		return (
-			<Layout className="layout" style={{ minHeight: "100vh" }}>			
-
+			<Layout className="layout" style={{ minHeight: "100vh" }}>
 				<Content
 					style={{
 						padding: "75px 50px",
@@ -68,7 +82,11 @@ class Login extends React.Component {
 					<Row type="flex" align="center">
 						<Col
 							span={8}
-							style={{ padding: "60px", backgroundColor: "#ffffff", borderRadius: "15px" }}
+							style={{
+								padding: "60px",
+								backgroundColor: "#ffffff",
+								borderRadius: "15px"
+							}}
 						>
 							<Form onSubmit={this.handleSubmit} className="login-form">
 								<Form.Item>
