@@ -1,5 +1,9 @@
 import React from "react";
 import ReactDom from "react-dom";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+
+import routes from "./routes";
+
 import {
 	Icon,
 	Typography,
@@ -71,84 +75,103 @@ class Login extends React.Component {
 		const { getFieldDecorator } = this.props.form;
 
 		return (
-			<Layout className="layout" style={{ minHeight: "100vh" }}>
-				<Content
-					style={{
-						padding: "75px 50px",
-						marginTop: 64,
-						textAlign: "center"
-					}}
-				>
-					<Row type="flex" align="center">
-						<Col
-							span={8}
-							style={{
-								padding: "60px",
-								backgroundColor: "#ffffff",
-								borderRadius: "15px"
-							}}
-						>
-							<Form onSubmit={this.handleSubmit} className="login-form">
-								<Form.Item>
-									{getFieldDecorator("username", {
-										rules: [
-											{
-												required: true,
-												message: "Please input your username!"
-											}
-										]
-									})(
-										<Input
-											prefix={
-												<Icon
-													type="user"
-													style={{ color: "rgba(0,0,0,.25)" }}
-												/>
-											}
-											placeholder="Username"
-										/>
-									)}
-								</Form.Item>
-								<Form.Item>
-									{getFieldDecorator("password", {
-										rules: [
-											{
-												required: true,
-												message: "Please input your Password!"
-											}
-										]
-									})(
-										<Input
-											prefix={
-												<Icon
-													type="lock"
-													style={{ color: "rgba(0,0,0,.25)" }}
-												/>
-											}
-											type="password"
-											placeholder="Password"
-										/>
-									)}
-								</Form.Item>
-								<Form.Item>
-									<Button
-										type="primary"
-										htmlType="submit"
-										className="login-form-button"
-									>
-										Log in
-									</Button>
-									<br />
-									Or <a href="">Register now!</a>
-								</Form.Item>
-							</Form>
-						</Col>
-					</Row>
-				</Content>
-				<Footer style={{ textAlign: "center" }}>
-					This project is created by Allen and Abbas
-				</Footer>
-			</Layout>
+			<Router forceRefresh={true}>
+				<Layout className="layout" style={{ minHeight: "100vh" }}>
+					<Content
+						style={{
+							padding: "75px 50px",
+							marginTop: 64,
+							textAlign: "center"
+						}}
+					>
+						<Row type="flex" align="center">
+							<Col
+								span={8}
+								style={{
+									padding: "60px",
+									backgroundColor: "#ffffff",
+									borderRadius: "15px"
+								}}
+							>
+								<Form
+									onSubmit={this.handleSubmit}
+									className="login-form"
+								>
+									<Form.Item>
+										{getFieldDecorator("username", {
+											rules: [
+												{
+													required: true,
+													message: "Please input your username!"
+												}
+											]
+										})(
+											<Input
+												prefix={
+													<Icon
+														type="user"
+														style={{ color: "rgba(0,0,0,.25)" }}
+													/>
+												}
+												placeholder="Username"
+											/>
+										)}
+									</Form.Item>
+									<Form.Item>
+										{getFieldDecorator("password", {
+											rules: [
+												{
+													required: true,
+													message: "Please input your Password!"
+												}
+											]
+										})(
+											<Input
+												prefix={
+													<Icon
+														type="lock"
+														style={{ color: "rgba(0,0,0,.25)" }}
+													/>
+												}
+												type="password"
+												placeholder="Password"
+											/>
+										)}
+									</Form.Item>
+									<Form.Item>
+										<Button
+											type="primary"
+											htmlType="submit"
+											className="login-form-button"
+										>
+											Log in
+										</Button>
+										<br />
+										Or <a href="">Register now!</a>
+									</Form.Item>
+								</Form>
+							</Col>
+						</Row>
+						<li>
+							<Link to="/homepage">Go home</Link>
+						</li>
+					</Content>
+					<Footer style={{ textAlign: "center" }}>
+						This project is created by Allen and Abbas
+					</Footer>
+				</Layout>
+				<Switch>
+					{routes.map(route => (
+						<Route
+							key={route.path}
+							exact
+							path={route.path}
+							component={route.component}
+						/>
+					))}
+				</Switch>
+				{/* <Route exact path={routes[0].path} component={routes[0].component} /> */}
+			</Router>
 		);
 	}
 }
