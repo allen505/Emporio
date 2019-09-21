@@ -9,6 +9,7 @@ import {
     Button,
     Row,
     Col,
+    Carousel,
     Breadcrumb
 } from "antd";
 import "./Homepage.css";
@@ -29,15 +30,16 @@ class Homepage extends React.Component {
             <Layout className="layout">
               <Content style={{ padding: '0 10px' }}>
               <br/>
-                <Breadcrumb style={{ margin: '16px 0' }}>
-                <Breadcrumb.Item>Home</Breadcrumb.Item>
-                <Breadcrumb.Item>List</Breadcrumb.Item>
-                <Breadcrumb.Item>App</Breadcrumb.Item>
-                </Breadcrumb> 
-                <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>Content</div>
+                <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
+                    <Carousel autoplay dots = "false">
+                        <div align = "center"><img src ={require('../Images/mobile.jpg')} alt="Please display" height="400" width="1500"/><h1>Mobiles</h1></div>
+                        <div align = "center"><img src ={require('../Images/laptop.jpg')} alt="Please display" height="400" width="1500" /><h1>Laptops</h1></div>
+                        <div align = "center"><img src ={require('../Images/television.jpg')} alt="Please display" height="400" width="1500" /><h1>Televisions</h1></div>
+                        <div align = "center"><img src ={require('../Images/headphone.jpg')} alt="Please display" height="400" width="1500" /><h1>Headphone</h1></div>
+                    </Carousel>
+                </div>
               </Content>
-              <Footer style={{ textAlign: 'center' }}>This project is created by Allen and Abbas
-              </Footer>
+
             </Layout>
 
         );

@@ -7,3 +7,15 @@
     margin: 16px 24px 16px 0;
     float: left;
   }
+
+  .ant-carousel .slick-slide {
+    text-align: center;
+    height: 500px;
+    /*line-height: 160px;*/
+    
+    overflow: hidden;
+  }
+  
+  .ant-carousel .slick-slide h1 {
+    color: rgb(19, 14, 14);
+  }
