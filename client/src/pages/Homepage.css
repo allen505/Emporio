@@ -19,3 +19,8 @@
   .ant-carousel .slick-slide h1 {
     color: rgb(19, 14, 14);
   }
+
+  #components-dropdown-demo-dropdown-button .ant-dropdown-button {
+    margin: 0 8px 8px 0;
+    width: 20px
+  }

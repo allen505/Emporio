@@ -15,7 +15,7 @@ const Nav = () => {
 			<Search
 				placeholder="Search for the items"
 				onSearch={value => console.log(value)}
-				style={{ width: 1100, margin: "20px" }}
+				style={{ width: 1100, margin: "0 20px 0 20px" }}
 			/>
 			<Menu.Item key="2">Home</Menu.Item>
 			<Menu.Item key="3">Cart</Menu.Item>
