@@ -3,6 +3,7 @@ import ReactDom from "react-dom";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 import routes from "./routes";
+import WrappedRegistrationForm from "./Register"
 
 import {
 	Icon,
@@ -159,6 +160,7 @@ class Login extends React.Component {
 					<Footer style={{ textAlign: "center" }}>
 						This project is created by Allen and Abbas
 					</Footer>
+					<WrappedRegistrationForm/>
 				</Layout>
 				<Switch>
 					{routes.map(route => (
@@ -178,7 +180,7 @@ class Login extends React.Component {
 
 // export default Login;
 
-const WrappedLogin = Form.create()(Login);
-ReactDom.render(<WrappedLogin />, document.getElementById("root"));
+Login = Form.create()(Login);
+// ReactDom.render(<WrappedLogin />, document.getElementById("root"));
 
-export default WrappedLogin;
+export default Login;

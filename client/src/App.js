@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { Button, Layout } from "antd";
 import "./App.css";
 
-import WrappedLogin from "./pages/Login";
+import Login from "./pages/Login";
 import Nav from "./pages/Navigator";
 import Error404 from "./pages/Error404";
 import Homepage from "./pages/Homepage"
@@ -37,7 +37,7 @@ class App extends React.Component {
 					<Nav />
 					<Switch>
 						<Route path="/Homepage" component={Homepage} />
-						<Route path="/login" component={WrappedLogin} />
+						<Route path="/login" component={Login} />
 						<Route path="/" component={Homepage1} />
 						<Route component={Error404} />
 					</Switch>

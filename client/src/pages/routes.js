@@ -8,11 +8,11 @@ const routes = [
 		component: Homepage
 	},
 	{
-		path: '/Login',
-		component: '/Login'
+		path: "/Login",
+		component: Login
 	},
 	{
-		path: '/Error404',
+		path: "/Error404",
 		component: Error404
 	}
 ];
