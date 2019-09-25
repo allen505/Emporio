@@ -1,7 +1,7 @@
 import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
-import Error404 from "./pages/Error404"
-import RegistrationForm from "./pages/Register"
+import Error404 from "./pages/Error404";
+import RegistrationForm from "./pages/Register";
 const routes = [
 	{
 		path: "/login",
@@ -13,7 +13,7 @@ const routes = [
 	},
 	{
 		path: "/error404",
-		component: Error404,
+		component: Error404
 	},
 	{
 		path: "/register",

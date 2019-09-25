@@ -13,12 +13,12 @@ import routes from "./routing";
 const Homepage1 = () => {
 	return (
 		<div>
-		<Link to="/login">
-			<Button type="primary" size="large">
-				Login
-			</Button>
-		</Link>
-		<Link to = "/Homepage">Homepage</Link>
+			<Link to="/login">
+				<Button type="primary" size="large">
+					Login
+				</Button>
+			</Link>
+			<Link to="/Homepage">Homepage</Link>
 		</div>
 	);
 };

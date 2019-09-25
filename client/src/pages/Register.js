@@ -24,7 +24,7 @@ const { Option } = Select;
 
 class RegistrationForm extends React.Component {
 	state = {
-		confirmDirty: false,
+		confirmDirty: false
 	};
 
 	handleSubmit = e => {
