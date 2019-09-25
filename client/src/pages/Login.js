@@ -1,9 +1,7 @@
 import React from "react";
-import ReactDom from "react-dom";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
-import routes from "./routes";
-import WrappedRegistrationForm from "./Register"
+import RegistrationForm from "./Register";
 
 import {
 	Icon,
@@ -29,6 +27,10 @@ class Login extends React.Component {
 		this.state = {
 			data: "Nothing recieved"
 		};
+	}
+
+	componentDidMount() {
+		console.log("Login Mounted");
 	}
 
 	success = () => {
@@ -160,27 +162,13 @@ class Login extends React.Component {
 					<Footer style={{ textAlign: "center" }}>
 						This project is created by Allen and Abbas
 					</Footer>
-					<WrappedRegistrationForm/>
+					<RegistrationForm />
 				</Layout>
-				<Switch>
-					{routes.map(route => (
-						<Route
-							key={route.path}
-							exact
-							path={route.path}
-							component={route.component}
-						/>
-					))}
-				</Switch>
-				{/* <Route exact path={routes[0].path} component={routes[0].component} /> */}
 			</Router>
 		);
 	}
 }
 
-// export default Login;
-
 Login = Form.create()(Login);
-// ReactDom.render(<WrappedLogin />, document.getElementById("root"));
 
 export default Login;

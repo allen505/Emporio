@@ -7,7 +7,8 @@ import "./App.css";
 import Login from "./pages/Login";
 import Nav from "./pages/Navigator";
 import Error404 from "./pages/Error404";
-import Homepage from "./pages/Homepage"
+import Homepage from "./pages/Homepage";
+import routes from "./routing";
 
 const Homepage1 = () => {
 	return (
@@ -30,6 +31,10 @@ class App extends React.Component {
 		};
 	}
 
+	componentDidMount() {
+		console.log("App.js is mounted");
+	}
+
 	render() {
 		return (
 			<Router>
@@ -38,7 +43,7 @@ class App extends React.Component {
 					<Switch>
 						<Route path="/Homepage" component={Homepage} />
 						<Route path="/login" component={Login} />
-						<Route path="/" component={Homepage1} />
+						<Route path="/" component={Homepage} />
 						<Route component={Error404} />
 					</Switch>
 				</div>

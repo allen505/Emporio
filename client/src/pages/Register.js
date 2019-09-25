@@ -16,7 +16,6 @@ import {
 } from "antd";
 
 import React from "react";
-import ReactDom from "react-dom";
 
 const { Title } = Typography;
 const { Header, Content, Footer } = Layout;
@@ -193,10 +192,6 @@ class RegistrationForm extends React.Component {
 	}
 }
 
-const WrappedRegistrationForm = Form.create({ name: "register" })(
-	RegistrationForm
-);
+RegistrationForm = Form.create({ name: "register" })(RegistrationForm);
 
-// ReactDOM.render(<WrappedRegistrationForm />, mountNode);
-
-export default WrappedRegistrationForm;
+export default RegistrationForm;
