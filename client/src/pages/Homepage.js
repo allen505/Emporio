@@ -11,6 +11,7 @@ import {
 	Carousel,
 	Dropdown
 } from "antd";
+import Cards from "./Cards"
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 import "./Homepage.css";
@@ -58,7 +59,7 @@ class Homepage extends React.Component {
 				<Content style={{ padding: "0 10px" }}>
 					<div align="center" style={{ padding: "10px" }}>
 						Categories :{" "}
-						<Dropdown.Button overlay={menu} trigger={["click"]}>
+						<Dropdown.Button overlay={menu} trigger={["click"]} icon={<Icon type = "down"/>}>
 							<a className="ant-dropdown-link" href="#">
 								All
 							</a>
@@ -117,6 +118,7 @@ class Homepage extends React.Component {
 								<h1>Consoles</h1>
 							</div>
 						</Carousel>
+            <Cards/>
 					</div>
 				</Content>
 			</Layout>
