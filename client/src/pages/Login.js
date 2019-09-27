@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Link } from "react-router-dom";
 
 import RegistrationForm from "./Register";
 
@@ -160,7 +160,6 @@ class Login extends React.Component {
 				<Footer style={{ textAlign: "center" }}>
 					This project is created by Allen and Abbas
 				</Footer>
-				<RegistrationForm />
 			</Layout>
 		);
 	}
