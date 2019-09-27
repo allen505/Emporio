@@ -146,7 +146,7 @@ class Login extends React.Component {
 										Log in
 									</Button>
 									<br />
-									Or <a href="">Register now!</a>
+									Or	<Link to="/register">Register now!</Link>
 								</Form.Item>
 							</Form>
 						</Col>

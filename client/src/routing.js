@@ -4,12 +4,12 @@ import Error404 from "./pages/Error404";
 import RegistrationForm from "./pages/Register";
 const routes = [
 	{
-		path: "/login",
-		component: Login
-	},
-	{
 		path: "/homepage",
 		component: Homepage
+	},
+	{
+		path: "/login",
+		component: Login
 	},
 	{
 		path: "/error404",
