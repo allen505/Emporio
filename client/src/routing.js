@@ -18,11 +18,6 @@ const routes = [
 		component: Error404
 	},
 	{
-		path: "/login",
-		component: Login
-	},
-
-	{
 		path: "/register",
 		component: RegistrationForm
 	},
