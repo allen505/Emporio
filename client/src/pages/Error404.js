@@ -1,10 +1,11 @@
 import React from "react";
+import { Menu } from "antd";
 import "./Login.css";
 import logo from "./Error404.gif";
 
 const Error404 = () => {
 	return (
-		<div style={{ backgroundColor: "black", width: "100%", height: "100%" }}>
+		<div style={{ backgroundColor: "black", width: "100%" ,height: "100%"}}>
 			<center>
 				<img
 					src={logo}

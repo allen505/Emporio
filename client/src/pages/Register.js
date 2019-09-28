@@ -1,39 +1,45 @@
 import {
 	Form,
 	Input,
-	Tooltip,
-	Icon,
-	Cascader,
 	Select,
 	Row,
 	Col,
-	Checkbox,
 	Radio,
 	Button,
 	Typography,
 	Layout,
-	message
 } from "antd";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 import React from "react";
 
 const { Title } = Typography;
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 
 const { Option } = Select;
 
 class RegistrationForm extends React.Component {
 	state = {
-		confirmDirty: false
+		confirmDirty: false,
+		radioState: "buyer"
 	};
 
 	handleSubmit = e => {
 		e.preventDefault();
 		this.props.form.validateFieldsAndScroll((err, values) => {
 			if (!err) {
+				values.accType = this.state.radioState;
+				delete values["confirm"];
 				console.log("Received values of form: ", values);
 			}
 		});
+	};
+
+	radioChange = value => {
+		this.setState({
+			radioState: value.target.value
+		});
+		console.log(this.state.radioState);
 	};
 
 	handleConfirmBlur = e => {
@@ -71,18 +77,7 @@ class RegistrationForm extends React.Component {
 				sm: { span: 16 }
 			}
 		};
-		const tailFormItemLayout = {
-			wrapperCol: {
-				xs: {
-					span: 24,
-					offset: 0
-				},
-				sm: {
-					span: 16,
-					offset: 8
-				}
-			}
-		};
+
 		const prefixSelector = getFieldDecorator("prefix", {
 			initialValue: "91"
 		})(
@@ -101,6 +96,7 @@ class RegistrationForm extends React.Component {
 						textAlign: "center"
 					}}
 				>
+					<Title>Register</Title>
 					<Row type="flex" align="center">
 						<Col
 							span={8}
@@ -112,12 +108,13 @@ class RegistrationForm extends React.Component {
 						>
 							<Form {...formItemLayout} onSubmit={this.handleSubmit}>
 								<Radio.Group
-									defaultValue="a"
+									defaultValue="buyer"
 									buttonStyle="solid"
 									style={{ margin: "15px" }}
+									onChange={this.radioChange}
 								>
-									<Radio.Button value="a">Buyer</Radio.Button>
-									<Radio.Button value="b">Seller</Radio.Button>
+									<Radio.Button value="buyer">Buyer</Radio.Button>
+									<Radio.Button value="seller">Seller</Radio.Button>
 								</Radio.Group>
 								<Form.Item label="E-mail">
 									{getFieldDecorator("email", {
@@ -177,16 +174,21 @@ class RegistrationForm extends React.Component {
 										/>
 									)}
 								</Form.Item>
-
-								<Form.Item {...tailFormItemLayout}>
-									<Button type="primary" htmlType="submit">
-										Register
-									</Button>
-								</Form.Item>
+								<Button type="primary" htmlType="submit">
+									Register
+								</Button>
 							</Form>
 						</Col>
 					</Row>
+					<Link to="/homepage">
+						<Button type="link" size="large">
+							Go Home
+						</Button>
+					</Link>
 				</Content>
+				<Footer style={{ textAlign: "center" }}>
+					This project is created by Allen and Abbas
+				</Footer>
 			</Layout>
 		);
 	}

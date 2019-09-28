@@ -34,18 +34,18 @@ class App extends React.Component {
 	componentDidMount() {
 		console.log("App.js is mounted");
 	}
-
+	
 	render() {
 		return (
 			<Router>
 				<div>
-					<Nav />
+					
 					<Switch>
 						{routes.map(route => (
 							<Route path={route.path} component={route.component} />
 						))}
 						<Route path="/" exact component={routes[0].component} />
-						<Route component={routes[1].component} />
+						<Route nomatch component={routes[1].component} />
 					</Switch>
 				</div>
 			</Router>

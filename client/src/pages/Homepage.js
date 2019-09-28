@@ -11,9 +11,10 @@ import {
 	Carousel,
 	Dropdown
 } from "antd";
-import { BrowserRouter as Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 import "./Homepage.css";
+import Nav from './Navigator'
 
 const { Tile } = Typography;
 const { Header, Content, Footer } = Layout;
@@ -55,6 +56,7 @@ class Homepage extends React.Component {
 		const { Search } = Input;
 		return (
 			<Layout className="layout">
+				<Nav />
 				<Content style={{ padding: "0 10px" }}>
 					<div align="center" style={{ padding: "10px" }}>
 						Categories :{" "}
