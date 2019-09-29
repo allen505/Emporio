@@ -18,8 +18,8 @@ app.get("/getData", (req, res) => {
 let pool = mysql.createPool({
 	connectionLimit: 10,
 	host: "localhost",
-	user: "",
-	password: "",
+	user: "allen",
+	password: "hello",
 	database: "aa-dbms"
 	// allen : hello
 });
@@ -32,8 +32,8 @@ app.post("/api/login", jsonParser, (req, res) => {
 			console.log("Error in getting connection");
 		} else {
 			connection.query(
-				"SELECT Lid,Password FROM login",
-				(error, result, fields) => {					
+				"SELECT * FROM login",
+				(error, result, fields) => {
 					connection.release();
 					let i = 0;
 					let valid = false;
@@ -48,10 +48,13 @@ app.post("/api/login", jsonParser, (req, res) => {
 							.compare(requestData.password, result[i].Password)
 							.then(passRes => {
 								valid = passRes;
-								res.json(valid);
+								let responseObj = {
+									valid: valid,
+									type: result[i].Type
+								};
+								res.json(responseObj);
 							});
-					}
-					else{
+					} else {
 						res.json(valid);
 					}
 				}
@@ -60,11 +63,18 @@ app.post("/api/login", jsonParser, (req, res) => {
 	});
 });
 
+app.post("/api/register", jsonParser, (req, res) => {
+	let requestData = req.body;
+	console.log(requestData);
+});
+
 app.get("/", (req, res) => res.send("Welcome to the Home Page"));
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 let hashed = "";
 
+// The following function testHash is only for demo purposes 
+// and is not used in the functional part of the project
 const testHash = () => {
 	let myPlaintextPassword = "admin";
 	let saltRounds = 5;
@@ -86,13 +96,12 @@ const testHash = () => {
 		});
 	});
 };
-
 // testHash();
 
 pool.getConnection((err, connection) => {
 	if (err) throw err;
 	connection.query(
-		"SELECT Lid,Password,Type FROM login",
+		"SELECT * FROM login",
 		(error, results, fields) => {
 			// console.log(results[0].Lid);
 			connection.release();

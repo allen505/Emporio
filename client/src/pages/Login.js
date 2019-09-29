@@ -29,8 +29,8 @@ class Login extends React.Component {
 		console.log("Login Mounted");
 	}
 
-	success = () => {
-		message.success("Logged In Successfully");
+	success = (type) => {
+		message.success("Logged in as "+type+" Successfully");
 	};
 
 	error = () => {
@@ -55,8 +55,9 @@ class Login extends React.Component {
 					})
 						.then(res => res.json())
 						.then(resp => {
-							if (resp == true) {
-								this.success();
+							console.log(resp);
+							if (resp.valid == true) {								
+								this.success(resp.type);
 							} else {
 								this.error();
 							}
