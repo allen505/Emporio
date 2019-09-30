@@ -44,7 +44,7 @@ CREATE TABLE `buyer` (
 
 CREATE TABLE `login` (
   `Lid` int(11) NOT NULL,
-  `Password` varchar(20) NOT NULL,
+  `Password` varchar(70) NOT NULL,
   `Type` char(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -53,7 +53,7 @@ CREATE TABLE `login` (
 --
 
 INSERT INTO `login` (`Lid`, `Password`, `Type`) VALUES
-(123, 'admin', 'admin');
+(123, '$2b$05$iP/GKVwPRef82yPWnhV57eHF211LuS6xsgGakXi.jPjubfo.6FUUi', 'admin');
 
 -- --------------------------------------------------------
 

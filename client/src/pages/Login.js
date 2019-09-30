@@ -1,8 +1,5 @@
 import React from "react";
-import { BrowserRouter as Link } from "react-router-dom";
-
-import RegistrationForm from "./Register";
-
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import {
 	Icon,
 	Typography,
@@ -14,12 +11,11 @@ import {
 	Col,
 	message
 } from "antd";
+
 import "./Login.css";
 
 const { Title } = Typography;
 const { Header, Content, Footer } = Layout;
-
-// Fetch the data on first mount
 
 class Login extends React.Component {
 	constructor(props) {
@@ -33,8 +29,8 @@ class Login extends React.Component {
 		console.log("Login Mounted");
 	}
 
-	success = () => {
-		message.success("Logged In Successfully");
+	success = (type) => {
+		message.success("Logged in as "+type+" Successfully");
 	};
 
 	error = () => {
@@ -45,7 +41,6 @@ class Login extends React.Component {
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
 			if (!err) {
-				// console.log("Received values of form: ", values);
 				let enteredDets = {
 					username: values.username,
 					password: values.password
@@ -60,8 +55,9 @@ class Login extends React.Component {
 					})
 						.then(res => res.json())
 						.then(resp => {
-							if (resp == true) {
-								this.success();
+							console.log(resp);
+							if (resp.valid == true) {								
+								this.success(resp.type);
 							} else {
 								this.error();
 							}
@@ -86,6 +82,7 @@ class Login extends React.Component {
 						textAlign: "center"
 					}}
 				>
+					<Title>Login</Title>
 					<Row type="flex" align="center">
 						<Col
 							span={8}
@@ -143,13 +140,10 @@ class Login extends React.Component {
 										htmlType="submit"
 										className="login-form-button"
 									>
-										Log in
+										Login
 									</Button>
 									<br />
-									<br />
-									<Link to="/register">
-										<Button type="link">Register now!</Button>
-									</Link>
+									Or <Link to="/register">Register now!</Link>
 								</Form.Item>
 							</Form>
 						</Col>

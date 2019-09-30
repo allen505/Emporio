@@ -12,13 +12,18 @@ import {
 	Dropdown
 } from "antd";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import Cards from "./Cards"
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 =======
 import { BrowserRouter as Link } from "react-router-dom";
 >>>>>>> cd3c4419163a8043a53dabdf84a2ece898b3af8a
+=======
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+>>>>>>> d0cd57011881d3b28f49bce6f48e467b39d18861
 
 import "./Homepage.css";
+import Nav from './Navigator'
 
 const { Tile } = Typography;
 const { Header, Content, Footer } = Layout;
@@ -60,6 +65,7 @@ class Homepage extends React.Component {
 		const { Search } = Input;
 		return (
 			<Layout className="layout">
+				<Nav />
 				<Content style={{ padding: "0 10px" }}>
 					<div align="center" style={{ padding: "10px" }}>
 						Categories :{" "}
