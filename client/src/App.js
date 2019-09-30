@@ -41,10 +41,15 @@ class App extends React.Component {
 				<div>
 					<Nav />
 					<Switch>
-						<Route path="/Homepage" component={Homepage} />
+						{/* <Route path="/Homepage" component={Homepage} />
 						<Route path="/login" component={Login} />
-						<Route path="/" component={Homepage} />
-						<Route component={Error404} />
+						<Route exact path="/" component={Homepage} />
+						<Route component={Error404} /> */}
+						{routes.map(route => (
+							<Route path={route.path} component={route.component} />
+						))}
+						<Route path="/" exact component={routes[0].component} />
+						<Route component={routes[1].component} />
 					</Switch>
 				</div>
 			</Router>

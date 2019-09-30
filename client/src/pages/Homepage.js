@@ -11,8 +11,12 @@ import {
 	Carousel,
 	Dropdown
 } from "antd";
+<<<<<<< HEAD
 import Cards from "./Cards"
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+=======
+import { BrowserRouter as Link } from "react-router-dom";
+>>>>>>> cd3c4419163a8043a53dabdf84a2ece898b3af8a
 
 import "./Homepage.css";
 
