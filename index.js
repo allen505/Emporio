@@ -8,6 +8,8 @@ const app = express();
 const port = 5000;
 var jsonParser = bodyParser.json();
 
+var saltRounds = 5;
+
 app.use(express.static(path.join(__dirname, "client/build")));
 
 app.get("/getData", (req, res) => {
@@ -31,41 +33,89 @@ app.post("/api/login", jsonParser, (req, res) => {
 		if (err) {
 			console.log("Error in getting connection");
 		} else {
-			connection.query(
-				"SELECT * FROM login",
-				(error, result, fields) => {
-					connection.release();
-					let i = 0;
-					let valid = false;
-					for (i = 0; i < result.length; i++) {
-						if (result[i].Lid == requestData.username) {
-							valid = true;
-							break;
-						}
-					}
-					if (valid == true) {
-						bcrypt
-							.compare(requestData.password, result[i].Password)
-							.then(passRes => {
-								valid = passRes;
-								let responseObj = {
-									valid: valid,
-									type: result[i].Type
-								};
-								res.json(responseObj);
-							});
-					} else {
-						res.json(valid);
+			connection.query("SELECT * FROM login", (error, result, fields) => {
+				connection.release();
+				let i = 0;
+				let valid = false;
+				for (i = 0; i < result.length; i++) {
+					if (result[i].Lid == requestData.userid) {
+						valid = true;
+						break;
 					}
 				}
-			);
+				if (valid == true) {
+					bcrypt
+						.compare(requestData.password, result[i].Password)
+						.then(passRes => {
+							valid = passRes;
+							let responseObj = {
+								valid: valid,
+								type: result[i].Type
+							};
+							res.json(responseObj);
+						});
+				} else {
+					res.json(valid);
+				}
+			});
 		}
 	});
 });
 
 app.post("/api/register", jsonParser, (req, res) => {
 	let requestData = req.body;
-	console.log(requestData);
+	var addToLogin = `insert into login values(?,?,?)`;
+
+	pool.getConnection((err, connection) => {
+		if (err) {
+			console.log("Error in getting connection");
+		} else {
+			bcrypt.hash(requestData.password, saltRounds).then(hash => {
+				let loginValues = [requestData.userid, hash, requestData.accType];
+				connection.query(
+					addToLogin,
+					loginValues,
+					(error, result, fields) => {
+						console.log(error);
+						console.log(result);
+					}
+				);
+
+				if (requestData.accType == "buyer") {
+					let addToBuyer = `insert into buyer values(?,?,?)`;
+					let buyerValues = [
+						requestData.userid,
+						requestData.name,
+						requestData.city + ", " + requestData.state
+					];
+					connection.query(
+						addToBuyer,
+						buyerValues,
+						(error, result, fields) => {
+							console.log(error);
+							console.log(result);
+						}
+					);
+				} else if (requestData.accType == "seller") {
+					let addToSeller = `insert into seller values(?,?,?)`;
+					let sellerValues = [
+						requestData.userid,
+						requestData.name,
+						requestData.phone
+					];
+					connection.query(
+						addToSeller,
+						sellerValues,
+						(error, result, fields) => {
+							console.log(error);
+							console.log(result);
+						}
+					);
+				}
+			});
+		}
+		connection.release();
+	});
 });
 
 app.get("/", (req, res) => res.send("Welcome to the Home Page"));
@@ -73,11 +123,10 @@ app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 let hashed = "";
 
-// The following function testHash is only for demo purposes 
+// The following function testHash is only for demo purposes
 // and is not used in the functional part of the project
 const testHash = () => {
 	let myPlaintextPassword = "admin";
-	let saltRounds = 5;
 
 	bcrypt.hash(myPlaintextPassword, saltRounds).then(hash => {
 		// Store hash in your password DB.
@@ -100,14 +149,9 @@ const testHash = () => {
 
 pool.getConnection((err, connection) => {
 	if (err) throw err;
-	connection.query(
-		"SELECT * FROM login",
-		(error, results, fields) => {
-			// console.log(results[0].Lid);
-			connection.release();
-			if (error) throw error;
-		}
-	);
-
-	connection.query("");
+	connection.query("SELECT * FROM login", (error, results, fields) => {
+		// console.log(results[0].Lid);
+		connection.release();
+		if (error) throw error;
+	});
 });

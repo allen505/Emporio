@@ -42,7 +42,7 @@ class Login extends React.Component {
 		this.props.form.validateFields((err, values) => {
 			if (!err) {
 				let enteredDets = {
-					username: values.username,
+					userid: values.userid,
 					password: values.password
 				};
 				var validate = () => {
@@ -94,11 +94,11 @@ class Login extends React.Component {
 						>
 							<Form onSubmit={this.handleSubmit} className="login-form">
 								<Form.Item>
-									{getFieldDecorator("username", {
+									{getFieldDecorator("userid", {
 										rules: [
 											{
 												required: true,
-												message: "Please input your username!"
+												message: "Please input your User ID!"
 											}
 										]
 									})(
@@ -109,7 +109,7 @@ class Login extends React.Component {
 													style={{ color: "rgba(0,0,0,.25)" }}
 												/>
 											}
-											placeholder="Username"
+											placeholder="User ID"
 										/>
 									)}
 								</Form.Item>

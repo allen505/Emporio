@@ -203,7 +203,7 @@ class RegistrationForm extends React.Component {
 								<Form.Item
 									label={
 										<span>
-											Username&nbsp;
+											User ID&nbsp;
 											<Tooltip title="This will be used for login">
 												<Icon type="question-circle-o" />
 											</Tooltip>
@@ -211,16 +211,16 @@ class RegistrationForm extends React.Component {
 									}
 								>
 									{" "}
-									{getFieldDecorator("username", {
+									{getFieldDecorator("userid", {
 										rules: [
 											{
 												required: true,
-												message: "Please input your username!",
+												message: "Please input your User ID!",
 												whitespace: true
 											}
 										]
 									})(
-										<Input placeholder="Do not forget your username!" />
+										<Input placeholder="Do not forget your User ID!" />
 									)}
 								</Form.Item>
 								<Form.Item {...formItemLayout} label="Name">
