@@ -65,6 +65,7 @@ app.post("/api/login", jsonParser, (req, res) => {
 app.post("/api/register", jsonParser, (req, res) => {
 	let requestData = req.body;
 	var addToLogin = `insert into login values(?,?,?)`;
+	let returnObject = { status: false };
 
 	pool.getConnection((err, connection) => {
 		if (err) {
@@ -92,8 +93,8 @@ app.post("/api/register", jsonParser, (req, res) => {
 						addToBuyer,
 						buyerValues,
 						(error, result, fields) => {
-							console.log(error);
-							console.log(result);
+							if (error === null) res.json(true);
+							else res.json(false);
 						}
 					);
 				} else if (requestData.accType == "seller") {
@@ -107,8 +108,8 @@ app.post("/api/register", jsonParser, (req, res) => {
 						addToSeller,
 						sellerValues,
 						(error, result, fields) => {
-							console.log(error);
-							console.log(result);
+							if (error === null) res.json(true);
+							else res.json(false);
 						}
 					);
 				}

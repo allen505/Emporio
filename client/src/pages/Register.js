@@ -13,6 +13,7 @@ import {
 	message
 } from "antd";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { Redirect } from "react-router";
 
 import React from "react";
 
@@ -27,12 +28,14 @@ class RegistrationForm extends React.Component {
 		radioState: "buyer"
 	};
 
-	success = type => {
-		message.success("Logged in as " + type + " Successfully");
+	success = () => {
+		message.success("Registration Successful");
+		this.props.history.push("/login", { some: "state" });
+		// <Redirect push to="/"/>
 	};
 
 	error = () => {
-		message.error("Log in unsuccessful");
+		message.error("Registration unsuccessful");
 	};
 
 	handleSubmit = e => {
@@ -52,9 +55,9 @@ class RegistrationForm extends React.Component {
 					})
 						.then(res => res.json())
 						.then(resp => {
-							console.log(resp);
-							if (resp.valid == true) {
-								this.success(resp.type);
+							// console.log(resp.status);
+							if (resp == true) {
+								this.success();
 							} else {
 								this.error();
 							}
