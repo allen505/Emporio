@@ -30,12 +30,11 @@ class App extends React.Component {
 	componentDidMount() {
 		console.log("App.js is mounted");
 	}
-	
+
 	render() {
 		return (
 			<Router>
 				<div>
-					
 					<Switch>
 						{routes.map(route => (
 							<Route path={route.path} component={route.component} />

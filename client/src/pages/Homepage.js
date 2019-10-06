@@ -13,9 +13,9 @@ import {
 } from "antd";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
-import Cards from "./Cards"
+import Cards from "./Cards";
 import "./Homepage.css";
-import Nav from './Navigator'
+import Nav from "./Navigator";
 
 const { Tile } = Typography;
 const { Header, Content, Footer } = Layout;
@@ -24,51 +24,56 @@ class Homepage extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			product : [
-			]
-		}
-		
+			productList: []
+		};
 	}
 	componentDidMount() {
 		fetch("/api/card")
-		.then(res => { return res.json()})
-		.then(data => {
-			console.log(data)
-			this.product.push(data[0])
-			let products = this.state.product.map(product=>{
-				return(
-						<div>
-							<Cards product={product}/>
-						</div>
-				)
+			.then(res => {
+				return res.json();
 			})
-			this.setState({
-				product : products
-			})			
-		});
-  	}
+			.then(data => {
+				// this.productList.push(data[0])
+				let tempProduct = [];
+				data.map(prod => {
+					// console.log(prod);
+					tempProduct.push(prod);
+				});
+				this.setState({
+					productList: tempProduct
+				});
+			});
+	}
+
+	productArea = () => {
+		return (
+			<div>
+				<Cards product={this.state.productList} />
+			</div>
+		);
+	};
 
 	render() {
 		const menu = (
 			<Menu>
 				<Menu.Item key="0">
-						<Icon type="mobile" /> Mobiles
+					<Icon type="mobile" /> Mobiles
 				</Menu.Item>
 				<Menu.Item key="1">
-						<Icon type="laptop" /> Laptops
+					<Icon type="laptop" /> Laptops
 				</Menu.Item>
 				<Menu.Item key="2">
-						<Icon type="desktop" /> Televisions
+					<Icon type="desktop" /> Televisions
 				</Menu.Item>
 				<Menu.Item key="3">
-						<Icon type="sound" /> Headphones
+					<Icon type="sound" /> Headphones
 				</Menu.Item>
 				<Menu.Item key="4">
-						<Icon type="play-circle" /> Consoles
+					<Icon type="play-circle" /> Consoles
 				</Menu.Item>
 			</Menu>
 		);
-		console.log(this.state.product)
+		console.log(this.state.productList);
 		const { Search } = Input;
 		return (
 			<Layout className="layout">
@@ -76,7 +81,11 @@ class Homepage extends React.Component {
 				<Content style={{ padding: "0 10px" }}>
 					<div align="center" style={{ padding: "10px" }}>
 						Categories :{" "}
-						<Dropdown.Button overlay={menu} trigger={["click"]} icon={<Icon type = "down"/>}>
+						<Dropdown.Button
+							overlay={menu}
+							trigger={["click"]}
+							icon={<Icon type="down" />}
+						>
 							<a className="ant-dropdown-link" href="#">
 								All
 							</a>
@@ -130,7 +139,7 @@ class Homepage extends React.Component {
 								/>
 							</div>
 						</Carousel>
-						{this.state.products}
+						<this.productArea />
 					</div>
 				</Content>
 			</Layout>

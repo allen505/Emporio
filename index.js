@@ -20,10 +20,10 @@ app.get("/getData", (req, res) => {
 let pool = mysql.createPool({
 	connectionLimit: 10,
 	host: "localhost",
-	user: "Abbas",
-	password: "admin",
+	user: "allen",
+	password: "hello",
 	database: "aa-dbms",
-	multipleStatements : true
+	multipleStatements: true
 	// allen : hello
 	// Abbas: admin
 });
@@ -67,12 +67,7 @@ app.post("/api/login", jsonParser, (req, res) => {
 app.post("/api/register", jsonParser, (req, res) => {
 	let requestData = req.body;
 	var addToLogin = `insert into login values(?,?,?)`;
-<<<<<<< HEAD
-	console.log(requestData);
-=======
-	let returnObject = { status: false };
 
->>>>>>> 3d822f7426aa6347c941b219895dec9e35ab9e0c
 	pool.getConnection((err, connection) => {
 		if (err) {
 			console.log("Error in getting connection");
@@ -125,28 +120,32 @@ app.post("/api/register", jsonParser, (req, res) => {
 	});
 });
 
-app.get("/api/card", jsonParser,(req,res) => {
-	pool.getConnection((error,connection) => {
-		if(error) throw err
+app.get("/api/card", jsonParser, (req, res) => {
+	pool.getConnection((error, connection) => {
+		if (error) throw err;
 		else {
-			connection.query("select * from products", (error,result,fields) => {
-				res.send(result[0]);
-			})
+			connection.query("select * from products", (error, result, fields) => {
+				console.log(result);
+				res.send(result);
+			});
 		}
 		connection.release();
-	})
+	});
 });
 
-app.get("/api/admin", (req,res)=> {
-	pool.getConnection((error,connection)=>{
-		if(error) throw error
-		else{
-			connection.query("select * from buyer; select * from seller",(error,result,fields)=>{
-				res.send(result);
-			})
+app.get("/api/admin", (req, res) => {
+	pool.getConnection((error, connection) => {
+		if (error) throw error;
+		else {
+			connection.query(
+				"select * from buyer; select * from seller",
+				(error, result, fields) => {
+					res.send(result);
+				}
+			);
 		}
-	connection.release();
-	})
+		connection.release();
+	});
 });
 
 app.get("/", (req, res) => res.send("Welcome to the Home Page"));
