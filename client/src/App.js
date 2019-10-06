@@ -4,10 +4,6 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { Button, Layout } from "antd";
 import "./App.css";
 
-import Login from "./pages/Login";
-import Nav from "./pages/Navigator";
-import Error404 from "./pages/Error404";
-import Homepage from "./pages/Homepage";
 import routes from "./routing";
 
 const Homepage1 = () => {

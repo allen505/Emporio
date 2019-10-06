@@ -67,7 +67,12 @@ app.post("/api/login", jsonParser, (req, res) => {
 app.post("/api/register", jsonParser, (req, res) => {
 	let requestData = req.body;
 	var addToLogin = `insert into login values(?,?,?)`;
+<<<<<<< HEAD
 	console.log(requestData);
+=======
+	let returnObject = { status: false };
+
+>>>>>>> 3d822f7426aa6347c941b219895dec9e35ab9e0c
 	pool.getConnection((err, connection) => {
 		if (err) {
 			console.log("Error in getting connection");
@@ -94,8 +99,8 @@ app.post("/api/register", jsonParser, (req, res) => {
 						addToBuyer,
 						buyerValues,
 						(error, result, fields) => {
-							console.log(error);
-							console.log(result);
+							if (error === null) res.json(true);
+							else res.json(false);
 						}
 					);
 				} else if (requestData.accType == "seller") {
@@ -109,8 +114,8 @@ app.post("/api/register", jsonParser, (req, res) => {
 						addToSeller,
 						sellerValues,
 						(error, result, fields) => {
-							console.log(error);
-							console.log(result);
+							if (error === null) res.json(true);
+							else res.json(false);
 						}
 					);
 				}
