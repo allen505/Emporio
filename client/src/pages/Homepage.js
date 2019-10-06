@@ -23,37 +23,52 @@ const { Header, Content, Footer } = Layout;
 class Homepage extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			product : [
+			]
+		}
+		
 	}
+	componentDidMount() {
+		fetch("/api/card")
+		.then(res => { return res.json()})
+		.then(data => {
+			console.log(data)
+			this.product.push(data[0])
+			let products = this.state.product.map(product=>{
+				return(
+						<div>
+							<Cards product={product}/>
+						</div>
+				)
+			})
+			this.setState({
+				product : products
+			})			
+		});
+  	}
+
 	render() {
 		const menu = (
 			<Menu>
 				<Menu.Item key="0">
-					<a href="">
 						<Icon type="mobile" /> Mobiles
-					</a>
 				</Menu.Item>
 				<Menu.Item key="1">
-					<a href="">
 						<Icon type="laptop" /> Laptops
-					</a>
 				</Menu.Item>
 				<Menu.Item key="2">
-					<a href="">
 						<Icon type="desktop" /> Televisions
-					</a>
 				</Menu.Item>
 				<Menu.Item key="3">
-					<a href="">
 						<Icon type="sound" /> Headphones
-					</a>
 				</Menu.Item>
 				<Menu.Item key="4">
-					<a href="">
 						<Icon type="play-circle" /> Consoles
-					</a>
 				</Menu.Item>
 			</Menu>
 		);
+		console.log(this.state.product)
 		const { Search } = Input;
 		return (
 			<Layout className="layout">
@@ -73,7 +88,7 @@ class Homepage extends React.Component {
 								Login
 							</Button>
 						</Link>
-						<Carousel autoplay dots="false">
+						<Carousel autoplay>
 							<div align="center">
 								<img
 									src={require("../Images/mobile.jpg")}
@@ -81,7 +96,6 @@ class Homepage extends React.Component {
 									height="400"
 									width="1500"
 								/>
-								<h1>Mobiles</h1>
 							</div>
 							<div align="center">
 								<img
@@ -90,7 +104,6 @@ class Homepage extends React.Component {
 									height="400"
 									width="1500"
 								/>
-								<h1>Laptops</h1>
 							</div>
 							<div align="center">
 								<img
@@ -99,7 +112,6 @@ class Homepage extends React.Component {
 									height="400"
 									width="1500"
 								/>
-								<h1>Televisions</h1>
 							</div>
 							<div align="center">
 								<img
@@ -108,7 +120,6 @@ class Homepage extends React.Component {
 									height="400"
 									width="1500"
 								/>
-								<h1>Headphone</h1>
 							</div>
 							<div align="center">
 								<img
@@ -117,10 +128,9 @@ class Homepage extends React.Component {
 									height="400"
 									width="1500"
 								/>
-								<h1>Consoles</h1>
 							</div>
 						</Carousel>
-            <Cards/>
+						{this.state.products}
 					</div>
 				</Content>
 			</Layout>

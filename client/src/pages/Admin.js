@@ -1,9 +1,23 @@
 import React from "react";
 import { BrowserRouter as Link } from "react-router-dom";
 
-import { Typography } from "antd";
+import { 
+	Typography,
+	Form,
+	Tooltip,
+	Icon,
+	Input,
+	Select,
+	Row,
+	Col,
+	Radio,
+	Button,
+	Layout,
+	message
+ } from "antd";
 
 const { Title } = Typography;
+const { Header, Content, Footer } = Layout;
 
 class Admin extends React.Component {
 	constructor(props) {
@@ -11,7 +25,41 @@ class Admin extends React.Component {
 	}
 
 	render() {
-		return <Title>This is the Admin's page</Title>;
+		return(
+			<Layout className="layout" style={{ minHeight: "100vh" }}>
+				<Content
+					style={{
+						padding: "75px 50px",
+						marginTop: 64,
+						textAlign: "center"
+					}}
+				>
+					<Title level= {3}>With great power comes great responsibilty</Title>
+					<Row type="flex" align="center">
+						<Col
+							span={8}
+							style={{
+								padding: "60px",
+								backgroundColor: "#ffffff",
+								borderRadius: "15px"
+							}}
+						>
+							
+								<Radio.Group
+									defaultValue="buyer"
+									buttonStyle="solid"
+									style={{ margin: "15px" }}
+									onChange={this.radioChange}
+								>
+									<Radio.Button value="buyer">Buyer</Radio.Button>
+									<Radio.Button value="seller">Seller</Radio.Button>
+								</Radio.Group>
+
+						</Col>
+					</Row>	
+				</Content>	
+			</Layout>	
+		);
 	}
 }
 export default Admin;

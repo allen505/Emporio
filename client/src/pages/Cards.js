@@ -5,15 +5,21 @@ import {
     Button
 } from "antd";
 
-const Cards = () => {
-    const {Meta} = Card;
-    return(
-        <Card
+class Cards extends React.Component {
+    constructor(props) {
+      super(props);
+    }
+    render () {
+      let { id, Pname, company, description, Category } = this.props.product;
+      const {Meta} = Card
+      return (
+        <div>
+          <Card
             style={{ width: 300 }}
             cover={
             <img
                 alt="example"
-                src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                src=""
             />
             }
             actions={[
@@ -23,11 +29,13 @@ const Cards = () => {
             ]}
         >
             <Meta
-            title="Phone cover"
-            description="$ 2.1"
+            title= {Pname}
+            description={Category}
             />
         </Card>
-    );
-}
-
-export default Cards;
+        </div>
+      )
+    }
+  }
+  
+  export default Cards;
