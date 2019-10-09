@@ -20,8 +20,8 @@ app.get("/getData", (req, res) => {
 let pool = mysql.createPool({
 	connectionLimit: 10,
 	host: "localhost",
-	user: "allen",
-	password: "hello",
+	user: "Abbas",
+	password: "admin",
 	database: "aa-dbms",
 	multipleStatements: true
 	// allen : hello
@@ -125,7 +125,6 @@ app.get("/api/card", jsonParser, (req, res) => {
 		if (error) throw err;
 		else {
 			connection.query("select * from products", (error, result, fields) => {
-				console.log(result);
 				res.send(result);
 			});
 		}
