@@ -20,12 +20,13 @@ app.get("/getData", (req, res) => {
 let pool = mysql.createPool({
 	connectionLimit: 10,
 	host: "localhost",
-	user: "Abbas",
-	password: "admin",
+	user: "aa",
+	password: "super",
 	database: "aa-dbms",
 	multipleStatements: true
 	// allen : hello
 	// Abbas: admin
+	// aa: super
 });
 
 app.post("/api/login", jsonParser, (req, res) => {
@@ -94,7 +95,7 @@ app.post("/api/register", jsonParser, (req, res) => {
 						addToBuyer,
 						buyerValues,
 						(error, result, fields) => {
-							if (error === null) res.json(true);
+							if (error == null) res.json(true);
 							else res.json(false);
 						}
 					);

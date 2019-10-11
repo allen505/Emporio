@@ -144,7 +144,7 @@ class RegistrationForm extends React.Component {
 								message: "Please input your phone number!"
 							}
 						]
-					})(<Input style={{ width: "100%" }} placeholder="Optional" />)}
+					})(<Input style={{ width: "100%" }} />)}
 				</Form.Item>
 			);
 		}
