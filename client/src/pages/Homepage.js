@@ -10,7 +10,7 @@ import {
 	Col,
 	Carousel,
 	Dropdown,
-	Card,
+	Card
 } from "antd";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
@@ -28,10 +28,18 @@ class Homepage extends React.Component {
 		super(props);
 		this.state = {
 			productList: [],
-			category : "All",
+			category: "All",
+			userid: null
 		};
-		this.handleMenuClick = this.handleMenuClick.bind(this)
+		this.handleMenuClick = this.handleMenuClick.bind(this);
+
+		try {
+			this.state.userid = props.location.state.id;
+		} catch (e) {
+			console.log("Not logged in");
+		}
 	}
+
 	componentDidMount() {
 		fetch("/api/card")
 			.then(res => {
@@ -52,17 +60,15 @@ class Homepage extends React.Component {
 	handleMenuClick(e) {
 		this.setState({
 			category: String(e.key)
-		})
-		console.log(this.state.category)
+		});
+		console.log(this.state.category);
 	}
 
 	productArea = () => {
-		return (
-				<Cards product={this.state.productList} />
-		);
+		return <Cards product={this.state.productList} />;
 	};
 
-	render() { 
+	render() {
 		const menu = (
 			<Menu>
 				<Menu.Item key="Mobiles" onClick={this.handleMenuClick}>
@@ -84,7 +90,7 @@ class Homepage extends React.Component {
 		);
 		return (
 			<Layout className="layout">
-				<Nav product = {this.state.productList} />
+				<Nav product={this.state.productList} />
 				<Content style={{ padding: "0 10px" }}>
 					<div align="center" style={{ padding: "10px" }}>
 						Categories :{" "}
@@ -96,13 +102,13 @@ class Homepage extends React.Component {
 							All
 						</Dropdown.Button>
 					</div>
-					<div style={{ background: "#fff", padding: 24}}>
+					<div style={{ background: "#fff", padding: 24 }}>
 						<Link to="/login">
 							<Button type="primary" size="large">
 								Login
 							</Button>
 						</Link>
-						<Carousel autoplay style = {{padding:"10px 0"}}>
+						<Carousel autoplay style={{ padding: "10px 0" }}>
 							<div align="center">
 								<img
 									src={require("../Images/mobile.jpg")}
@@ -144,7 +150,7 @@ class Homepage extends React.Component {
 								/>
 							</div>
 						</Carousel>
-						<this.productArea/>
+						<this.productArea />
 					</div>
 				</Content>
 			</Layout>

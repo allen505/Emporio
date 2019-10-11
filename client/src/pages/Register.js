@@ -31,7 +31,6 @@ class RegistrationForm extends React.Component {
 	success = () => {
 		message.success("Registration Successful");
 		this.props.history.push("/login", { some: "state" });
-		// <Redirect push to="/"/>
 	};
 
 	error = () => {

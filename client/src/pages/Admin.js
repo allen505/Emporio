@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Link } from "react-router-dom";
 
-import { 
+import {
 	Typography,
 	Form,
 	Tooltip,
@@ -14,7 +14,7 @@ import {
 	Button,
 	Layout,
 	message
- } from "antd";
+} from "antd";
 
 const { Title } = Typography;
 const { Header, Content, Footer } = Layout;
@@ -22,10 +22,25 @@ const { Header, Content, Footer } = Layout;
 class Admin extends React.Component {
 	constructor(props) {
 		super(props);
+
+		try {
+			this.state = {
+				auth: props.location.state.authority
+			};
+		} catch (e) {
+			console.log(e);
+			this.state = {
+				auth: false
+			};
+		}
+
+		setTimeout(() => {
+			console.log(this.state.auth);
+		}, 100);
 	}
 
 	render() {
-		return(
+		return (
 			<Layout className="layout" style={{ minHeight: "100vh" }}>
 				<Content
 					style={{
@@ -34,7 +49,9 @@ class Admin extends React.Component {
 						textAlign: "center"
 					}}
 				>
-					<Title level= {3}>With great power comes great responsibilty</Title>
+					<Title level={3}>
+						"With great power comes great responsibilty" -Uncle Ben
+					</Title>
 					<Row type="flex" align="center">
 						<Col
 							span={8}
@@ -44,21 +61,19 @@ class Admin extends React.Component {
 								borderRadius: "15px"
 							}}
 						>
-							
-								<Radio.Group
-									defaultValue="buyer"
-									buttonStyle="solid"
-									style={{ margin: "15px" }}
-									onChange={this.radioChange}
-								>
-									<Radio.Button value="buyer">Buyer</Radio.Button>
-									<Radio.Button value="seller">Seller</Radio.Button>
-								</Radio.Group>
-
+							<Radio.Group
+								defaultValue="buyer"
+								buttonStyle="solid"
+								style={{ margin: "15px" }}
+								onChange={this.radioChange}
+							>
+								<Radio.Button value="buyer">Buyer</Radio.Button>
+								<Radio.Button value="seller">Seller</Radio.Button>
+							</Radio.Group>
 						</Col>
-					</Row>	
-				</Content>	
-			</Layout>	
+					</Row>
+				</Content>
+			</Layout>
 		);
 	}
 }
