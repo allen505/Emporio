@@ -37,9 +37,9 @@ class Login extends React.Component {
 		} else if (type == "buyer") {
 			this.props.history.push("/homepage", { id: userid });
 		} 
-		// else if (type == "seller") {
-		// 	this.props.history.push("/homepage", { id: userid });
-		// }
+		else if (type == "seller") {
+			this.props.history.push("/seller", { id: userid });
+		}
 	};
 
 	error = () => {

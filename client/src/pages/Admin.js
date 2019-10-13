@@ -28,15 +28,15 @@ class Admin extends React.Component {
 				auth: props.location.state.authority
 			};
 		} catch (e) {
-			console.log(e);
 			this.state = {
 				auth: false
 			};
 		}
 
-		setTimeout(() => {
-			console.log(this.state.auth);
-		}, 100);
+		if(this.state.auth==false){
+			this.props.history.push("/accessdenied");
+		}
+
 	}
 
 	render() {
