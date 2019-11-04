@@ -31,7 +31,6 @@ let pool = mysql.createPool({
 
 app.post("/api/login", jsonParser, (req, res) => {
 	let requestData = req.body;
-
 	pool.getConnection((err, connection) => {
 		if (err) {
 			console.log("Error in getting connection");
@@ -80,7 +79,6 @@ app.post("/api/register", jsonParser, (req, res) => {
 					loginValues,
 					(error, result, fields) => {
 						console.log(error);
-						console.log(result);
 					}
 				);
 
@@ -118,6 +116,26 @@ app.post("/api/register", jsonParser, (req, res) => {
 			});
 		}
 		connection.release();
+	});
+});
+
+app.post("/api/sellerDash", jsonParser, (req, res) => {
+	let requestData = req.body;
+
+	pool.getConnection((err, connection) => {
+		if (err) {
+			console.log("Error in getting connection");
+		} else {
+			let prodQuery = `SELECT p.pid, p.pname,p.price,p.quantity,c.category from products p,seller s, categories c WHERE (p.cid=c.Cid) AND (s.sid=p.sid) AND (s.sid=?);`;
+			connection.query(
+				prodQuery,
+				[requestData.userid],
+				(error, result, fields) => {
+					connection.release();
+					res.send(result)
+				}
+			);
+		}
 	});
 });
 
