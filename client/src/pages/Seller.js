@@ -90,26 +90,32 @@ class EditableTable extends React.Component {
 			{
 				title: "Name",
 				dataIndex: "name",
-				width: "25%",
+				width: "20%",
+				editable: true
+			},
+			{
+				title: "Description",
+				dataIndex: "desc",
+				width: "30%",
 				editable: true
 			},
 			{
 				title: "Category",
 				dataIndex: "category",
-				width: "20%",
+				width: "13%",
 				editable: false
 			},
 			{
 				title: "Price",
 				dataIndex: "price",
-				width: "15%",
+				width: "13%",
 				editable: true,
 				sorter: (a, b) => a.price - b.price
 			},
 			{
 				title: "Quantity",
 				dataIndex: "quantity",
-				width: "15%",
+				width: "13%",
 				editable: true,
 				sorter: (a, b) => a.price - b.price
 			},
@@ -143,7 +149,7 @@ class EditableTable extends React.Component {
 							<a
 								disabled={editingKey !== ""}
 								onClick={() => this.edit(record.key)}
-								style={{ padding: 5 }}
+								style={{ padding: 5 , paddingRight: 15}}
 							>
 								Edit
 							</a>
@@ -182,7 +188,8 @@ class EditableTable extends React.Component {
 						name: resp[i].pname,
 						category: resp[i].category,
 						price: resp[i].price,
-						quantity: resp[i].quantity
+						quantity: resp[i].quantity,
+						desc: resp[i].descripton
 					});
 				}
 				this.setState(() => ({

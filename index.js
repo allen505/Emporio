@@ -126,7 +126,7 @@ app.post("/api/seller/prods", jsonParser, (req, res) => {
 		if (err) {
 			console.log("Error in getting connection");
 		} else {
-			let prodQuery = `SELECT p.pid, p.pname,p.price,p.quantity,c.category from products p,seller s, categories c WHERE (p.cid=c.Cid) AND (s.sid=p.sid) AND (s.sid=?);`;
+			let prodQuery = `SELECT p.pid, p.pname, p.descripton, p.price,p.quantity,c.category from products p,seller s, categories c WHERE (p.cid=c.Cid) AND (s.sid=p.sid) AND (s.sid=?);`;
 			connection.query(
 				prodQuery,
 				[requestData.userid],
@@ -166,9 +166,10 @@ app.post("/api/seller/update", jsonParser, (req, res) => {
 		if (err) {
 			console.log("Error in getting connection");
 		} else {
-			let upQuery = `UPDATE products set Pname=?, Price=?, Quantity=?  WHERE Pid=?`;
+			let upQuery = `UPDATE products set Pname=?, Descripton=?, Price=?, Quantity=?  WHERE Pid=?`;
 			let upArray = [
 				requestData.name,
+				requestData.desc,
 				requestData.price,
 				requestData.quantity,
 				requestData.key
