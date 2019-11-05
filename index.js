@@ -119,7 +119,7 @@ app.post("/api/register", jsonParser, (req, res) => {
 	});
 });
 
-app.post("/api/sellerDash", jsonParser, (req, res) => {
+app.post("/api/seller/prods", jsonParser, (req, res) => {
 	let requestData = req.body;
 
 	pool.getConnection((err, connection) => {
@@ -132,7 +132,30 @@ app.post("/api/sellerDash", jsonParser, (req, res) => {
 				[requestData.userid],
 				(error, result, fields) => {
 					connection.release();
-					res.send(result)
+					res.send(result);
+				}
+			);
+		}
+	});
+});
+
+app.post("/api/seller/del", jsonParser, (req, res) => {
+	let requestData = req.body;
+	console.log(requestData.pid);
+	pool.getConnection((err, connection) => {
+		if (err) {
+			console.log("Error in getting connection");
+		} else {
+			let delQuery = `DELETE FROM products WHERE Pid=?;`;
+			console.log("Going to execute delete");
+			connection.query(
+				delQuery,
+				[requestData.pid],
+				(error, result, fields) => {
+					console.log("Error = " + error);
+					console.log("Result = " + result);
+					connection.release();
+					res.send(result);
 				}
 			);
 		}

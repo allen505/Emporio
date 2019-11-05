@@ -16,11 +16,11 @@ import {
 const { Title } = Typography;
 const { Header, Content, Footer } = Layout;
 
-const data = [];
+// const data = [];
 
 const EditableContext = React.createContext();
 
-const TIME_OUT=1000;
+const TIME_OUT = 1000;
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -78,12 +78,10 @@ class EditableCell extends React.Component {
 class EditableTable extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { data, editingKey: "", userid: null, loading: true };
+		this.state = { data: [], editingKey: "", userid: null, loading: true };
 		try {
 			this.state.userid = props.location.state.id;
-			// console.log("User id = " + this.state.userid);
 		} catch (e) {
-			// console.log("Not logged in");
 			this.props.history.push("/accessdenied");
 		}
 
@@ -161,8 +159,14 @@ class EditableTable extends React.Component {
 				}
 			}
 		];
+		this.updateData();
+	}
 
-		fetch("/api/sellerDash", {
+	updateData = () => {
+		this.setState(() => ({
+			loading: true
+		}));
+		fetch("/api/seller/prods", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json;charset=utf-8"
@@ -171,8 +175,9 @@ class EditableTable extends React.Component {
 		})
 			.then(res => res.json())
 			.then(resp => {
+				let tempdata = [];
 				for (let i = 0; i < resp.length; i++) {
-					data.push({
+					tempdata.push({
 						key: resp[i].pid,
 						name: resp[i].pname,
 						category: resp[i].category,
@@ -180,16 +185,35 @@ class EditableTable extends React.Component {
 						quantity: resp[i].quantity
 					});
 				}
-				// this.setState(() => ({
-				// 	loading: false
-				// }));
+				this.setState(() => ({
+					data: tempdata
+				}));
+				this.setState(() => ({
+					loading: false
+				}));
 			});
-	}
+	};
 
 	isEditing = record => record.key === this.state.editingKey;
 
 	delete = key => {
-		console.log("Delete " + key);
+		this.setState(() => ({
+			loading: true
+		}));
+		fetch("/api/seller/del", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json;charset=utf-8"
+			},
+			body: JSON.stringify({ pid: key })
+		})
+			.then(res => res.json())
+			.then(resp => {
+				console.log(resp);
+			})
+			.finally(() => {
+				this.updateData();
+			});
 	};
 
 	cancel = () => {
@@ -221,11 +245,11 @@ class EditableTable extends React.Component {
 	}
 
 	render() {
-		setTimeout(() => {
-			this.setState(() => ({
-				loading: false
-			}));
-		}, TIME_OUT);
+		// setTimeout(() => {
+		// 	this.setState(() => ({
+		// 		loading: false
+		// 	}));
+		// }, TIME_OUT);
 		const components = {
 			body: {
 				cell: EditableCell
