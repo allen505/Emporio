@@ -144,6 +144,8 @@ app.post("/api/orders",jsonParser,(req,res) => {
 			)
 		}
 		connection.release();
+	});
+});
 
 app.post("/api/seller/prods", jsonParser, (req, res) => {
 	let requestData = req.body;
