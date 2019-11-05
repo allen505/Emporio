@@ -31,7 +31,6 @@ let pool = mysql.createPool({
 
 app.post("/api/login", jsonParser, (req, res) => {
 	let requestData = req.body;
-
 	pool.getConnection((err, connection) => {
 		if (err) {
 			console.log("Error in getting connection");
@@ -81,7 +80,6 @@ app.post("/api/register", jsonParser, (req, res) => {
 					loginValues,
 					(error, result, fields) => {
 						console.log(error);
-						console.log(result);
 					}
 				);
 
@@ -122,6 +120,7 @@ app.post("/api/register", jsonParser, (req, res) => {
 	});
 });
 
+<<<<<<< HEAD
 app.post("/api/orders",jsonParser,(req,res) => {
 	let orders = req.body;
 	console.log(orders)
@@ -145,6 +144,70 @@ app.post("/api/orders",jsonParser,(req,res) => {
 			)
 		}
 		connection.release();
+=======
+app.post("/api/seller/prods", jsonParser, (req, res) => {
+	let requestData = req.body;
+
+	pool.getConnection((err, connection) => {
+		if (err) {
+			console.log("Error in getting connection");
+		} else {
+			let prodQuery = `SELECT p.pid, p.pname, p.descripton, p.price,p.quantity,c.category from products p,seller s, categories c WHERE (p.cid=c.Cid) AND (s.sid=p.sid) AND (s.sid=?);`;
+			connection.query(
+				prodQuery,
+				[requestData.userid],
+				(error, result, fields) => {
+					connection.release();
+					res.send(result);
+				}
+			);
+		}
+	});
+});
+
+app.post("/api/seller/del", jsonParser, (req, res) => {
+	let requestData = req.body;
+	pool.getConnection((err, connection) => {
+		if (err) {
+			console.log("Error in getting connection");
+		} else {
+			let delQuery = `DELETE FROM products WHERE Pid=?;`;
+			connection.query(
+				delQuery,
+				[requestData.pid],
+				(error, result, fields) => {
+					connection.release();
+					console.log("Error = " + error);
+					res.send(result);
+				}
+			);
+		}
+	});
+});
+
+app.post("/api/seller/update", jsonParser, (req, res) => {
+	let requestData = req.body;
+	console.log(requestData)
+	pool.getConnection((err, connection) => {
+		if (err) {
+			console.log("Error in getting connection");
+		} else {
+			let upQuery = `UPDATE products set Pname=?, Descripton=?, Price=?, Quantity=?  WHERE Pid=?`;
+			let upArray = [
+				requestData.name,
+				requestData.desc,
+				requestData.price,
+				requestData.quantity,
+				requestData.key
+			];
+			connection.query(upQuery, upArray, (error, result, fields) => {
+				connection.release();
+				console.log("Error = " + error);
+				console.log("Result = " + result);
+				res.send(result);
+			});
+		}
+>>>>>>> b587de2622fb1e8109fcd661cacbd413d381dfc4
 	});
 });
 

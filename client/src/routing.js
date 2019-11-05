@@ -2,7 +2,9 @@ import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
 import Error404 from "./pages/Error404";
 import RegistrationForm from "./pages/Register";
-import Admin from "./pages/Admin"
+import Admin from "./pages/Admin";
+import AccessDenied from "./pages/AccessDenied";
+import Seller from "./pages/Seller";
 
 const routes = [
 	{
@@ -14,6 +16,10 @@ const routes = [
 		component: Error404
 	},
 	{
+		path: "/accessdenied",
+		component: AccessDenied
+	},
+	{
 		path: "/login",
 		component: Login
 	},
@@ -22,8 +28,13 @@ const routes = [
 		component: RegistrationForm
 	},
 	{
-		path:"/admin",
+		path: "/admin",
 		component: Admin
+	},
+
+	{
+		path: "/seller",
+		component: Seller
 	}
 ];
 

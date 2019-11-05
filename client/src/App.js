@@ -27,10 +27,6 @@ class App extends React.Component {
 		};
 	}
 
-	componentDidMount() {
-		console.log("App.js is mounted");
-	}
-
 	render() {
 		return (
 			<Router>
@@ -40,6 +36,13 @@ class App extends React.Component {
 							<Route path={route.path} component={route.component} />
 						))}
 						<Route path="/" exact component={routes[0].component} />
+						<Route
+							exact
+							path="/accessdenied"
+							render={() => {
+								window.location.href = "pages/accessDenied.html";
+							}}
+						/>
 						<Route nomatch component={routes[1].component} />
 					</Switch>
 				</div>

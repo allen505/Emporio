@@ -29,17 +29,16 @@ class Login extends React.Component {
 		console.log("Login Mounted");
 	}
 
-	success = (type,userid) => {
+	success = (type, userid) => {
 		message.success("Logged in as " + type + " Successfully");
 		if (type == "admin") {
 			console.log("Redirecting");
 			this.props.history.push("/admin", { authority: true });
 		} else if (type == "buyer") {
 			this.props.history.push("/homepage", { id: userid });
-		} 
-		// else if (type == "seller") {
-		// 	this.props.history.push("/homepage", { id: userid });
-		// }
+		} else if (type == "seller") {
+			this.props.history.push("/seller", { id: userid });
+		}
 	};
 
 	error = () => {
@@ -66,7 +65,7 @@ class Login extends React.Component {
 						.then(resp => {
 							// console.log(resp);
 							if (resp.valid == true) {
-								this.success(resp.type,enteredDets.userid);
+								this.success(resp.type, enteredDets.userid);
 							} else {
 								this.error();
 							}
