@@ -120,7 +120,7 @@ app.post("/api/register", jsonParser, (req, res) => {
 	});
 });
 
-<<<<<<< HEAD
+
 app.post("/api/orders",jsonParser,(req,res) => {
 	let orders = req.body;
 	console.log(orders)
@@ -144,7 +144,7 @@ app.post("/api/orders",jsonParser,(req,res) => {
 			)
 		}
 		connection.release();
-=======
+
 app.post("/api/seller/prods", jsonParser, (req, res) => {
 	let requestData = req.body;
 
@@ -207,7 +207,6 @@ app.post("/api/seller/update", jsonParser, (req, res) => {
 				res.send(result);
 			});
 		}
->>>>>>> b587de2622fb1e8109fcd661cacbd413d381dfc4
 	});
 });
 
