@@ -5,8 +5,44 @@ class Cards extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			loading : true
+			loading : true,
+			userid : null,
 		}
+		try{
+			this.state.userid = props.id;
+			let sid = props.product.Sid;
+			console.log(sid)
+		} catch (e) {
+			console.log(e);
+		}
+	}
+	buyproduct = (Sid,e) =>{
+		let order=
+			{
+				pid : e.target.value,
+				bid : this.state.userid,
+				sid : Sid,
+				price : 1000
+			}
+		let register = () => {
+			fetch("/api/orders", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify(order)
+			})
+				.then(res => res.json())
+				.then(resp => {
+					// console.log(resp.status);
+					if (resp == true) {
+						this.success();
+					} else {
+						this.error();
+					}
+				});
+		};
+		register();
 	}
 	render() {
 		setTimeout(() => { 
@@ -27,7 +63,7 @@ class Cards extends React.Component {
 					style={{ width: '90%' }}
 					cover={<img alt="example" src="" />}
 					actions={[
-						<Button type="primary" block>
+						<Button type="primary" block onClick={(e)=>{this.buyproduct(prod.Sid,e)}} value = {prod.Pid}>
 							Buy
 						</Button>
 					]}

@@ -36,7 +36,7 @@ class Homepage extends React.Component {
 		try {
 			this.state.userid = props.location.state.id;
 		} catch (e) {
-			console.log("Not logged in");
+			console.log(e);
 		}
 	}
 
@@ -65,7 +65,7 @@ class Homepage extends React.Component {
 	}
 
 	productArea = () => {
-		return <Cards product={this.state.productList} />;
+		return <Cards product={this.state.productList} id={this.state.userid} />;
 	};
 
 	render() {

@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import {
 	Typography,
@@ -13,7 +13,8 @@ import {
 	Radio,
 	Button,
 	Layout,
-	message
+	message,
+	List
 } from "antd";
 
 const { Title } = Typography;
@@ -22,7 +23,10 @@ const { Header, Content, Footer } = Layout;
 class Admin extends React.Component {
 	constructor(props) {
 		super(props);
-
+		this.state = {
+			// loading : true
+			radioState : "buyer"
+		}
 		try {
 			this.state = {
 				auth: props.location.state.authority
@@ -38,8 +42,79 @@ class Admin extends React.Component {
 			console.log(this.state.auth);
 		}, 100);
 	}
+	state = {
+		// radioState : "buyer",
+		loading : true
+	};
+
+	radioChange = selected => {
+		this.setState({
+			radioState: selected.target.value
+		});
+	};
+	
+	buyerlist = () => {
+		// const {loading} = this.state
+		if(this.state.radioState == "buyer"){
+		fetch("/api/admin")
+			.then(res => {
+				return res.json();
+			})
+			.then(data => {
+				let tempProduct = [];
+				data.map(prod => {
+					if(prod.type == "buyer"){
+						tempProduct.push(prod.name);
+					}
+				});
+				this.setState({
+					list : tempProduct
+				});
+			});
+		}
+		if(this.state.radioState == "seller"){
+			fetch("/api/admin")
+				.then(res => {
+					return res.json();
+				})
+				.then(data => {
+					let tempProduct = [];
+					data.map(prod => {
+						if(prod.type == "seller"){
+							tempProduct.push(prod.name);
+						}
+					});
+					this.setState({
+						list : tempProduct
+					});
+				});
+			}
+			return(
+				<List
+					bordered = "true"
+					loading = {this.state.loading}
+					itemLayout="horizontal"
+					dataSource={this.state.list}
+					renderItem={item => (
+					<List.Item
+								actions={[<Icon type = "delete" theme = "twoTone" onClick></Icon>]}
+							>						
+					<List.Item.Meta
+						title={item}
+						/>
+					</List.Item>
+					)}
+				/>
+			);
+		
+	}
 
 	render() {
+		// setTimeout(() => {
+		// 	this.setState(() => ({
+		// 		loading : false
+		// 	}))
+		// },100);
 		return (
 			<Layout className="layout" style={{ minHeight: "100vh" }}>
 				<Content
@@ -70,6 +145,7 @@ class Admin extends React.Component {
 								<Radio.Button value="buyer">Buyer</Radio.Button>
 								<Radio.Button value="seller">Seller</Radio.Button>
 							</Radio.Group>
+							<this.buyerlist/>
 						</Col>
 					</Row>
 				</Content>

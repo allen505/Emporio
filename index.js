@@ -68,6 +68,7 @@ app.post("/api/login", jsonParser, (req, res) => {
 app.post("/api/register", jsonParser, (req, res) => {
 	let requestData = req.body;
 	var addToLogin = `insert into login values(?,?,?)`;
+	console.log(requestData)
 
 	pool.getConnection((err, connection) => {
 		if (err) {
@@ -121,6 +122,32 @@ app.post("/api/register", jsonParser, (req, res) => {
 	});
 });
 
+app.post("/api/orders",jsonParser,(req,res) => {
+	let orders = req.body;
+	console.log(orders)
+	pool.getConnection((error,connection) => {
+		if(error){
+			console.log("Error in getting connection")
+		} else {
+			let ordervalues = [
+				orders.bid,
+				orders.sid,
+				orders.pid,
+				orders.price
+			];
+			connection.query(
+				`insert into orders values(NULL,?,?,?,NULL,?)`,
+				ordervalues,
+				(error,result,fields) => {
+					console.log(error)
+					console.log(result)
+				}
+			)
+		}
+		connection.release();
+	});
+});
+
 app.get("/api/card", jsonParser, (req, res) => {
 	pool.getConnection((error, connection) => {
 		if (error) throw err;
@@ -138,7 +165,7 @@ app.get("/api/admin", (req, res) => {
 		if (error) throw error;
 		else {
 			connection.query(
-				"select * from buyer; select * from seller",
+				"select * from admin",
 				(error, result, fields) => {
 					res.send(result);
 				}
