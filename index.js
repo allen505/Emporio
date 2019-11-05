@@ -141,23 +141,44 @@ app.post("/api/seller/prods", jsonParser, (req, res) => {
 
 app.post("/api/seller/del", jsonParser, (req, res) => {
 	let requestData = req.body;
-	console.log(requestData.pid);
 	pool.getConnection((err, connection) => {
 		if (err) {
 			console.log("Error in getting connection");
 		} else {
 			let delQuery = `DELETE FROM products WHERE Pid=?;`;
-			console.log("Going to execute delete");
 			connection.query(
 				delQuery,
 				[requestData.pid],
 				(error, result, fields) => {
-					console.log("Error = " + error);
-					console.log("Result = " + result);
 					connection.release();
+					console.log("Error = " + error);
 					res.send(result);
 				}
 			);
+		}
+	});
+});
+
+app.post("/api/seller/update", jsonParser, (req, res) => {
+	let requestData = req.body;
+	console.log(requestData)
+	pool.getConnection((err, connection) => {
+		if (err) {
+			console.log("Error in getting connection");
+		} else {
+			let upQuery = `UPDATE products set Pname=?, Price=?, Quantity=?  WHERE Pid=?`;
+			let upArray = [
+				requestData.name,
+				requestData.price,
+				requestData.quantity,
+				requestData.key
+			];
+			connection.query(upQuery, upArray, (error, result, fields) => {
+				connection.release();
+				console.log("Error = " + error);
+				console.log("Result = " + result);
+				res.send(result);
+			});
 		}
 	});
 });
