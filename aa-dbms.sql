@@ -2,8 +2,8 @@
 -- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Nov 04, 2019 at 01:20 PM
+-- Host: 127.0.0.1
+-- Generation Time: Nov 05, 2019 at 01:40 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.8
 
@@ -21,6 +21,17 @@ SET time_zone = "+00:00";
 --
 -- Database: `aa-dbms`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `admin`
+-- (See below for the actual view)
+--
+CREATE TABLE `admin` (
+`type` varchar(6)
+,`name` varchar(20)
+);
 
 -- --------------------------------------------------------
 
@@ -73,8 +84,6 @@ CREATE TABLE `login` (
   `Type` char(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
 --
 -- Dumping data for table `login`
 --
@@ -98,6 +107,15 @@ CREATE TABLE `orders` (
   `Date` timestamp NOT NULL DEFAULT current_timestamp(),
   `Price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`Oid`, `Bid`, `Sid`, `Pid`, `Date`, `Price`) VALUES
+(3, 1234, 12345, 5, '2019-11-04 17:04:10', 1000),
+(4, 1234, 12345, 7, '2019-11-04 17:04:34', 1000),
+(5, 1234, 12345, 5, '2019-11-04 17:04:52', 1000);
 
 -- --------------------------------------------------------
 
@@ -141,6 +159,15 @@ CREATE TABLE `seller` (
 
 INSERT INTO `seller` (`Sid`, `Name`, `Contact`) VALUES
 (12345, '12345', 1111);
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `admin`
+--
+DROP TABLE IF EXISTS `admin`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `admin`  AS  select 'buyer' AS `type`,`buyer`.`Name` AS `name` from `buyer` union select 'seller' AS `seller`,`seller`.`Name` AS `name` from `seller` ;
 
 --
 -- Indexes for dumped tables
@@ -201,7 +228,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `Oid` int(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `Oid` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `products`
