@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Profiler } from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -14,7 +14,8 @@ import {
 	Button,
 	Layout,
 	message,
-	List
+	List,
+	Popconfirm
 } from "antd";
 
 const { Title } = Typography;
@@ -52,52 +53,71 @@ class Admin extends React.Component {
 			radioState: selected.target.value
 		});
 	};
-	
-	buyerlist = () => {
-		// const {loading} = this.state
-		if(this.state.radioState == "buyer"){
+	datafetch = () =>{
 		fetch("/api/admin")
-			.then(res => {
-				return res.json();
-			})
-			.then(data => {
-				let tempProduct = [];
-				data.map(prod => {
-					if(prod.type == "buyer"){
-						tempProduct.push(prod.name);
-					}
-				});
-				this.setState({
-					list : tempProduct
-				});
-			});
-		}
-		if(this.state.radioState == "seller"){
-			fetch("/api/admin")
 				.then(res => {
 					return res.json();
 				})
 				.then(data => {
-					let tempProduct = [];
+					let buyerlist = [];
+					let sellerlist = [];
 					data.map(prod => {
-						if(prod.type == "seller"){
-							tempProduct.push(prod.name);
+						if(prod.type == "buyer"){
+							buyerlist.push(prod.name);
+						}
+						else if(prod.type == "seller"){
+							sellerlist.push(prod.name)
 						}
 					});
 					this.setState({
-						list : tempProduct
+						blist : buyerlist,
+						slist : sellerlist
 					});
 				});
-			}
+	}
+
+	delete = (item,type) =>{
+		let del = {
+			type : type,
+			name : item
+		}
+		fetch("/api/admin/del", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(del)
+		})
+			.then(res => res.json())
+			.then(resp => {
+				console.log(resp);
+			})
+			.finally(() => {
+				this.datafetch();
+			});
+	}
+
+	adminlist = (e) => {
+		// const {loading} = this.state
+		this.datafetch();
+		if(e.value == "seller"){
 			return(
 				<List
 					bordered = "true"
 					loading = {this.state.loading}
 					itemLayout="horizontal"
-					dataSource={this.state.list}
+					dataSource={this.state.slist}
 					renderItem={item => (
+						
 					<List.Item
-								actions={[<Icon type = "delete" theme = "twoTone" onClick></Icon>]}
+								actions={[
+									<Popconfirm
+									title = "Are you sure you want to delete?"
+									onConfirm = {()=>{this.delete(item,this.state.radioState)}}
+									>
+										<Icon type = "delete" theme = "twoTone" ></Icon>
+									</Popconfirm>
+							]}
 							>						
 					<List.Item.Meta
 						title={item}
@@ -106,6 +126,35 @@ class Admin extends React.Component {
 					)}
 				/>
 			);
+		}
+		else{
+			return(
+				<List
+					bordered = "true"
+					loading = {this.state.loading}
+					itemLayout="horizontal"
+					dataSource={this.state.blist}
+					renderItem={item => (
+						
+					<List.Item
+								actions={[
+									<Popconfirm
+									title = "Are you sure you want to delete?"
+									onConfirm = {()=>{this.delete(item,this.state.radioState)}}
+									>
+										<Icon type = "delete" theme = "twoTone" ></Icon>
+									</Popconfirm>
+							]}
+							>						
+					<List.Item.Meta
+						title={item}
+						/>
+					</List.Item>
+					)}
+				/>
+			);
+		}
+					
 		
 	}
 
@@ -145,7 +194,7 @@ class Admin extends React.Component {
 								<Radio.Button value="buyer">Buyer</Radio.Button>
 								<Radio.Button value="seller">Seller</Radio.Button>
 							</Radio.Group>
-							<this.buyerlist/>
+							<this.adminlist value={this.state.radioState}/>
 						</Col>
 					</Row>
 				</Content>

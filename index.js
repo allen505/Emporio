@@ -138,8 +138,9 @@ app.post("/api/orders",jsonParser,(req,res) => {
 				`insert into orders values(NULL,?,?,?,NULL,?)`,
 				ordervalues,
 				(error,result,fields) => {
-					console.log(error)
-					console.log(result)
+					// console.log(error)
+					// console.log(result)
+					res.send(result)
 				}
 			)
 		}
@@ -237,6 +238,45 @@ app.get("/api/admin", (req, res) => {
 		}
 		connection.release();
 	});
+});
+
+app.post("/api/admin/del",jsonParser,(req,res)=>{
+	let requestData = req.body;
+	pool.getConnection((err, connection) => {
+		if (err) {
+			console.log("Error in getting connection");
+		} else {
+			if(requestData.type == "buyer"){
+				let delQuery = `DELETE FROM login WHERE Lid=(SELECT Bid from buyer where name = ?);`;
+				connection.query(
+					delQuery,
+					[requestData.name],
+					(error, result, fields) => {
+						connection.release();
+						console.log("Error = " + error);
+						res.send(result);
+						console.log(result)
+						console.log(fields)
+					}
+				);
+			}
+			else if(requestData.type == "seller"){
+				let delQuery = `DELETE FROM login WHERE Lid=(SELECT Sid from seller where name = ?);`;
+				connection.query(
+					delQuery,
+					[requestData.name],
+					(error, result, fields) => {
+						connection.release();
+						console.log("Error = " + error);
+						res.send(result);
+						console.log(result)
+						console.log(fields)
+					}
+				);
+			}
+		}
+	});
+	console.log(req.body)
 });
 
 app.get("/", (req, res) => res.send("Welcome to the Home Page"));
