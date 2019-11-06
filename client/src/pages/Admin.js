@@ -18,6 +18,8 @@ import {
 	Popconfirm
 } from "antd";
 
+import Nav from "./Navigator";
+
 const { Title } = Typography;
 const { Header, Content, Footer } = Layout;
 
@@ -26,8 +28,8 @@ class Admin extends React.Component {
 		super(props);
 		this.state = {
 			// loading : true
-			radioState : "buyer"
-		}
+			radioState: "buyer"
+		};
 		try {
 			this.state = {
 				auth: props.location.state.authority
@@ -38,14 +40,13 @@ class Admin extends React.Component {
 			};
 		}
 
-		if(this.state.auth==false){
+		if (this.state.auth == false) {
 			this.props.history.push("/accessdenied");
 		}
-
 	}
 	state = {
 		// radioState : "buyer",
-		loading : true
+		loading: true
 	};
 
 	radioChange = selected => {
@@ -158,6 +159,7 @@ class Admin extends React.Component {
 		
 	}
 
+
 	render() {
 		// setTimeout(() => {
 		// 	this.setState(() => ({
@@ -166,6 +168,10 @@ class Admin extends React.Component {
 		// },100);
 		return (
 			<Layout className="layout" style={{ minHeight: "100vh" }}>
+				<Nav
+					accType="admin"
+					loggedin={true}
+				/>
 				<Content
 					style={{
 						padding: "75px 50px",

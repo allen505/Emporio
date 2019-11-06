@@ -30,7 +30,7 @@ class Login extends React.Component {
 	}
 
 	success = (type, userid) => {
-		message.success("Logged in as " + type + " Successfully");
+		message.success("Logged in with User ID " + userid);
 		if (type == "admin") {
 			console.log("Redirecting");
 			this.props.history.push("/admin", { authority: true });

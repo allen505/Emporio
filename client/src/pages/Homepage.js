@@ -29,12 +29,15 @@ class Homepage extends React.Component {
 		this.state = {
 			productList: [],
 			category: "All",
-			userid: null
+			userid: null,
+			loggedin: false
 		};
 		this.handleMenuClick = this.handleMenuClick.bind(this);
 
 		try {
 			this.state.userid = props.location.state.id;
+			this.state.loggedin = true;
+			// this.forceUpdate()
 		} catch (e) {
 			console.log(e);
 		}
@@ -90,7 +93,11 @@ class Homepage extends React.Component {
 		);
 		return (
 			<Layout className="layout">
-				<Nav product={this.state.productList} />
+				<Nav
+					product={this.state.productList}
+					accType="buyer"
+					loggedin={this.state.loggedin}
+				/>
 				<Content style={{ padding: "0 10px" }}>
 					<div align="center" style={{ padding: "10px" }}>
 						Categories :{" "}
@@ -103,11 +110,6 @@ class Homepage extends React.Component {
 						</Dropdown.Button>
 					</div>
 					<div style={{ background: "#fff", padding: 24 }}>
-						<Link to="/login">
-							<Button type="primary" size="large">
-								Login
-							</Button>
-						</Link>
 						<Carousel autoplay style={{ padding: "10px 0" }}>
 							<div align="center">
 								<img
