@@ -1,71 +1,132 @@
 import React from "react";
-import { Menu, Input, Icon, Dropdown, Select, AutoComplete } from "antd";
-import "./Login.css";
+
+import {
+	Menu,
+	Input,
+	Icon,
+	Dropdown,
+	Select,
+	AutoComplete,
+	Button,
+} from "antd";
+import {
+	BrowserRouter as Router,
+	Route,
+	Link,
+	Switch,
+	Redirect
+} from "react-router-dom";
+// import "./Login.css";
+
+import logo from "../Images/logo.png";
+
+const { SubMenu } = Menu;
 
 class Nav extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			productList : [],
-			searchList : [],
-			value: '',
-		}
+			productList: [],
+			searchList: [],
+			value: "",
+			accType: null,
+			loggedin: this.props.loggedin,
+			searchDisabled: false,
+			cartDisabled: false
+		};
+		this.state.accType = props.accType;
+		console.log("Navigator for " + this.state.accType);
+		this.state.cartDisabled =
+			this.state.accType == ("seller" || "admin")
+				? true
+				: this.state.loggedin == false
+				? true
+				: false;
+		this.state.searchDisabled =
+			this.state.accType == ("seller" || "admin") ? true : false;
 	}
 
 	handleChange = e => {
 		let items = this.state.productList;
-		items = items.filter((item) => {
-		  return item.toLowerCase().search(e.target.value.toLowerCase()) !== -1;
+		items = items.filter(item => {
+			return item.toLowerCase().search(e.target.value.toLowerCase()) !== -1;
 		});
 		this.setState({
-			values : items
+			values: items
 		});
-		console.log(items)
-	}
+		console.log(items);
+	};
 	onChange = value => {
 		this.setState({ value });
-	  };
+	};
 
 	onSearch = search => {
-		console.log(search)
-	}
+		console.log(search);
+	};
+
+	loginButton = () => {
+		return this.state.loggedin == false ? (
+			<Link to="/login">
+				<Icon type="user" />
+				Login
+			</Link>
+		) : (
+			<Link to="/" style={{ color: "red" }}>
+				<Icon type="logout" />
+				Logout
+			</Link>
+		);
+	};
 
 	render() {
+		const { Option } = Select;
 
-	const { Option } = Select;
+		try {
+			var name = this.props.product.map(Pname => {
+				return Pname.Pname;
+			});
+		} catch (e) {
+			console.log(e);
+		}
 
-	var name = this.props.product.map(Pname => {
-		return Pname.Pname;
-	})
+		this.state.productList = name;
 
-	this.state.productList = name;
+		return (
+			<Menu theme="light" mode="horizontal" style={{ lineHeight: "75px" }}>
+				<Menu.Item key="1" disabled>
+					{/* <Icon component={() => <img src="../Images/logo.png" />} />
+				 */}<img
+									src={require("../Images/logo.png")}
+									style={{width: 150, height: 75}}/>
+				</Menu.Item>
+				<AutoComplete
+					showSearch
+					dataSource={this.state.productList}
+					style={{ width: 500, marginLeft: 20}}
+					//   onSelect={onSelect}
+					onSearch={this.onSearch}
+					placeholder="Search"
+					onChange={this.onChange}
+					value={this.state.value}
+					disabled={this.state.searchDisabled}
+				>
+					{/* <Input suffix={<Icon type="search" className="certain-category-icon" />} /> */}
+				</AutoComplete>
 
-	return (
-		<Menu
-			theme="dark"
-			mode="horizontal"
-			defaultSelectedKeys={["2"]}
-			style={{ lineHeight: "64px" }}
-		>
-			<Menu.Item key="1">Emporio</Menu.Item>
-			<AutoComplete
-			showSearch
-          dataSource={this.state.productList}
-          style={{ width: 200 }}
-        //   onSelect={onSelect}
-          onSearch={this.onSearch}
-		  placeholder="input here"
-		  onChange = {this.onChange}   
-		  value = {this.state.value}
-        >
-			 {/* <Input suffix={<Icon type="search" className="certain-category-icon" />} /> */}
-			 </AutoComplete>
-			<Menu.Item key="2"><Icon type= "home" />Home</Menu.Item>
-			<Menu.Item key="3"><Icon type = "shopping-cart"/>Cart</Menu.Item>
-			<Menu.Item key="4"><Icon type = "user"/>User</Menu.Item>
-		</Menu>
-	);
+				<Menu.Item key="4" style={{ float: "right" }}>
+					<this.loginButton />
+				</Menu.Item>
+				<Menu.Item
+					key="3"
+					style={{ float: "right" }}
+					disabled={this.state.cartDisabled}
+				>
+					<Icon type="shopping-cart" />
+					Cart
+				</Menu.Item>
+			</Menu>
+		);
+	}
 }
-};
 
 export default Nav;

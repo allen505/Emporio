@@ -17,6 +17,8 @@ import {
 	List
 } from "antd";
 
+import Nav from "./Navigator";
+
 const { Title } = Typography;
 const { Header, Content, Footer } = Layout;
 
@@ -25,8 +27,8 @@ class Admin extends React.Component {
 		super(props);
 		this.state = {
 			// loading : true
-			radioState : "buyer"
-		}
+			radioState: "buyer"
+		};
 		try {
 			this.state = {
 				auth: props.location.state.authority
@@ -37,14 +39,13 @@ class Admin extends React.Component {
 			};
 		}
 
-		if(this.state.auth==false){
+		if (this.state.auth == false) {
 			this.props.history.push("/accessdenied");
 		}
-
 	}
 	state = {
 		// radioState : "buyer",
-		loading : true
+		loading: true
 	};
 
 	radioChange = selected => {
@@ -52,27 +53,10 @@ class Admin extends React.Component {
 			radioState: selected.target.value
 		});
 	};
-	
+
 	buyerlist = () => {
 		// const {loading} = this.state
-		if(this.state.radioState == "buyer"){
-		fetch("/api/admin")
-			.then(res => {
-				return res.json();
-			})
-			.then(data => {
-				let tempProduct = [];
-				data.map(prod => {
-					if(prod.type == "buyer"){
-						tempProduct.push(prod.name);
-					}
-				});
-				this.setState({
-					list : tempProduct
-				});
-			});
-		}
-		if(this.state.radioState == "seller"){
+		if (this.state.radioState == "buyer") {
 			fetch("/api/admin")
 				.then(res => {
 					return res.json();
@@ -80,34 +64,50 @@ class Admin extends React.Component {
 				.then(data => {
 					let tempProduct = [];
 					data.map(prod => {
-						if(prod.type == "seller"){
+						if (prod.type == "buyer") {
 							tempProduct.push(prod.name);
 						}
 					});
 					this.setState({
-						list : tempProduct
+						list: tempProduct
 					});
 				});
-			}
-			return(
-				<List
-					bordered = "true"
-					loading = {this.state.loading}
-					itemLayout="horizontal"
-					dataSource={this.state.list}
-					renderItem={item => (
+		}
+		if (this.state.radioState == "seller") {
+			fetch("/api/admin")
+				.then(res => {
+					return res.json();
+				})
+				.then(data => {
+					let tempProduct = [];
+					data.map(prod => {
+						if (prod.type == "seller") {
+							tempProduct.push(prod.name);
+						}
+					});
+					this.setState({
+						list: tempProduct
+					});
+				});
+		}
+		return (
+			<List
+				bordered="true"
+				loading={this.state.loading}
+				itemLayout="horizontal"
+				dataSource={this.state.list}
+				renderItem={item => (
 					<List.Item
-								actions={[<Icon type = "delete" theme = "twoTone" onClick></Icon>]}
-							>						
-					<List.Item.Meta
-						title={item}
-						/>
+						actions={[
+							<Icon type="delete" theme="twoTone" onClick></Icon>
+						]}
+					>
+						<List.Item.Meta title={item} />
 					</List.Item>
-					)}
-				/>
-			);
-		
-	}
+				)}
+			/>
+		);
+	};
 
 	render() {
 		// setTimeout(() => {
@@ -117,6 +117,10 @@ class Admin extends React.Component {
 		// },100);
 		return (
 			<Layout className="layout" style={{ minHeight: "100vh" }}>
+				<Nav
+					accType="admin"
+					loggedin={true}
+				/>
 				<Content
 					style={{
 						padding: "75px 50px",
@@ -145,7 +149,7 @@ class Admin extends React.Component {
 								<Radio.Button value="buyer">Buyer</Radio.Button>
 								<Radio.Button value="seller">Seller</Radio.Button>
 							</Radio.Group>
-							<this.buyerlist/>
+							<this.buyerlist />
 						</Col>
 					</Row>
 				</Content>
