@@ -1,25 +1,23 @@
 import React from "react";
-import { BrowserRouter as Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-import stopSign from "../Images/stopSign.png";
+import { Result, Button } from "antd";
 
-class AccessDenied extends React.Component {
-	constructor(props) {
-		super(props);
-		this.myRef = React.createRef();
-	}
+const AccessDenied = () => {
+	return (
+		<Result
+			status="403"
+			title="403"
+			subTitle="Sorry, you are not authorized to access this page."
+			extra={
+				<Link to="/">
+					<Button type="primary" size="large">
+						Go Home
+					</Button>
+				</Link>
+			}
+		/>
+	);
+};
 
-	render() {
-		
-		return (
-			<div id="main">
-				
-				<img id="image" src={stopSign} alt="STOP" height="120px" width="120px" />
-				<br />
-				<p>You are not allowed to enter here</p>
-				<p>The server understood your request but declined access.</p>
-			</div>
-		);
-	}
-}
 export default AccessDenied;
