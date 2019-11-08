@@ -19,6 +19,7 @@ import "./Homepage.css";
 import Nav from "./Navigator";
 import Grid from "antd/lib/card/Grid";
 import { string } from "prop-types";
+import MenuItem from "antd/lib/menu/MenuItem";
 
 const { Tile } = Typography;
 const { Header, Content, Footer } = Layout;
@@ -30,7 +31,8 @@ class Homepage extends React.Component {
 			productList: [],
 			category: "All",
 			userid: null,
-			loggedin: false
+			loggedin: false,
+			categories : []
 		};
 		this.handleMenuClick = this.handleMenuClick.bind(this);
 
@@ -59,6 +61,19 @@ class Homepage extends React.Component {
 					productList: tempProduct
 				});
 			});
+		fetch("/api/card/category")
+			.then(res => {
+				return res.json();
+			})
+			.then(data => {
+				let cate = []
+				data.map( cat => {
+					cate.push(cat.Category);
+				});
+				this.setState({
+					categories : cate
+				})
+			});
 	}
 	handleMenuClick(e) {
 		this.setState({
@@ -68,29 +83,23 @@ class Homepage extends React.Component {
 	}
 
 	productArea = () => {
-		return <Cards product={this.state.productList} id={this.state.userid} />;
+		return <Cards product={this.state.productList} id={this.state.userid}/>;
 	};
 
-	render() {
-		const menu = (
-			<Menu>
-				<Menu.Item key="Mobiles" onClick={this.handleMenuClick}>
-					<Icon type="mobile" /> Mobiles
-				</Menu.Item>
-				<Menu.Item key="Laptop" onClick={this.handleMenuClick}>
-					<Icon type="laptop" /> Laptops
-				</Menu.Item>
-				<Menu.Item key="Television" onClick={this.handleMenuClick}>
-					<Icon type="desktop" /> Televisions
-				</Menu.Item>
-				<Menu.Item key="Headphones" onClick={this.handleMenuClick}>
-					<Icon type="sound" /> Headphones
-				</Menu.Item>
-				<Menu.Item key="Consoles" onClick={this.handleMenuClick}>
-					<Icon type="play-circle" /> Consoles
-				</Menu.Item>
-			</Menu>
+	menu = () => {
+			return (
+				<Menu>
+					{this.state.categories.map(prod =>{
+						return(
+							<Menu.Item key = {prod} onClick={this.handleMenuClick}>
+								{prod}
+							</Menu.Item>
+						)
+					})}
+				</Menu>
 		);
+	}
+	render() {
 		return (
 			<Layout className="layout">
 				<Nav
@@ -102,14 +111,14 @@ class Homepage extends React.Component {
 					<div align="center" style={{ padding: "10px" }}>
 						Categories :{" "}
 						<Dropdown.Button
-							overlay={menu}
+							overlay={this.menu}
 							trigger={["click"]}
 							icon={<Icon type="down" />}
 						>
 							All
 						</Dropdown.Button>
 					</div>
-					<div style={{ background: "#fff", padding: 24 }}>
+					<div style={{ padding: 20 }}>
 						<Carousel autoplay style={{ padding: "10px 0" }}>
 							<div align="center">
 								<img
