@@ -12,11 +12,13 @@ import {
 	message,
 	Spin
 } from "antd";
+import Cookies from "universal-cookie";
 
 import Nav from "./Navigator";
 
 const { Title } = Typography;
 const { Header, Content, Footer } = Layout;
+const cookies = new Cookies();
 
 // const data = [];
 
@@ -80,10 +82,21 @@ class EditableCell extends React.Component {
 class EditableTable extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { data: [], editingKey: "", userid: null, loading: true };
+		this.state = {
+			data: [],
+			editingKey: "",
+			userid: null,
+			auth: false,
+			loading: true
+		};
 		try {
-			this.state.userid = props.location.state.id;
+			this.state.auth = cookies.get("auth");
+			this.state.userid=cookies.get("userid")
 		} catch (e) {
+			this.state.auth = false;
+		}
+
+		if (this.state.auth != "true") {
 			this.props.history.push("/accessdenied");
 		}
 
@@ -151,7 +164,7 @@ class EditableTable extends React.Component {
 							<a
 								disabled={editingKey !== ""}
 								onClick={() => this.edit(record.key)}
-								style={{ padding: 5 , paddingRight: 15}}
+								style={{ padding: 5, paddingRight: 15 }}
 							>
 								Edit
 							</a>
@@ -265,7 +278,7 @@ class EditableTable extends React.Component {
 						this.setState(() => ({
 							loading: false
 						}));
-					})
+					});
 				this.setState({ data: newData, editingKey: "" });
 			} else {
 				console.log("Else called");

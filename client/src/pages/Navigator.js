@@ -7,8 +7,9 @@ import {
 	Dropdown,
 	Select,
 	AutoComplete,
-	Button,
+	Button
 } from "antd";
+
 import {
 	BrowserRouter as Router,
 	Route,
@@ -16,11 +17,13 @@ import {
 	Switch,
 	Redirect
 } from "react-router-dom";
+import Cookies from "universal-cookie";
 // import "./Login.css";
 
 import logo from "../Images/logo.png";
 
 const { SubMenu } = Menu;
+const cookies = new Cookies();
 
 class Nav extends React.Component {
 	constructor(props) {
@@ -35,7 +38,6 @@ class Nav extends React.Component {
 			cartDisabled: false
 		};
 		this.state.accType = props.accType;
-		console.log("Navigator for " + this.state.accType);
 		this.state.cartDisabled =
 			this.state.accType == ("seller" || "admin")
 				? true
@@ -64,6 +66,12 @@ class Nav extends React.Component {
 		console.log(search);
 	};
 
+	logoutFunc = () => {
+		cookies.remove("userid");
+		cookies.remove("type");
+		cookies.remove("auth");
+	};
+
 	loginButton = () => {
 		return this.state.loggedin == false ? (
 			<Link to="/login">
@@ -71,9 +79,11 @@ class Nav extends React.Component {
 				Login
 			</Link>
 		) : (
-			<Link to="/" style={{ color: "red" }}>
-				<Icon type="logout" />
-				Logout
+			<Link to="/login" replace>
+				<Button type="link" onClick={this.logoutFunc}>
+					<Icon type="logout" />
+					Logout
+				</Button>
 			</Link>
 		);
 	};
@@ -86,7 +96,7 @@ class Nav extends React.Component {
 				return Pname.Pname;
 			});
 		} catch (e) {
-			console.log(e);
+			// console.log(e);
 		}
 
 		this.state.productList = name;
@@ -95,14 +105,16 @@ class Nav extends React.Component {
 			<Menu theme="light" mode="horizontal" style={{ lineHeight: "75px" }}>
 				<Menu.Item key="1" disabled>
 					{/* <Icon component={() => <img src="../Images/logo.png" />} />
-				 */}<img
-									src={require("../Images/logo.png")}
-									style={{width: 150, height: 75}}/>
+					 */}
+					<img
+						src={require("../Images/logo.png")}
+						style={{ width: 150, height: 75 }}
+					/>
 				</Menu.Item>
 				<AutoComplete
 					showSearch
 					dataSource={this.state.productList}
-					style={{ width: 500, marginLeft: 20}}
+					style={{ width: 500, marginLeft: 20 }}
 					//   onSelect={onSelect}
 					onSearch={this.onSearch}
 					placeholder="Search"

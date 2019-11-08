@@ -13,16 +13,15 @@ import {
 	Card
 } from "antd";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import Cookies from "universal-cookie";
 
 import Cards from "./Cards";
 import "./Homepage.css";
 import Nav from "./Navigator";
-import Grid from "antd/lib/card/Grid";
-import { string } from "prop-types";
-import MenuItem from "antd/lib/menu/MenuItem";
 
 const { Tile } = Typography;
 const { Header, Content, Footer } = Layout;
+const cookies = new Cookies();
 
 class Homepage extends React.Component {
 	constructor(props) {
@@ -37,8 +36,8 @@ class Homepage extends React.Component {
 		this.handleMenuClick = this.handleMenuClick.bind(this);
 
 		try {
-			this.state.userid = props.location.state.id;
-			this.state.loggedin = true;
+			this.state.userid = cookies.get("userid");
+			if (this.state.userid != undefined) this.state.loggedin = true;
 			// this.forceUpdate()
 		} catch (e) {
 			console.log(e);
