@@ -1,5 +1,11 @@
 import React from "react";
-import { Card, Icon, Button, Table } from "antd";
+import { Card, Icon, Button, Table,Layout,Spin } from "antd";
+import Cookies from "universal-cookie"
+
+import Nav from "./Navigator";
+const { Header, Content, Footer } = Layout;
+
+const cookies = new Cookies();
 
 class Cart extends React.Component{
     constructor(props){
@@ -7,11 +13,12 @@ class Cart extends React.Component{
         this.state={
             bid: null,
             loggedin:false,
+            loading: true,
             data: []
         }
         try {
-			this.state.bid = props.location.state.id;
-			this.state.loggedin = true;
+			this.state.bid = cookies.get("userid");
+            this.state.loggedin = true;
 		} catch (e) {
 			console.log(e);
 		}
@@ -54,7 +61,7 @@ class Cart extends React.Component{
                 headers : {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({Bid:1234})
+                body: JSON.stringify({Bid:this.state.bid})
             })
             .then(res => res.json())
             .then(resp => {
@@ -69,9 +76,16 @@ class Cart extends React.Component{
                         price: resp[i].Price
                     });
                 }
-                this.setState({
-                    data: temp
-                })
+                // this.setState({
+                //     data: temp
+                // })
+                setTimeout(() => {
+                    this.setState(() =>
+                        ({
+                            loading: false,
+                            data:temp
+                        }))
+                }, 800);
             })
             // this.datafetch();
     }
@@ -84,11 +98,20 @@ class Cart extends React.Component{
         console.log(this.state.data)
         return(
             <div >
-                <center>
-                    <br/>
-                <h1>Order History</h1>
+                <Layout className="layout" style={{ minHeight: "100vh" }}>
+					<Nav accType="seller" loggedin={true} />
+					<Content
+						style={{
+							padding: "75px 50px",
+							marginTop: 64,
+							textAlign: "center"
+						}}
+					>
+						<Spin size="large" spinning={this.state.loading}>
             <Table columns={this.columns} dataSource={this.state.data} style={{padding:30}}/>
-            </center>
+            </Spin>
+					</Content>
+				</Layout>
             </div>
         );
     }

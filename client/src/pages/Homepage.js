@@ -38,7 +38,6 @@ class Homepage extends React.Component {
 		try {
 			this.state.userid = cookies.get("userid");
 			if (this.state.userid != undefined) this.state.loggedin = true;
-			// this.forceUpdate()
 		} catch (e) {
 			console.log(e);
 		}
@@ -78,7 +77,6 @@ class Homepage extends React.Component {
 		this.setState({
 			category: String(e.key)
 		});
-		console.log(this.state.category);
 	}
 
 	productArea = () => {

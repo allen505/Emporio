@@ -133,8 +133,10 @@ class Nav extends React.Component {
 					style={{ float: "right" }}
 					disabled={this.state.cartDisabled}
 				>
+					<Link to="/cart">
 					<Icon type="shopping-cart" />
 					Cart
+					</Link>
 				</Menu.Item>
 			</Menu>
 		);
