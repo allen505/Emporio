@@ -1,6 +1,22 @@
 import React from "react";
-import { Card, Icon, Button, Result, Popover, Modal, Alert } from "antd";
-import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
+import {
+	Card,
+	Icon,
+	Button,
+	Result,
+	Popover,
+	Modal,
+	Alert,
+	Row,
+	Col
+} from "antd";
+import {
+	BrowserRouter as Router,
+	Route,
+	Link,
+	Switch,
+	Redirect
+} from "react-router-dom";
 
 class Cards extends React.Component {
 	constructor(props) {
@@ -10,7 +26,7 @@ class Cards extends React.Component {
 			userid: null,
 			visible: false,
 			product: null
-		}
+		};
 		try {
 			this.state.userid = props.id;
 		} catch (e) {
@@ -18,21 +34,20 @@ class Cards extends React.Component {
 		}
 	}
 
-	success = (Pname) => {
+	success = Pname => {
 		this.setState({
 			visible: true,
-			product:Pname
-		})
-	}
+			product: Pname
+		});
+	};
 
 	buyproduct = (Sid, e, Pname) => {
-		let order =
-		{
+		let order = {
 			pid: e.target.value,
 			bid: this.state.userid,
 			sid: Sid,
 			price: 1000
-		}
+		};
 		let register = () => {
 			fetch("/api/orders", {
 				method: "POST",
@@ -51,34 +66,42 @@ class Cards extends React.Component {
 				});
 		};
 		register();
-	}
-	handleCancel=()=>{
+	};
+	handleCancel = () => {
 		this.setState({
-			visible:false
-		})
-	}
+			visible: false
+		});
+	};
 	render() {
 		setTimeout(() => {
-			this.setState(() =>
-				({
-					loading: false
-				}))
+			this.setState(() => ({
+				loading: false
+			}));
 		}, 1000);
 		const { Meta } = Card;
+		let index = 0;
+		let rowGroup=[];
 		var cardList = this.props.product.map(prod => {
-			return (
-				<div style=
-					{{
-						float: 'left',
-						width: '25%'
-					}}>
-					<Card loading={this.state.loading}
-						style={{ width: '90%' }}
-						cover={<img alt="example" src="" />}
+			index++;
+
+			rowGroup.push(
+				<Col span={8}>
+					<Card
+						loading={this.state.loading}
+						style={{ width: "90%" }}
+						style={{ marginBottom: 20, padding: 5 }}
+						// cover={<img alt="example" src="" />}
 						actions={[
-							<Button type="primary" block onClick={(e) => { this.buyproduct(prod.Sid, e, prod.Pname) }} value={prod.Pid}>
+							<Button
+								type="primary"
+								block
+								onClick={e => {
+									this.buyproduct(prod.Sid, e, prod.Pname);
+								}}
+								value={prod.Pid}
+							>
 								Buy
-						</Button>
+							</Button>
 						]}
 					>
 						<Meta title={prod.Pname} description={prod.Category} />
@@ -88,16 +111,25 @@ class Cards extends React.Component {
 						visible={this.state.visible}
 						onOk={this.handleOk}
 						footer={[
-							<Button key="buy" onClick={this.handleCancel}>Back to shopping</Button>]}
+							<Button key="buy" onClick={this.handleCancel}>
+								Back to shopping
+							</Button>
+						]}
 						onCancel={this.handleCancel}
-					  ><Result
-					  status="success"
-					  title={"Successfully Purchased  "+ this.state.product}
-					/>
-					  </Modal>
-						
-				</div>
+					>
+						<Result
+							status="success"
+							title={"Successfully Purchased  " + this.state.product}
+						/>
+					</Modal>
+				</Col>
 			);
+			if(index%3==0){
+				return (<Row gutter={20}>{rowGroup}</Row>		
+			);
+			}
+
+			
 		});
 
 		return cardList;

@@ -18,6 +18,7 @@ import "./Login.css";
 const { Title } = Typography;
 const { Header, Content, Footer } = Layout;
 const cookies = new Cookies();
+const cookieTimeout = 30 * 60;
 
 class Login extends React.Component {
 	constructor(props) {
@@ -27,24 +28,20 @@ class Login extends React.Component {
 		};
 	}
 
-	componentDidMount() {
-		;
-	}
+	componentDidMount() {}
 
 	success = (type, userid) => {
 		message.success("Logged in with User ID " + type);
-		cookies.set("userid", userid, { path: "/" });
-		cookies.set("type", type, { path: "/" });
-		
+		cookies.set("userid", userid, { path: "/", maxAge: cookieTimeout });
+		cookies.set("type", type, { path: "/", maxAge: cookieTimeout });
+
 		if (type == "admin") {
-			console.log("admin if")
-			cookies.set("auth", "true", { path: "/" });
+			cookies.set("auth", "true", { path: "/", maxAge: cookieTimeout });
 			this.props.history.push("/admin");
 		} else if (type == "buyer") {
 			this.props.history.push("/homepage");
 		} else if (type == "seller") {
-			cookies.set("auth", "true", { path: "/" });
-			console.log("seller if");
+			cookies.set("auth", "true", { path: "/", maxAge: cookieTimeout });
 			this.props.history.push("/seller");
 		}
 	};

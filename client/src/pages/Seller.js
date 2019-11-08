@@ -91,7 +91,7 @@ class EditableTable extends React.Component {
 		};
 		try {
 			this.state.auth = cookies.get("auth");
-			this.state.userid=cookies.get("userid")
+			this.state.userid = cookies.get("userid");
 		} catch (e) {
 			this.state.auth = false;
 		}
