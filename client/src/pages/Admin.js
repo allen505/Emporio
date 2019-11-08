@@ -17,30 +17,29 @@ import {
 	List,
 	Popconfirm
 } from "antd";
+import Cookies from "universal-cookie";
 
 import Nav from "./Navigator";
 
 const { Title } = Typography;
 const { Header, Content, Footer } = Layout;
+const cookies = new Cookies();
 
 class Admin extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			// loading : true
-			radioState: "buyer"
+			radioState: "buyer",
+			auth: false
 		};
 		try {
-			this.state = {
-				auth: props.location.state.authority
-			};
+			this.state.auth = cookies.get("auth");
 		} catch (e) {
-			this.state = {
-				auth: false
-			};
+			this.state.auth = false;
 		}
 
-		if (this.state.auth == false) {
+		if (this.state.auth != "true") {
 			this.props.history.push("/accessdenied");
 		}
 	}
@@ -54,34 +53,33 @@ class Admin extends React.Component {
 			radioState: selected.target.value
 		});
 	};
-	datafetch = () =>{
+	datafetch = () => {
 		fetch("/api/admin")
-				.then(res => {
-					return res.json();
-				})
-				.then(data => {
-					let buyerlist = [];
-					let sellerlist = [];
-					data.map(prod => {
-						if(prod.type == "buyer"){
-							buyerlist.push(prod.name);
-						}
-						else if(prod.type == "seller"){
-							sellerlist.push(prod.name)
-						}
-					});
-					this.setState({
-						blist : buyerlist,
-						slist : sellerlist
-					});
+			.then(res => {
+				return res.json();
+			})
+			.then(data => {
+				let buyerlist = [];
+				let sellerlist = [];
+				data.map(prod => {
+					if (prod.type == "buyer") {
+						buyerlist.push(prod.name);
+					} else if (prod.type == "seller") {
+						sellerlist.push(prod.name);
+					}
 				});
-	}
+				this.setState({
+					blist: buyerlist,
+					slist: sellerlist
+				});
+			});
+	};
 
-	delete = (item,type) =>{
+	delete = (item, type) => {
 		let del = {
-			type : type,
-			name : item
-		}
+			type: type,
+			name: item
+		};
 		fetch("/api/admin/del", {
 			method: "POST",
 			headers: {
@@ -96,69 +94,63 @@ class Admin extends React.Component {
 			.finally(() => {
 				this.datafetch();
 			});
-	}
+	};
 
-	adminlist = (e) => {
+	adminlist = e => {
 		// const {loading} = this.state
 		this.datafetch();
-		if(e.value == "seller"){
-			return(
+		if (e.value == "seller") {
+			return (
 				<List
-					bordered = "true"
-					loading = {this.state.loading}
+					bordered="true"
+					loading={this.state.loading}
 					itemLayout="horizontal"
 					dataSource={this.state.slist}
 					renderItem={item => (
-						
-					<List.Item
-								actions={[
-									<Popconfirm
-									title = "Are you sure you want to delete?"
-									onConfirm = {()=>{this.delete(item,this.state.radioState)}}
-									>
-										<Icon type = "delete" theme = "twoTone" ></Icon>
-									</Popconfirm>
+						<List.Item
+							actions={[
+								<Popconfirm
+									title="Are you sure you want to delete?"
+									onConfirm={() => {
+										this.delete(item, this.state.radioState);
+									}}
+								>
+									<Icon type="delete" theme="twoTone"></Icon>
+								</Popconfirm>
 							]}
-							>						
-					<List.Item.Meta
-						title={item}
-						/>
-					</List.Item>
+						>
+							<List.Item.Meta title={item} />
+						</List.Item>
 					)}
 				/>
 			);
-		}
-		else{
-			return(
+		} else {
+			return (
 				<List
-					bordered = "true"
-					loading = {this.state.loading}
+					bordered="true"
+					loading={this.state.loading}
 					itemLayout="horizontal"
 					dataSource={this.state.blist}
 					renderItem={item => (
-						
-					<List.Item
-								actions={[
-									<Popconfirm
-									title = "Are you sure you want to delete?"
-									onConfirm = {()=>{this.delete(item,this.state.radioState)}}
-									>
-										<Icon type = "delete" theme = "twoTone" ></Icon>
-									</Popconfirm>
+						<List.Item
+							actions={[
+								<Popconfirm
+									title="Are you sure you want to delete?"
+									onConfirm={() => {
+										this.delete(item, this.state.radioState);
+									}}
+								>
+									<Icon type="delete" theme="twoTone"></Icon>
+								</Popconfirm>
 							]}
-							>						
-					<List.Item.Meta
-						title={item}
-						/>
-					</List.Item>
+						>
+							<List.Item.Meta title={item} />
+						</List.Item>
 					)}
 				/>
 			);
 		}
-					
-		
-	}
-
+	};
 
 	render() {
 		// setTimeout(() => {
@@ -168,10 +160,7 @@ class Admin extends React.Component {
 		// },100);
 		return (
 			<Layout className="layout" style={{ minHeight: "100vh" }}>
-				<Nav
-					accType="admin"
-					loggedin={true}
-				/>
+				<Nav accType="admin" loggedin={true} />
 				<Content
 					style={{
 						padding: "75px 50px",
@@ -200,7 +189,7 @@ class Admin extends React.Component {
 								<Radio.Button value="buyer">Buyer</Radio.Button>
 								<Radio.Button value="seller">Seller</Radio.Button>
 							</Radio.Group>
-							<this.adminlist value={this.state.radioState}/>
+							<this.adminlist value={this.state.radioState} />
 						</Col>
 					</Row>
 				</Content>

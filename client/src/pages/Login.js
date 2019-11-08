@@ -11,11 +11,13 @@ import {
 	Col,
 	message
 } from "antd";
+import Cookies from "universal-cookie";
 
 import "./Login.css";
 
 const { Title } = Typography;
 const { Header, Content, Footer } = Layout;
+const cookies = new Cookies();
 
 class Login extends React.Component {
 	constructor(props) {
@@ -26,18 +28,24 @@ class Login extends React.Component {
 	}
 
 	componentDidMount() {
-		console.log("Login Mounted");
+		;
 	}
 
 	success = (type, userid) => {
-		message.success("Logged in with User ID " + userid);
+		message.success("Logged in with User ID " + type);
+		cookies.set("userid", userid, { path: "/" });
+		cookies.set("type", type, { path: "/" });
+		
 		if (type == "admin") {
-			console.log("Redirecting");
-			this.props.history.push("/admin", { authority: true });
+			console.log("admin if")
+			cookies.set("auth", "true", { path: "/" });
+			this.props.history.push("/admin");
 		} else if (type == "buyer") {
-			this.props.history.push("/homepage", { id: userid });
+			this.props.history.push("/homepage");
 		} else if (type == "seller") {
-			this.props.history.push("/seller", { id: userid });
+			cookies.set("auth", "true", { path: "/" });
+			console.log("seller if");
+			this.props.history.push("/seller");
 		}
 	};
 
