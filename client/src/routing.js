@@ -5,6 +5,7 @@ import RegistrationForm from "./pages/Register";
 import Admin from "./pages/Admin";
 import AccessDenied from "./pages/AccessDenied";
 import Seller from "./pages/Seller";
+import Cart from "./pages/Cart"
 
 const routes = [
 	{
@@ -35,6 +36,10 @@ const routes = [
 	{
 		path: "/seller",
 		component: Seller
+	},
+	{
+		path:"/cart",
+		component : Cart
 	}
 ];
 

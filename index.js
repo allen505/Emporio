@@ -122,7 +122,7 @@ app.post("/api/register", jsonParser, (req, res) => {
 
 app.post("/api/orders", jsonParser, (req, res) => {
 	let orders = req.body;
-	console.log(orders);
+	// console.log(orders);
 	pool.getConnection((error, connection) => {
 		if (error) {
 			console.log("Error in getting connection");
@@ -133,13 +133,33 @@ app.post("/api/orders", jsonParser, (req, res) => {
 				ordervalues,
 
 				(error,result,fields) => {
-					// console.log(error)
-					// console.log(result)
+					//  console.log(error)
+					console.log(result)
 					res.send(result)
 				}
 			);
 		}
 		connection.release();
+	});
+});
+
+app.post("/api/orders/buyer",jsonParser,(req,res)=>{
+	let requestData = req.body;
+	console.log(requestData)
+	pool.getConnection((err,connection) => {
+		if(err){
+			console.log(err)
+		} else {
+			connection.query(
+				`SELECT Pname, s.Name,Date, Quantity, c.Category, o.Price from products p, seller s, categories c, orders o where o.Sid=s.Sid and o.Bid= ? and o.Pid = p.Pid and p.Cid=c.Cid`,
+				[requestData.Bid],
+				(error,result,fields) =>{
+					connection.release();
+					res.send(result);
+					console.log(result)
+				}
+			);
+		}
 	});
 });
 
@@ -219,6 +239,23 @@ app.get("/api/card", jsonParser, (req, res) => {
 		connection.release();
 	});
 });
+
+app.get("/api/card/category",jsonParser,(req,res)=>{
+	pool.getConnection((err,connection) => {
+		if(err) {
+			console.log(err)
+		} else {
+			connection.query(
+				`Select Category from categories`,
+				(error, result, fields) => {
+					res.send(result)
+					console.log(result)
+				}
+			);
+		}
+		connection.release();
+	})
+})
 
 app.get("/api/admin", (req, res) => {
 	pool.getConnection((error, connection) => {

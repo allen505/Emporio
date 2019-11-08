@@ -32,10 +32,10 @@ class Cards extends React.Component {
 				},
 				body: JSON.stringify(order)
 			})
-				.then(res => res.json())
+				// .then(res => res.json())
 				.then(resp => {
-					// console.log(resp.status);
-					if (resp == true) {
+					console.log(resp);
+					if (resp) {
 						this.success();
 					} else {
 						this.error();
