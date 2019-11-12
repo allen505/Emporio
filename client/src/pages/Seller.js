@@ -285,11 +285,6 @@ class EditableTable extends React.Component {
 			if (index > -1) {
 				const item = newData[index];
 				updateObj = { ...row, key: item.key };
-				// updateObj.key = item.key;
-				console.log("Data to send :");
-				console.log(updateObj);
-				console.log(item);
-				console.log(row);
 				newData.splice(index, 1, {
 					...item,
 					...row
@@ -310,7 +305,6 @@ class EditableTable extends React.Component {
 					});
 				this.setState({ data: newData, editingKey: "" });
 			} else {
-				console.log("Else called");
 				newData.push(row);
 				this.setState({ data: newData, editingKey: "" });
 			}

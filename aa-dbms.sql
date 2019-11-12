@@ -2,8 +2,8 @@
 -- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 05, 2019 at 01:40 PM
+-- Host: localhost
+-- Generation Time: Nov 12, 2019 at 02:04 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.8
 
@@ -108,15 +108,6 @@ CREATE TABLE `orders` (
   `Price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`Oid`, `Bid`, `Sid`, `Pid`, `Date`, `Price`) VALUES
-(3, 1234, 12345, 5, '2019-11-04 17:04:10', 1000),
-(4, 1234, 12345, 7, '2019-11-04 17:04:34', 1000),
-(5, 1234, 12345, 5, '2019-11-04 17:04:52', 1000);
-
 -- --------------------------------------------------------
 
 --
@@ -139,7 +130,7 @@ CREATE TABLE `products` (
 
 INSERT INTO `products` (`Pid`, `Sid`, `Cid`, `Pname`, `Descripton`, `Price`, `Quantity`) VALUES
 (5, 12345, 200, 'One Plus 7', 'New Phone', 50000, 100),
-(7, 12345, 201, 'Sony Bravia', 'Bravia is good', 100000, 28);
+(11, 12345, 202, 'XBox', 'asdf', 43, 23);
 
 -- --------------------------------------------------------
 
@@ -195,10 +186,10 @@ ALTER TABLE `login`
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
-  ADD PRIMARY KEY (`Oid`,`Bid`,`Sid`,`Pid`),
-  ADD KEY `Pid` (`Pid`),
+  ADD PRIMARY KEY (`Oid`),
   ADD KEY `Bid` (`Bid`),
-  ADD KEY `Sid` (`Sid`);
+  ADD KEY `Sid` (`Sid`),
+  ADD KEY `Pid` (`Pid`);
 
 --
 -- Indexes for table `products`
@@ -234,7 +225,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `Pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `Pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
@@ -252,7 +243,7 @@ ALTER TABLE `buyer`
 ALTER TABLE `orders`
   ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`Bid`) REFERENCES `buyer` (`Bid`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`Sid`) REFERENCES `seller` (`Sid`) ON DELETE NO ACTION ON UPDATE CASCADE,
-  ADD CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`Pid`) REFERENCES `products` (`Pid`) ON DELETE NO ACTION ON UPDATE CASCADE;
+  ADD CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`Pid`) REFERENCES `products` (`Pid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `products`

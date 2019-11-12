@@ -195,7 +195,7 @@ app.post("/api/seller/del", jsonParser, (req, res) => {
 				[requestData.pid],
 				(error, result, fields) => {
 					connection.release();
-					console.log("Error = " + error);
+					// console.log("Error = " + error);
 					res.send(result);
 				}
 			);
@@ -219,8 +219,8 @@ app.post("/api/seller/update", jsonParser, (req, res) => {
 			];
 			connection.query(upQuery, upArray, (error, result, fields) => {
 				connection.release();
-				console.log("Error = " + error);
-				console.log("Result = " + result);
+				// console.log("Error = " + error);
+				// console.log("Result = " + result);
 				res.send(result);
 			});
 		}
