@@ -324,7 +324,7 @@ class EditableTable extends React.Component {
 		return (
 			<EditableContext.Provider value={this.props.form}>
 				<Layout className="layout" style={{ minHeight: "100vh" }}>
-					<Nav accType="seller" loggedin={true} />
+					<Nav loggedin={true} />
 					<Content
 						style={{
 							padding: "75px 50px",

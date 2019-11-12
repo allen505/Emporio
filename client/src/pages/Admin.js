@@ -160,7 +160,7 @@ class Admin extends React.Component {
 		// },100);
 		return (
 			<Layout className="layout" style={{ minHeight: "100vh" }}>
-				<Nav accType="admin" loggedin={true} />
+				<Nav loggedin={true} />
 				<Content
 					style={{
 						padding: "75px 50px",

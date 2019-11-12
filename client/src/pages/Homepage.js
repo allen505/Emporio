@@ -101,7 +101,6 @@ class Homepage extends React.Component {
 			<Layout className="layout">
 				<Nav
 					product={this.state.productList}
-					accType="buyer"
 					loggedin={this.state.loggedin}
 				/>
 				<Content style={{ padding: "0 10px" }}>
