@@ -1,5 +1,7 @@
 import React from "react";
 import { Card, Icon, Button, Table,Layout,Spin } from "antd";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+
 import Cookies from "universal-cookie"
 
 import Nav from "./Navigator";
@@ -102,13 +104,19 @@ class Cart extends React.Component{
 					<Nav accType="seller" loggedin={true} />
 					<Content
 						style={{
-							padding: "75px 50px",
-							marginTop: 64,
+							padding: "0px 50px",
+							marginTop: 60,
 							textAlign: "center"
 						}}
 					>
+                        <h1>Order History</h1>
 						<Spin size="large" spinning={this.state.loading}>
-            <Table columns={this.columns} dataSource={this.state.data} style={{padding:30}}/>
+            <Table columns={this.columns} dataSource={this.state.data} style={{padding:30}} pagination={{pageSize:5}}/>
+					<Link to="/homepage">
+						<Button type="link" size="large">
+							Go Home
+						</Button>
+					</Link>
             </Spin>
 					</Content>
 				</Layout>

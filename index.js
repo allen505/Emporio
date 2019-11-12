@@ -205,7 +205,6 @@ app.post("/api/seller/del", jsonParser, (req, res) => {
 
 app.post("/api/seller/update", jsonParser, (req, res) => {
 	let requestData = req.body;
-	console.log(requestData);
 	pool.getConnection((err, connection) => {
 		if (err) {
 			console.log("Error in getting connection");
@@ -223,6 +222,31 @@ app.post("/api/seller/update", jsonParser, (req, res) => {
 				console.log("Error = " + error);
 				console.log("Result = " + result);
 				res.send(result);
+			});
+		}
+	});
+});
+
+app.post("/api/seller/prods/input",jsonParser,(req,res) => {
+	let requestData = req.body;
+	pool.getConnection((error,connection)=>{
+		if(error){
+			console.log("Error in getting connection");
+		}else {
+			let inpquery = 	`Insert into products values (NULL,?,?,?,?,?,?)`;
+			let inparray = [
+				requestData.sid,
+				requestData.cid,
+				requestData.pname,
+				requestData.desc,
+				requestData.price,
+				requestData.quan
+			];
+			connection.query(inpquery,inparray, (err,result,fields) => {
+				connection.release();
+				res.send(result);
+				console.log(result)
+				console.log(err)
 			});
 		}
 	});
@@ -246,10 +270,9 @@ app.get("/api/card/category",jsonParser,(req,res)=>{
 			console.log(err)
 		} else {
 			connection.query(
-				`Select Category from categories`,
+				`Select * from categories`,
 				(error, result, fields) => {
 					res.send(result)
-					console.log(result)
 				}
 			);
 		}

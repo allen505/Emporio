@@ -10,14 +10,21 @@ import {
 	Form,
 	Layout,
 	message,
-	Spin
+	Spin,
+	Button,
+	Modal,
+	Select,
+	Upload,
+	Icon
 } from "antd";
 import Cookies from "universal-cookie";
 
 import Nav from "./Navigator";
 
 const { Title } = Typography;
+const {Option} = Select;
 const { Header, Content, Footer } = Layout;
+const { TextArea } = Input;
 const cookies = new Cookies();
 
 // const data = [];
@@ -87,7 +94,10 @@ class EditableTable extends React.Component {
 			editingKey: "",
 			userid: null,
 			auth: false,
-			loading: true
+			loading: true,
+			visible: false,
+			categories : [],
+			categoryid : {}
 		};
 		try {
 			this.state.auth = cookies.get("auth");
@@ -181,6 +191,25 @@ class EditableTable extends React.Component {
 			}
 		];
 		this.updateData();
+	}
+
+	componentDidMount = () =>{
+		fetch("/api/card/category")
+			.then(res => {
+				return res.json();
+			})
+			.then(data => {
+				let cate = [];
+				let cid = {};
+				data.map( cat => {
+					cate.push(cat.Category);
+					cid[cat.Category]= cat.Cid;
+				});
+				this.setState({
+					categories : cate,
+					categoryid : cid
+				})
+			});
 	}
 
 	updateData = () => {
@@ -292,18 +321,74 @@ class EditableTable extends React.Component {
 		this.setState({ editingKey: key });
 	}
 
+	show = () =>{
+		this.setState({
+			visible:true
+		});
+	}
+
+	handleCancel = () =>{
+		this.setState({
+			visible:false
+		});
+	}
+
+	file = e =>{
+		console.log(e.file.name)
+	}
+
+	handleSubmit = e => {
+		e.preventDefault();
+		this.props.form.validateFields((err, values) => {
+			if (!err) {
+			   	let valsend = {
+				 	sid : this.state.userid,
+				  	cid : this.state.categoryid[values.category],
+					pname : values.name,
+					desc : values.description,
+					price : values.price,
+					quan : values.quantity
+			  };
+			  let input = () =>{
+			  fetch("/api/seller/prods/input", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify(valsend)
+			})
+				.then(res => res.json())
+				.then(resp => {
+					// console.log(resp.status);
+					if (resp) {
+						message.success("Product added successfully");
+					} else {
+						message.error("Error occured ");
+					}
+				});
+			}
+			input();
+			this.updateData();
+			}
+		});
+	}
+
 	render() {
 		// setTimeout(() => {
 		// 	this.setState(() => ({
 		// 		loading: false
 		// 	}));
 		// }, TIME_OUT);
+		const { getFieldDecorator } = this.props.form;
 		const components = {
 			body: {
 				cell: EditableCell
 			}
 		};
-
+		const formItemLayout = {
+			labelCol: { span: 6 },
+			wrapperCol: { span: 14 },
+		  };
 		const columns = this.columns.map(col => {
 			if (!col.editable) {
 				return col;
@@ -321,17 +406,35 @@ class EditableTable extends React.Component {
 			};
 		});
 
+		const props = {
+			name: 'file',
+			multiple: true,
+			action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+			onChange(info) {
+			  const { status } = info.file;
+			  if (status !== 'uploading') {
+				console.log(info.file, info.fileList);
+			  }
+			  if (status === 'done') {
+				message.success(`${info.file.name} file uploaded successfully.`);
+			  } else if (status === 'error') {
+				message.error(`${info.file.name} file upload failed.`);
+			  }
+			},
+		  };
+
 		return (
 			<EditableContext.Provider value={this.props.form}>
 				<Layout className="layout" style={{ minHeight: "100vh" }}>
 					<Nav accType="seller" loggedin={true} />
 					<Content
 						style={{
-							padding: "75px 50px",
+							padding: "0px 50px",
 							marginTop: 64,
 							textAlign: "center"
 						}}
 					>
+						<h1>Seller Dashboard</h1>
 						<Spin size="large" spinning={this.state.loading}>
 							<Table
 								components={components}
@@ -340,9 +443,90 @@ class EditableTable extends React.Component {
 								columns={columns}
 								rowClassName="editable-row"
 								pagination={{
-									onChange: this.cancel
+									onChange: this.cancel,
+									pageSize:5
 								}}
 							/>
+							<Button type="primary" onClick={this.show} >
+								Add product
+							</Button>
+							<Modal
+								title="Product Input"
+								visible={this.state.visible}
+								// onOk={this.handleSubmit}
+								onCancel={this.handleCancel}
+								// okButtonProps={{visible:false}}
+								footer={null}
+								>
+								<Form {...formItemLayout} onSubmit={this.handleSubmit} layout="horizontal">
+									<Form.Item label="Name">
+										{getFieldDecorator("name", {
+											rules: [{ 
+												required: true, 
+												message: 'Please enter Product Name' 
+											}],
+										})(<Input />)}
+									</Form.Item>
+									<Form.Item label="Category" hasFeedback>
+										{getFieldDecorator('category', {
+											rules: [{ 
+												required: true, 
+												message: 'Please select Category' 
+											}],
+										})(
+											<Select placeholder="Please select category">
+												{this.state.categories.map(category=>(
+													<Option value={category}>
+														{category}
+													</Option>
+												))}
+											</Select>
+										)}
+									</Form.Item>
+									<Form.Item label="Description">
+										{getFieldDecorator("description", {
+											rules: [{ 
+												required: true, 
+												message: 'Please enter Description' 
+											}],
+										})(<TextArea />)}
+									</Form.Item>
+									<Form.Item label="Quantity">
+										{getFieldDecorator('quantity',{
+											rules:[{
+												required:true, 
+												message:'Enter Quantity'
+											}]
+										})(<InputNumber min={1}/>)}
+									</Form.Item>
+									<Form.Item label="Price">
+										{getFieldDecorator('price',{
+											rules:[{
+												required:true, 
+												message:'Enter Price'
+											}]
+										})(<InputNumber min={1}/>)}
+									</Form.Item>
+									<Form.Item label="Upload Image">
+										{getFieldDecorator('dragger', {
+											valuePropName: 'fileList',
+											getValueFromEvent: this.file,
+										})(
+											<Upload.Dragger {...props}>
+											<p className="ant-upload-drag-icon">
+												<Icon type="inbox" />
+											</p>
+											<p className="ant-upload-text">Click or drag file to this area to upload</p>
+											</Upload.Dragger>,
+										)}
+									</Form.Item>
+									<Form.Item wrapperCol={{ span: 12, offset: 6 }}>
+										<Button type="primary" htmlType="submit">
+											Submit
+										</Button>
+									</Form.Item> 
+								</Form>
+							</Modal>
 						</Spin>
 					</Content>
 				</Layout>
