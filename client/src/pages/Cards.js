@@ -31,7 +31,6 @@ class Cards extends React.Component {
       visible: false,
       product: null
     };
-    console.log("User id = " + this.state.userid);
     try {
       this.state.userid = props.id;
     } catch (e) {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 12, 2019 at 02:04 PM
+-- Generation Time: Nov 13, 2019 at 10:37 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.8
 
@@ -108,6 +108,21 @@ CREATE TABLE `orders` (
   `Price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`Oid`, `Bid`, `Sid`, `Pid`, `Date`, `Price`) VALUES
+(7, 1234, 12345, 11, '2019-11-13 09:34:20', 1000);
+
+--
+-- Triggers `orders`
+--
+DELIMITER $$
+CREATE TRIGGER `reduceQuant` AFTER INSERT ON `orders` FOR EACH ROW UPDATE products set Quantity=( SELECT quantity-1 from products where pid=new.pid) where pid=new.pid
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -129,8 +144,9 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`Pid`, `Sid`, `Cid`, `Pname`, `Descripton`, `Price`, `Quantity`) VALUES
-(5, 12345, 200, 'One Plus 7', 'New Phone', 50000, 100),
-(11, 12345, 202, 'XBox', 'asdf', 43, 23);
+(5, 12345, 200, 'One Plus 7', 'New Phone', 50000, 22),
+(11, 12345, 202, 'XBox', 'asdf', 43, 20),
+(12, 12345, 202, 'PS 4', 'sexy', 32, 22);
 
 -- --------------------------------------------------------
 
@@ -219,13 +235,13 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `Oid` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Oid` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `Pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `Pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables

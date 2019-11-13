@@ -39,13 +39,19 @@ class Nav extends React.Component {
     };
     this.state.accType = cookies.get("type");
     this.state.cartDisabled =
-      this.state.accType === "admin" || "seller"
+      this.state.accType == "admin"
+        ? true
+        : this.state.accType == "seller"
         ? true
         : this.state.loggedin == false
         ? true
         : false;
     this.state.searchDisabled =
-      this.state.accType == "admin" || "seller" ? true : false;
+      this.state.accType == "admin"
+        ? true
+        : this.state.accType == "seller"
+        ? true
+        : false;
   }
 
   handleChange = e => {
