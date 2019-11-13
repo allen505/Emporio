@@ -256,7 +256,7 @@ app.get("/api/card", jsonParser, (req, res) => {
 	pool.getConnection((error, connection) => {
 		if (error) throw err;
 		else {
-			connection.query("select * from products", (error, result, fields) => {
+			connection.query("select p.*,c.category from products p,categories c where p.cid=c.cid", (error, result, fields) => {
 				res.send(result);
 			});
 		}

@@ -31,7 +31,8 @@ class Homepage extends React.Component {
 			category: "All",
 			userid: null,
 			loggedin: false,
-			categories : []
+			categories : [],
+			displayList : []
 		};
 		this.handleMenuClick = this.handleMenuClick.bind(this);
 
@@ -56,7 +57,8 @@ class Homepage extends React.Component {
 					tempProduct.push(prod);
 				});
 				this.setState({
-					productList: tempProduct
+					productList: tempProduct,
+					displayList: tempProduct
 				});
 			});
 		fetch("/api/card/category")
@@ -66,7 +68,7 @@ class Homepage extends React.Component {
 			.then(data => {
 				let cate = []
 				data.map( cat => {
-					cate.push(cat.Category);
+					cate.push(cat);
 				});
 				this.setState({
 					categories : cate
@@ -74,22 +76,39 @@ class Homepage extends React.Component {
 			});
 	}
 	handleMenuClick(e) {
+			this.state.displayList = this.state.productList.filter(item => {
+				if(e.key=="ALL"){
+					return item;
+				}
+				if(item.category==e.key){
+					// console.log(item)
+					return item;
+				}
+				else{
+					// console.log(item.category+e.key)
+					// console.log("not matching")
+				}
+			});
+			console.log(this.state.displayList)
 		this.setState({
 			category: String(e.key)
 		});
 	}
 
 	productArea = () => {
-		return <Cards product={this.state.productList} id={this.state.userid}/>;
+		return <Cards product={this.state.displayList} id={this.state.userid}/>;
 	};
 
 	menu = () => {
 			return (
 				<Menu>
+					<Menu.Item key="ALL" onClick={this.handleMenuClick}>
+						All
+					</Menu.Item>
 					{this.state.categories.map(prod =>{
 						return(
-							<Menu.Item key = {prod} onClick={this.handleMenuClick}>
-								{prod}
+							<Menu.Item key = {prod.Category} onClick={this.handleMenuClick}>
+								{prod.Category}
 							</Menu.Item>
 						)
 					})}
@@ -111,7 +130,7 @@ class Homepage extends React.Component {
 							trigger={["click"]}
 							icon={<Icon type="down" />}
 						>
-							All
+							{this.state.category}
 						</Dropdown.Button>
 					</div>
 					<div style={{ padding: 20 }}>

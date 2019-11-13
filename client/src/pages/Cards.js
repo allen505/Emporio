@@ -93,7 +93,6 @@ class Cards extends React.Component {
     let rowGroup = [];
     var cardList = this.props.product.map(prod => {
       index++;
-
       rowGroup.push(
         <Col span={8}>
           <Card
@@ -101,6 +100,7 @@ class Cards extends React.Component {
             style={{ width: "90%" }}
             style={{ marginBottom: 20, padding: 5 }}
             // cover={<img alt="example" src="" />}
+            hoverable={true}
             actions={[
               <Button
                 type="primary"
@@ -114,7 +114,9 @@ class Cards extends React.Component {
               </Button>
             ]}
           >
-            <Meta title={prod.Pname} description={prod.Category} />
+            <Meta title={prod.Pname} description={prod.Descripton} />
+            <br/>
+            <Meta title= {"$"+prod.Price} />
           </Card>
           <Modal
             title="Basic Modal"
