@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 13, 2019 at 10:37 AM
+-- Generation Time: Nov 20, 2019 at 11:44 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.8
 
@@ -144,8 +144,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`Pid`, `Sid`, `Cid`, `Pname`, `Descripton`, `Price`, `Quantity`) VALUES
-(5, 12345, 200, 'One Plus 7', 'New Phone', 50000, 22),
-(11, 12345, 202, 'XBox', 'asdf', 43, 20),
+(11, 12345, 202, 'XBox', 'By microsoft', 40, 21),
 (12, 12345, 202, 'PS 4', 'sexy', 32, 22);
 
 -- --------------------------------------------------------
@@ -235,7 +234,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `Oid` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `Oid` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `products`
