@@ -205,6 +205,7 @@ app.post("/api/seller/del", jsonParser, (req, res) => {
 
 app.post("/api/seller/update", jsonParser, (req, res) => {
 	let requestData = req.body;
+	console.log("Update data"+JSON.stringify(requestData))
 	pool.getConnection((err, connection) => {
 		if (err) {
 			console.log("Error in getting connection");
@@ -212,14 +213,14 @@ app.post("/api/seller/update", jsonParser, (req, res) => {
 			let upQuery = `UPDATE products set Pname=?, Descripton=?, Price=?, Quantity=?  WHERE Pid=?`;
 			let upArray = [
 				requestData.name,
-				requestData.desc,
+				requestData.description,
 				requestData.price,
 				requestData.quantity,
 				requestData.key
 			];
 			connection.query(upQuery, upArray, (error, result, fields) => {
 				connection.release();
-				// console.log("Error = " + error);
+				console.log("Error = " + error);
 				// console.log("Result = " + result);
 				res.send(result);
 			});

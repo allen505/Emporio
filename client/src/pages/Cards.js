@@ -91,16 +91,18 @@ class Cards extends React.Component {
     let index = 0;
     let rowGroup = [];
     var cardList = this.props.product.map(prod => {
-      return(
-        <div style=
-				{{
-					float:'left', 
-					width:'25%'
-				}}>
+      return (
+        <div
+          style={{
+            float: "left",
+            width: "25%"
+          }}
+        >
           <Card
             loading={this.state.loading}
             style={{ width: "90%" }}
-            style={{ marginBottom: 20, padding: 5 }}
+            style={{ margin: 7, marginBottom: 15, padding: 0 }}
+            // border-radius: 7
             // cover={<img alt="example" src="" />}
             hoverable={true}
             actions={[
@@ -111,14 +113,15 @@ class Cards extends React.Component {
                   this.buyproduct(prod.Sid, e, prod.Pname, prod.Price);
                 }}
                 value={prod.Pid}
+                style={{ margin: 2, width: 320 }}
               >
                 Buy
               </Button>
             ]}
           >
             <Meta title={prod.Pname} description={prod.Descripton} />
-            <br/>
-            <Meta title= {"$"+prod.Price} />
+            <br />
+            <Meta title={"₹ " + prod.Price} />
           </Card>
           <Modal
             title="Basic Modal"
@@ -136,7 +139,7 @@ class Cards extends React.Component {
               title={"Successfully Purchased  " + this.state.product}
             />
           </Modal>
-          </div>
+        </div>
       );
   });
   return cardList;
