@@ -2,8 +2,8 @@
 -- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Nov 20, 2019 at 11:44 AM
+-- Host: 127.0.0.1
+-- Generation Time: Nov 21, 2019 at 03:42 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.8
 
@@ -50,7 +50,8 @@ CREATE TABLE `buyer` (
 --
 
 INSERT INTO `buyer` (`Bid`, `Name`, `Location`) VALUES
-(1234, '1234', 'Bangalore, Karnataka');
+(12, 'Joe', 'Kolkata, Bengal'),
+(1234, 'Allen', 'Bangalore, Karnataka');
 
 -- --------------------------------------------------------
 
@@ -70,7 +71,9 @@ CREATE TABLE `categories` (
 INSERT INTO `categories` (`Cid`, `Category`) VALUES
 (200, 'Mobiles'),
 (201, 'TV'),
-(202, 'Gaming Consoles');
+(202, 'Gaming Consoles'),
+(203, 'Laptops'),
+(204, 'Headphones');
 
 -- --------------------------------------------------------
 
@@ -89,6 +92,8 @@ CREATE TABLE `login` (
 --
 
 INSERT INTO `login` (`Lid`, `Password`, `Type`) VALUES
+(12, '$2b$05$2/BwbCO0C0FJhNBf2UGjm.1CgsMGvYUzLizSZi.PCyJagUkZWdi8e', 'buyer'),
+(22, '$2b$05$xj.BHAdkdiaOSFbJn3KZleFoNKfefI0BZSBwsxTHrUjnq17pDNFNu', 'seller'),
 (123, '$2b$05$iP/GKVwPRef82yPWnhV57eHF211LuS6xsgGakXi.jPjubfo.6FUUi', 'admin'),
 (1234, '$2b$05$Pj/2mE1D.aU7C/3UTJ6bZObU10O0CRasXIJ6b8QGHvgE38mYWhF/6', 'buyer'),
 (12345, '$2b$05$Loq4CgHtsv2nEmgKFuEosubGxhtn/oaxczZxPb9rk67/UnJLAUGEe', 'seller');
@@ -113,7 +118,9 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`Oid`, `Bid`, `Sid`, `Pid`, `Date`, `Price`) VALUES
-(7, 1234, 12345, 11, '2019-11-13 09:34:20', 1000);
+(12, 1234, 22, 18, '2019-11-21 14:13:44', 11999),
+(13, 12, 22, 17, '2019-11-21 14:15:46', 69999),
+(14, 12, 22, 18, '2019-11-21 14:31:22', 11999);
 
 --
 -- Triggers `orders`
@@ -144,8 +151,22 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`Pid`, `Sid`, `Cid`, `Pname`, `Descripton`, `Price`, `Quantity`) VALUES
-(11, 12345, 202, 'XBox', 'By microsoft', 40, 21),
-(12, 12345, 202, 'PS 4', 'sexy', 32, 22);
+(13, 22, 200, 'Oneplus 7T', 'Nebula blue, 12GB RAM', 53999, 10),
+(14, 22, 203, 'Predator helios 300', 'GTX 1660 graphics card, 144Hz display', 78999, 3),
+(15, 22, 204, 'Audiotechnica', 'Noise cancelling high end audio equipment.', 1500, 7),
+(16, 22, 202, 'PS4', '1TB storage, Sony\'s gaming station', 19999, 2),
+(17, 22, 201, 'Sony Bravia', 'Ultra HD curved screen.', 69999, 1),
+(18, 22, 200, 'Realme 3', 'Snapdragon 660, 6GB ram', 11999, 18),
+(19, 22, 201, 'Samsung QLED ', '55 inch, Ultra HD', 42000, 3),
+(20, 22, 203, 'HP Pavilion 15', 'GTX 1650, 8GB ram', 79999, 7),
+(21, 12345, 200, 'iPhone XS Max', 'IP68 rated, You are wasting your money', 99999, 60),
+(22, 12345, 204, 'Boat Rockers 500', 'Blast your ears with bass', 21000, 10),
+(23, 12345, 202, 'Xbox One', 'Microsoft entertainment system', 16000, 11),
+(24, 12345, 201, 'Xiaomi', 'Android TV', 15000, 9),
+(25, 12345, 203, 'Alienware', 'Best laptop to ever existed', 150000, 2),
+(26, 12345, 202, 'Nintendo Switch', 'Classic portable gaming console', 25000, 6),
+(27, 12345, 202, 'Google Stadia', 'Google way to go for gaming', 65000, 4),
+(28, 12345, 204, 'Skull Candy', 'Bass heavy', 12000, 20);
 
 -- --------------------------------------------------------
 
@@ -164,7 +185,8 @@ CREATE TABLE `seller` (
 --
 
 INSERT INTO `seller` (`Sid`, `Name`, `Contact`) VALUES
-(12345, '12345', 1111);
+(22, 'Robert', 98547612),
+(12345, 'Abbas', 865426314);
 
 -- --------------------------------------------------------
 
@@ -228,19 +250,19 @@ ALTER TABLE `seller`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `Cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=203;
+  MODIFY `Cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=205;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `Oid` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `Oid` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `Pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `Pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- Constraints for dumped tables
