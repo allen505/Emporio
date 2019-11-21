@@ -111,13 +111,13 @@ class Cart extends React.Component{
 					>
                         <h1>Order History</h1>
 						<Spin size="large" spinning={this.state.loading}>
-            <Table columns={this.columns} dataSource={this.state.data} style={{padding:30}} pagination={{pageSize:5}}/>
-					<Link to="/homepage">
-						<Button type="link" size="large">
-							Go Home
-						</Button>
-					</Link>
-            </Spin>
+                        <Table columns={this.columns} dataSource={this.state.data} style={{padding:30}} pagination={{pageSize:5}}/>
+                                <Link to="/homepage">
+                                    <Button type="link" size="large">
+                                        Go Home
+                                    </Button>
+                                </Link>
+                        </Spin>
 					</Content>
 				</Layout>
             </div>

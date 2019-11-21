@@ -45,13 +45,13 @@ class Cards extends React.Component {
     });
   };
 
-  buyproduct = (Sid, e, Pname) => {
+  buyproduct = (Sid, e, Pname, Price) => {
     if (this.state.userid != undefined) {
       let order = {
         pid: e.target.value,
         bid: this.state.userid,
         sid: Sid,
-        price: 1000
+        price: Price
       };
       let register = () => {
         fetch("/api/orders", {
@@ -91,9 +91,12 @@ class Cards extends React.Component {
     let index = 0;
     let rowGroup = [];
     var cardList = this.props.product.map(prod => {
-      index++;
-      rowGroup.push(
-        <Col span={8}>
+      return(
+        <div style=
+				{{
+					float:'left', 
+					width:'25%'
+				}}>
           <Card
             loading={this.state.loading}
             style={{ width: "90%" }}
@@ -105,7 +108,7 @@ class Cards extends React.Component {
                 type="primary"
                 block
                 onClick={e => {
-                  this.buyproduct(prod.Sid, e, prod.Pname);
+                  this.buyproduct(prod.Sid, e, prod.Pname, prod.Price);
                 }}
                 value={prod.Pid}
               >
@@ -133,15 +136,11 @@ class Cards extends React.Component {
               title={"Successfully Purchased  " + this.state.product}
             />
           </Modal>
-        </Col>
+          </div>
       );
-      if (index % 3 == 0) {
-        return <Row gutter={20}>{rowGroup}</Row>;
-      }
-    });
-
-    return cardList;
-  }
+  });
+  return cardList;
+}
 }
 
 export default Cards;

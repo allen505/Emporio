@@ -151,7 +151,7 @@ app.post("/api/orders/buyer",jsonParser,(req,res)=>{
 			console.log(err)
 		} else {
 			connection.query(
-				`SELECT Pname, s.Name,Date, Quantity, c.Category, o.Price from products p, seller s, categories c, orders o where o.Sid=s.Sid and o.Bid= ? and o.Pid = p.Pid and p.Cid=c.Cid`,
+				`SELECT Pname, s.Name, DATE_FORMAT(Date,\'%m-%d-%Y\') as Date, Quantity, c.Category, o.Price from products p, seller s, categories c, orders o where o.Sid=s.Sid and o.Bid= ? and o.Pid = p.Pid and p.Cid=c.Cid`,
 				[requestData.Bid],
 				(error,result,fields) =>{
 					connection.release();

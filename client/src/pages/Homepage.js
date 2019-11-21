@@ -89,7 +89,6 @@ class Homepage extends React.Component {
 					// console.log("not matching")
 				}
 			});
-			console.log(this.state.displayList)
 		this.setState({
 			category: String(e.key)
 		});
