@@ -44,7 +44,6 @@ class RegistrationForm extends React.Component {
 			if (!err) {
 				values.accType = this.state.radioState;
 				delete values["confirm"];
-				console.log("Received values of form: ", values);
 				let register = () => {
 					fetch("/api/register", {
 						method: "POST",

@@ -28,34 +28,28 @@ class Cart extends React.Component{
 			{
 				title: "Product name",
 				dataIndex: "Pname",
-				width: "20%",
+				width: "22%",
 			},
 			{
 				title: "Seller name",
 				dataIndex: "Name",
-				width: "15%"
+				width: "12%"
             },
-            {
-				title: "Quantity",
-				dataIndex: "quantity",
-				width: "13%",
-				// sorter: (a, b) => a.price - b.price
-			},
 			{
 				title: "Category",
 				dataIndex: "category",
-				width: "13%"
+				width: "17%"
 			},
 			{
 				title: "Price",
 				dataIndex: "price",
-				width: "13%",
+				width: "17%",
 				sorter: (a, b) => a.price - b.price
             },
             {
                 title: "Date",
                 dataIndex: "date",
-                width: "15%"
+                width: "17%"
             }
             ]
             fetch("/api/orders/buyer",{
@@ -73,7 +67,6 @@ class Cart extends React.Component{
                         Pname: resp[i].Pname,
                         Name: resp[i].Name,
                         date: resp[i].Date,
-                        quantity: resp[i].Quantity,
                         category: resp[i].Category,
                         price: resp[i].Price
                     });
@@ -97,7 +90,6 @@ class Cart extends React.Component{
     // }
 
     render(){
-        console.log(this.state.data)
         return(
             <div >
                 <Layout className="layout" style={{ minHeight: "100vh" }}>
@@ -111,7 +103,7 @@ class Cart extends React.Component{
 					>
                         <h1>Order History</h1>
 						<Spin size="large" spinning={this.state.loading}>
-                        <Table columns={this.columns} dataSource={this.state.data} style={{padding:30}} pagination={{pageSize:5}}/>
+                        <Table bordered columns={this.columns} dataSource={this.state.data} style={{padding:30}} pagination={{pageSize:5}}/>
                                 <Link to="/homepage">
                                     <Button type="link" size="large">
                                         Go Home

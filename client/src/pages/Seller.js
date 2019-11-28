@@ -296,10 +296,10 @@ class EditableTable extends React.Component {
         newData[index].category = item.category;
         newData[index].key = item.key;
         updateObj=newData[index]
-        console.log("row = " + JSON.stringify(row));
-        console.log("item = " + JSON.stringify(item));
-        console.log("newData[index] = " + JSON.stringify(newData[index]));
-        console.log("updateObj = " + JSON.stringify(updateObj));
+        // console.log("row = " + JSON.stringify(row));
+        // console.log("item = " + JSON.stringify(item));
+        // console.log("newData[index] = " + JSON.stringify(newData[index]));
+        // console.log("updateObj = " + JSON.stringify(updateObj));
         fetch("/api/seller/update", {
           method: "POST",
           headers: {

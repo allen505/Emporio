@@ -62,14 +62,13 @@ class Nav extends React.Component {
     this.setState({
       values: items
     });
-    console.log(items);
   };
   onChange = value => {
     this.setState({ value });
   };
 
   onSearch = search => {
-    console.log(search);
+    // console.log(search);
   };
 
   logoutFunc = () => {

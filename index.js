@@ -67,7 +67,6 @@ app.post("/api/login", jsonParser, (req, res) => {
 app.post("/api/register", jsonParser, (req, res) => {
 	let requestData = req.body;
 	var addToLogin = `insert into login values(?,?,?)`;
-	console.log(requestData);
 
 	pool.getConnection((err, connection) => {
 		if (err) {
@@ -134,7 +133,6 @@ app.post("/api/orders", jsonParser, (req, res) => {
 
 				(error,result,fields) => {
 					//  console.log(error)
-					console.log(result)
 					res.send(result)
 				}
 			);
@@ -145,18 +143,16 @@ app.post("/api/orders", jsonParser, (req, res) => {
 
 app.post("/api/orders/buyer",jsonParser,(req,res)=>{
 	let requestData = req.body;
-	console.log(requestData)
 	pool.getConnection((err,connection) => {
 		if(err){
 			console.log(err)
 		} else {
 			connection.query(
-				`SELECT Pname, s.Name, DATE_FORMAT(Date,\'%m-%d-%Y\') as Date, Quantity, c.Category, o.Price from products p, seller s, categories c, orders o where o.Sid=s.Sid and o.Bid= ? and o.Pid = p.Pid and p.Cid=c.Cid`,
+				`SELECT Pname, s.Name, DATE_FORMAT(Date,\'%m-%d-%Y\') as Date, c.Category, o.Price from products p, seller s, categories c, orders o where o.Sid=s.Sid and o.Bid= ? and o.Pid = p.Pid and p.Cid=c.Cid`,
 				[requestData.Bid],
 				(error,result,fields) =>{
 					connection.release();
 					res.send(result);
-					console.log(result)
 				}
 			);
 		}
@@ -205,7 +201,6 @@ app.post("/api/seller/del", jsonParser, (req, res) => {
 
 app.post("/api/seller/update", jsonParser, (req, res) => {
 	let requestData = req.body;
-	console.log("Update data"+JSON.stringify(requestData))
 	pool.getConnection((err, connection) => {
 		if (err) {
 			console.log("Error in getting connection");
@@ -239,14 +234,13 @@ app.post("/api/seller/prods/input",jsonParser,(req,res) => {
 				requestData.sid,
 				requestData.cid,
 				requestData.pname,
-				requestData.desc,
+				requestData.description,
 				requestData.price,
 				requestData.quan
 			];
 			connection.query(inpquery,inparray, (err,result,fields) => {
 				connection.release();
 				res.send(result);
-				console.log(result)
 				console.log(err)
 			});
 		}
@@ -308,8 +302,6 @@ app.post("/api/admin/del",jsonParser,(req,res)=>{
 						connection.release();
 						console.log("Error = " + error);
 						res.send(result);
-						console.log(result)
-						console.log(fields)
 					}
 				);
 			}
@@ -322,14 +314,11 @@ app.post("/api/admin/del",jsonParser,(req,res)=>{
 						connection.release();
 						console.log("Error = " + error);
 						res.send(result);
-						console.log(result)
-						console.log(fields)
 					}
 				);
 			}
 		}
 	});
-	console.log(req.body)
 });
 
 app.get("/", (req, res) => res.send("Welcome to the Home Page"));
