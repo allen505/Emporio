@@ -178,13 +178,17 @@ class EditableTable extends React.Component {
               >
                 Edit
               </a>
-              <a
-                disabled={editingKey !== ""}
-                onClick={() => this.delete(record.key)}
-                style={{ padding: 5 }}
+              <Popconfirm
+                title="Sure to delete?"
+                onConfirm={() => this.delete(record.key)}
               >
-                Delete
-              </a>
+                <a
+                  disabled={editingKey !== ""}
+                  style={{ padding: 5 }}
+                >
+                  Delete
+                </a>
+              </Popconfirm>
             </div>
           );
         }
@@ -277,10 +281,10 @@ class EditableTable extends React.Component {
       loading: true
     }));
     form.validateFields((error, row) => {
-      // if (error) {
-      //   console.log("Error = "+JSON.stringify(error))
-      // 	return;
-      // }
+      if (error) {
+        console.log("Error = "+JSON.stringify(error))
+      	return;
+      }
       const newData = [...this.state.data];
       const index = newData.findIndex(item => key === item.key);
       let updateObj = {};

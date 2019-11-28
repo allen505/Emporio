@@ -2,8 +2,8 @@
 -- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 21, 2019 at 03:42 PM
+-- Host: localhost
+-- Generation Time: Nov 28, 2019 at 05:51 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.8
 
@@ -120,7 +120,13 @@ CREATE TABLE `orders` (
 INSERT INTO `orders` (`Oid`, `Bid`, `Sid`, `Pid`, `Date`, `Price`) VALUES
 (12, 1234, 22, 18, '2019-11-21 14:13:44', 11999),
 (13, 12, 22, 17, '2019-11-21 14:15:46', 69999),
-(14, 12, 22, 18, '2019-11-21 14:31:22', 11999);
+(14, 12, 22, 18, '2019-11-21 14:31:22', 11999),
+(15, 1234, 22, 13, '2019-11-21 14:55:27', 53999),
+(16, 1234, 12345, 21, '2019-11-21 14:55:32', 99999),
+(17, 1234, 22, 18, '2019-11-28 16:45:19', 11999),
+(18, 1234, 22, 18, '2019-11-28 16:46:24', 11999),
+(19, 1234, 12345, 21, '2019-11-28 16:46:28', 100),
+(20, 1234, 22, 19, '2019-11-28 16:46:45', 42000);
 
 --
 -- Triggers `orders`
@@ -151,20 +157,17 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`Pid`, `Sid`, `Cid`, `Pname`, `Descripton`, `Price`, `Quantity`) VALUES
-(13, 22, 200, 'Oneplus 7T', 'Nebula blue, 12GB RAM', 53999, 10),
+(13, 22, 200, 'Oneplus 7T', 'Nebula blue, 12GB RAM', 53999, 9),
 (14, 22, 203, 'Predator helios 300', 'GTX 1660 graphics card, 144Hz display', 78999, 3),
-(15, 22, 204, 'Audiotechnica', 'Noise cancelling high end audio equipment.', 1500, 7),
+(15, 22, 204, 'Audiotechnica', 'High end audio equipment.', 1500, 7),
 (16, 22, 202, 'PS4', '1TB storage, Sony\'s gaming station', 19999, 2),
 (17, 22, 201, 'Sony Bravia', 'Ultra HD curved screen.', 69999, 1),
-(18, 22, 200, 'Realme 3', 'Snapdragon 660, 6GB ram', 11999, 18),
-(19, 22, 201, 'Samsung QLED ', '55 inch, Ultra HD', 42000, 3),
+(18, 22, 200, 'Realme 3', 'Snapdragon 660, 6GB ram', 11999, 16),
+(19, 22, 201, 'Samsung QLED ', '55 inch, Ultra HD', 42000, 2),
 (20, 22, 203, 'HP Pavilion 15', 'GTX 1650, 8GB ram', 79999, 7),
-(21, 12345, 200, 'iPhone XS Max', 'IP68 rated, You are wasting your money', 99999, 60),
-(22, 12345, 204, 'Boat Rockers 500', 'Blast your ears with bass', 21000, 10),
-(23, 12345, 202, 'Xbox One', 'Microsoft entertainment system', 16000, 11),
-(24, 12345, 201, 'Xiaomi', 'Android TV', 15000, 9),
+(21, 12345, 200, 'iPhone XS ', 'Last year\'s Apples phone', 102, 27),
+(24, 12345, 201, 'LG TV', 'Android TV', 2000, 12),
 (25, 12345, 203, 'Alienware', 'Best laptop to ever existed', 150000, 2),
-(26, 12345, 202, 'Nintendo Switch', 'Classic portable gaming console', 25000, 6),
 (27, 12345, 202, 'Google Stadia', 'Google way to go for gaming', 65000, 4),
 (28, 12345, 204, 'Skull Candy', 'Bass heavy', 12000, 20);
 
@@ -256,7 +259,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `Oid` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `Oid` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `products`
