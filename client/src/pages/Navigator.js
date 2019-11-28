@@ -140,8 +140,8 @@ class Nav extends React.Component {
           disabled={this.state.cartDisabled}
         >
           <Link to="/cart">
-            <Icon type="shopping-cart" />
-            Cart
+            <Icon type="history" />
+            Order-History
           </Link>
         </Menu.Item>
       </Menu>

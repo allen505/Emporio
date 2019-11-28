@@ -10,7 +10,8 @@ import {
 	Button,
 	Typography,
 	Layout,
-	message
+	message,
+	InputNumber
 } from "antd";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { Redirect } from "react-router";
@@ -144,7 +145,7 @@ class RegistrationForm extends React.Component {
 								message: "Please input your phone number!"
 							}
 						]
-					})(<Input style={{ width: "100%" }} />)}
+					})(<InputNumber style={{ width: "100%" }} />)}
 				</Form.Item>
 			);
 		}
@@ -185,7 +186,7 @@ class RegistrationForm extends React.Component {
 					<Title>Register</Title>
 					<Row type="flex" align="center">
 						<Col
-							span={8}
+							span={10}
 							style={{
 								padding: "60px",
 								backgroundColor: "#ffffff",
@@ -222,7 +223,7 @@ class RegistrationForm extends React.Component {
 											}
 										]
 									})(
-										<Input placeholder="Do not forget your User ID!" />
+										<InputNumber placeholder="Do not forget your User ID!" style={{width:"100%"}} />
 									)}
 								</Form.Item>
 								<Form.Item {...formItemLayout} label="Name">
