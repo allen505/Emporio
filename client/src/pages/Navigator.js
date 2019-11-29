@@ -118,7 +118,7 @@ class Nav extends React.Component {
             />
           </Link>
         </Menu.Item>
-        <AutoComplete
+        {/* <AutoComplete
           showSearch
           dataSource={this.state.productList}
           style={{ width: 500, marginLeft: 20 }}
@@ -132,7 +132,7 @@ class Nav extends React.Component {
           <Input
             suffix={<Icon type="search" className="certain-category-icon" />}
           />
-        </AutoComplete>
+        </AutoComplete> */}
 
         <Menu.Item key="4" style={{ float: "right" }}>
           <this.loginButton />
