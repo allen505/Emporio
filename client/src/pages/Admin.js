@@ -169,7 +169,7 @@ class Admin extends React.Component {
 					}}
 				>
 					<Title level={3}>
-						"With great power comes great responsibilty" -Uncle Ben
+						"With great power comes great responsibilty"
 					</Title>
 					<Row type="flex" align="center">
 						<Col

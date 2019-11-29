@@ -217,8 +217,7 @@ class RegistrationForm extends React.Component {
 										rules: [
 											{
 												required: true,
-												message: "Please input your User ID!",
-												whitespace: true
+												message: "Please input your User ID!"
 											}
 										]
 									})(
