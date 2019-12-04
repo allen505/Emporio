@@ -469,7 +469,6 @@ class EditableTable extends React.Component {
               textAlign: "center"
             }}
           >
-<<<<<<< HEAD
             <h1>Seller Dashboard</h1>
              <Tabs defaultActivekey = "1">
               <TabPane
@@ -481,9 +480,6 @@ class EditableTable extends React.Component {
                 }
                 key="1"
               >
-=======
-            <Title style={{ fontWeight: 430 }}>Seller Dashboard</Title>
->>>>>>> d8137ef93441ec5c639f24ecc3046bb7a7704f70
             <Spin size="large" spinning={this.state.loading}>
               <Table
                 components={components}
