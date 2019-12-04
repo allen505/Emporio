@@ -108,15 +108,17 @@ class Nav extends React.Component {
 
     return (
       <Menu theme="light" mode="horizontal" style={{ lineHeight: "75px" }}>
-        <Menu.Item key="1" disabled>
+        <Menu.Item key="1">
           {/* <Icon component={() => <img src="../Images/logo.png" />} />
            */}
-          <img
-            src={require("../Images/logo.png")}
-            style={{ width: 150, height: 75 }}
-          />
+          <Link to="/">
+            <img
+              src={require("../Images/logo.png")}
+              style={{ width: 150, height: 75 }}
+            />
+          </Link>
         </Menu.Item>
-        <AutoComplete
+        {/* <AutoComplete
           showSearch
           dataSource={this.state.productList}
           style={{ width: 500, marginLeft: 20 }}
@@ -125,10 +127,12 @@ class Nav extends React.Component {
           placeholder="Search"
           onChange={this.onChange}
           value={this.state.value}
-          disabled={this.state.searchDisabled}
+          disabled={true}
         >
-          {/* <Input suffix={<Icon type="search" className="certain-category-icon" />} /> */}
-        </AutoComplete>
+          <Input
+            suffix={<Icon type="search" className="certain-category-icon" />}
+          />
+        </AutoComplete> */}
 
         <Menu.Item key="4" style={{ float: "right" }}>
           <this.loginButton />

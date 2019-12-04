@@ -174,118 +174,120 @@ class RegistrationForm extends React.Component {
 		);
 
 		return (
-			<Layout className="layout" style={{ minHeight: "100vh" }}>
-				<Content
-					style={{
-						padding: "75px 50px",
-						marginTop: 64,
-						textAlign: "center"
-					}}
-				>
-					<Title>Register</Title>
-					<Row type="flex" align="center">
-						<Col
-							span={10}
-							style={{
-								padding: "60px",
-								backgroundColor: "#ffffff",
-								borderRadius: "15px"
-							}}
-						>
-							<Form {...formItemLayout} onSubmit={this.handleSubmit}>
-								<Radio.Group
-									defaultValue="buyer"
-									buttonStyle="solid"
-									style={{ margin: "15px" }}
-									onChange={this.radioChange}
-								>
-									<Radio.Button value="buyer">Buyer</Radio.Button>
-									<Radio.Button value="seller">Seller</Radio.Button>
-								</Radio.Group>
-								<Form.Item
-									label={
-										<span>
-											User ID&nbsp;
-											<Tooltip title="This will be used for login">
-												<Icon type="question-circle-o" />
-											</Tooltip>
-										</span>
-									}
-								>
-									{" "}
-									{getFieldDecorator("userid", {
-										rules: [
-											{
-												required: true,
-												message: "Please input your User ID!",
-												whitespace: true
-											}
-										]
-									})(
-										<InputNumber placeholder="Do not forget your User ID!" style={{width:"100%"}} />
-									)}
-								</Form.Item>
-								<Form.Item {...formItemLayout} label="Name">
-									{getFieldDecorator("name", {
-										rules: [
-											{
-												required: true,
-												message: "Please input your name"
-											}
-										]
-									})(<Input placeholder="Please input your name" />)}
-								</Form.Item>
-								<Form.Item label="Password" hasFeedback>
-									{getFieldDecorator("password", {
-										rules: [
-											{
-												required: true,
-												message: "Please input your password!"
-											},
-											{
-												validator: this.validateToNextPassword
-											}
-										]
-									})(
-										<Input.Password placeholder="Do not forget your password either!" />
-									)}
-								</Form.Item>
-								<Form.Item label="Confirm Password" hasFeedback>
-									{getFieldDecorator("confirm", {
-										rules: [
-											{
-												required: true,
-												message: "Please confirm your password!"
-											},
-											{
-												validator: this.compareToFirstPassword
-											}
-										]
-									})(
-										<Input.Password
-											onBlur={this.handleConfirmBlur}
-											placeholder="Repeat password"
-										/>
-									)}
-								</Form.Item>
-								<this.extraFields />
-								<Button type="primary" htmlType="submit">
-									Register
-								</Button>
-							</Form>
-						</Col>
-					</Row>
-					<Link to="/homepage">
-						<Button type="link" size="large">
-							Go Home
-						</Button>
-					</Link>
-				</Content>
-				<Footer style={{ textAlign: "center" }}>
-					This project is created by Allen and Abbas
-				</Footer>
-			</Layout>
-		);
+      <Layout className="layout" style={{ minHeight: "100vh" }}>
+        <Content
+          style={{
+            padding: "75px 50px",
+            marginTop: 64,
+            textAlign: "center"
+          }}
+        >
+          <Title style={{ fontWeight: 430 }}>Register</Title>
+          <Row type="flex" align="center">
+            <Col
+              span={10}
+              style={{
+                padding: "60px",
+                backgroundColor: "#ffffff",
+                borderRadius: "15px"
+              }}
+            >
+              <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+                <Radio.Group
+                  defaultValue="buyer"
+                  buttonStyle="solid"
+                  style={{ margin: "15px" }}
+                  onChange={this.radioChange}
+                >
+                  <Radio.Button value="buyer">Buyer</Radio.Button>
+                  <Radio.Button value="seller">Seller</Radio.Button>
+                </Radio.Group>
+                <Form.Item
+                  label={
+                    <span>
+                      User ID&nbsp;
+                      <Tooltip title="This will be used for login">
+                        <Icon type="question-circle-o" />
+                      </Tooltip>
+                    </span>
+                  }
+                >
+                  {" "}
+                  {getFieldDecorator("userid", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please input your User ID!"
+                      }
+                    ]
+                  })(
+                    <InputNumber
+                      placeholder="Do not forget your User ID!"
+                      style={{ width: "100%" }}
+                    />
+                  )}
+                </Form.Item>
+                <Form.Item {...formItemLayout} label="Name">
+                  {getFieldDecorator("name", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please input your name"
+                      }
+                    ]
+                  })(<Input placeholder="Please input your name" />)}
+                </Form.Item>
+                <Form.Item label="Password" hasFeedback>
+                  {getFieldDecorator("password", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please input your password!"
+                      },
+                      {
+                        validator: this.validateToNextPassword
+                      }
+                    ]
+                  })(
+                    <Input.Password placeholder="Do not forget your password either!" />
+                  )}
+                </Form.Item>
+                <Form.Item label="Confirm Password" hasFeedback>
+                  {getFieldDecorator("confirm", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please confirm your password!"
+                      },
+                      {
+                        validator: this.compareToFirstPassword
+                      }
+                    ]
+                  })(
+                    <Input.Password
+                      onBlur={this.handleConfirmBlur}
+                      placeholder="Repeat password"
+                    />
+                  )}
+                </Form.Item>
+                <this.extraFields />
+                <Button type="primary" htmlType="submit">
+                  Register
+                </Button>
+              </Form>
+            </Col>
+          </Row>
+          <Link to="/homepage">
+            <Button type="link" size="large">
+              Go Home
+            </Button>
+          </Link>
+        </Content>
+        <Footer style={{ textAlign: "center" }}>
+          This project is created by Allen and Abbas
+        </Footer>
+      </Layout>
+    );
 	}
 }
 

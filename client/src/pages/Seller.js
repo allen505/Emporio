@@ -33,7 +33,7 @@ const cookies = new Cookies();
 
 const EditableContext = React.createContext();
 
-const TIME_OUT = 1000;
+const TIME_OUT = 2000;
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -185,10 +185,7 @@ class EditableTable extends React.Component {
                 title="Sure to delete?"
                 onConfirm={() => this.delete(record.key)}
               >
-                <a
-                  disabled={editingKey !== ""}
-                  style={{ padding: 5 }}
-                >
+                <a disabled={editingKey !== ""} style={{ padding: 5 }}>
                   Delete
                 </a>
               </Popconfirm>
@@ -330,8 +327,8 @@ class EditableTable extends React.Component {
     }));
     form.validateFields((error, row) => {
       if (error) {
-        console.log("Error = "+JSON.stringify(error))
-      	return;
+        console.log("Error = " + JSON.stringify(error));
+        return;
       }
       const newData = [...this.state.data];
       const index = newData.findIndex(item => key === item.key);
@@ -343,11 +340,7 @@ class EditableTable extends React.Component {
         });
         newData[index].category = item.category;
         newData[index].key = item.key;
-        updateObj=newData[index]
-        // console.log("row = " + JSON.stringify(row));
-        // console.log("item = " + JSON.stringify(item));
-        // console.log("newData[index] = " + JSON.stringify(newData[index]));
-        // console.log("updateObj = " + JSON.stringify(updateObj));
+        updateObj = newData[index];
         fetch("/api/seller/update", {
           method: "POST",
           headers: {
@@ -364,6 +357,11 @@ class EditableTable extends React.Component {
             this.setState(() => ({
               loading: false
             }));
+            // setTimeout(() => {
+            //   this.setState(() => ({
+            //     loading: false
+            //   }));
+            // }, TIME_OUT);
           });
         this.setState({ data: newData, editingKey: "" });
       } else {
@@ -433,11 +431,6 @@ class EditableTable extends React.Component {
   };
 
   render() {
-    // setTimeout(() => {
-    // 	this.setState(() => ({
-    // 		loading: false
-    // 	}));
-    // }, TIME_OUT);
     const { getFieldDecorator } = this.props.form;
     const components = {
       body: {
@@ -476,6 +469,7 @@ class EditableTable extends React.Component {
               textAlign: "center"
             }}
           >
+<<<<<<< HEAD
             <h1>Seller Dashboard</h1>
              <Tabs defaultActivekey = "1">
               <TabPane
@@ -487,6 +481,9 @@ class EditableTable extends React.Component {
                 }
                 key="1"
               >
+=======
+            <Title style={{ fontWeight: 430 }}>Seller Dashboard</Title>
+>>>>>>> d8137ef93441ec5c639f24ecc3046bb7a7704f70
             <Spin size="large" spinning={this.state.loading}>
               <Table
                 components={components}
@@ -498,6 +495,7 @@ class EditableTable extends React.Component {
                   onChange: this.cancel,
                   pageSize: 5
                 }}
+                style={{ background: "#FFFFFF", padding: 12, borderRadius: 7, marginBottom: 20 }}
               />
               <Button type="primary" onClick={this.show}>
                 Add product

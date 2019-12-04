@@ -87,91 +87,91 @@ class Login extends React.Component {
 		const { getFieldDecorator } = this.props.form;
 
 		return (
-			<Layout className="layout" style={{ minHeight: "100vh" }}>
-				<Content
-					style={{
-						padding: "75px 50px",
-						marginTop: 64,
-						textAlign: "center"
-					}}
-				>
-					<Title>Login</Title>
-					<Row type="flex" align="center">
-						<Col
-							span={8}
-							style={{
-								padding: "60px",
-								backgroundColor: "#ffffff",
-								borderRadius: "15px"
-							}}
-						>
-							<Form onSubmit={this.handleSubmit} className="login-form">
-								<Form.Item>
-									{getFieldDecorator("userid", {
-										rules: [
-											{
-												required: true,
-												message: "Please input your User ID!"
-											}
-										]
-									})(
-										<Input
-											prefix={
-												<Icon
-													type="user"
-													style={{ color: "rgba(0,0,0,.25)" }}
-												/>
-											}
-											placeholder="User ID"
-										/>
-									)}
-								</Form.Item>
-								<Form.Item>
-									{getFieldDecorator("password", {
-										rules: [
-											{
-												required: true,
-												message: "Please input your Password!"
-											}
-										]
-									})(
-										<Input
-											prefix={
-												<Icon
-													type="lock"
-													style={{ color: "rgba(0,0,0,.25)" }}
-												/>
-											}
-											type="password"
-											placeholder="Password"
-										/>
-									)}
-								</Form.Item>
-								<Form.Item>
-									<Button
-										type="primary"
-										htmlType="submit"
-										className="login-form-button"
-									>
-										Login
-									</Button>
-									<br />
-									Or <Link to="/register">Register now!</Link>
-								</Form.Item>
-							</Form>
-						</Col>
-					</Row>
-					<Link to="/homepage">
-						<Button type="link" size="large">
-							Go Home
-						</Button>
-					</Link>
-				</Content>
-				<Footer style={{ textAlign: "center" }}>
-					This project is created by Allen and Abbas
-				</Footer>
-			</Layout>
-		);
+      <Layout className="layout" style={{ minHeight: "100vh" }}>
+        <Content
+          style={{
+            padding: "75px 50px",
+            marginTop: 64,
+            textAlign: "center"
+          }}
+        >
+          <Title style={{ fontWeight: 430 }}>Login</Title>
+          <Row type="flex" align="center">
+            <Col
+              span={8}
+              style={{
+                padding: "60px",
+                backgroundColor: "#ffffff",
+                borderRadius: "15px"
+              }}
+            >
+              <Form onSubmit={this.handleSubmit} className="login-form">
+                <Form.Item>
+                  {getFieldDecorator("userid", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please input your User ID!"
+                      }
+                    ]
+                  })(
+                    <Input
+                      prefix={
+                        <Icon
+                          type="user"
+                          style={{ color: "rgba(0,0,0,.25)" }}
+                        />
+                      }
+                      placeholder="User ID"
+                    />
+                  )}
+                </Form.Item>
+                <Form.Item>
+                  {getFieldDecorator("password", {
+                    rules: [
+                      {
+                        required: true,
+                        message: "Please input your Password!"
+                      }
+                    ]
+                  })(
+                    <Input
+                      prefix={
+                        <Icon
+                          type="lock"
+                          style={{ color: "rgba(0,0,0,.25)" }}
+                        />
+                      }
+                      type="password"
+                      placeholder="Password"
+                    />
+                  )}
+                </Form.Item>
+                <Form.Item>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    className="login-form-button"
+                  >
+                    Login
+                  </Button>
+                  <br />
+                  Or <Link to="/register">Register now!</Link>
+                </Form.Item>
+              </Form>
+            </Col>
+          </Row>
+          <Link to="/homepage">
+            <Button type="link" size="large">
+              Go Home
+            </Button>
+          </Link>
+        </Content>
+        <Footer style={{ textAlign: "center" }}>
+          This project is created by Allen and Abbas
+        </Footer>
+      </Layout>
+    );
 	}
 }
 
