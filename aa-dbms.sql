@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 28, 2019 at 05:51 PM
+-- Generation Time: Dec 04, 2019 at 01:56 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.8
 
@@ -22,6 +22,19 @@ SET time_zone = "+00:00";
 -- Database: `aa-dbms`
 --
 
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `adminSumProc` ()  SELECT A.Date,A.maxName,A.maxTrans,B.minName, B.minTrans from
+(SELECT t1.Date, Name as maxName, maxTrans from adminSummary t1 inner JOIN ( select Date,max(maxTrans) Max from adminSummary GROUP BY Date) t2 on t1.Date=t2.date and t1.maxTrans=t2.Max) as A
+JOIN
+(SELECT t3.Date, Name as minName, minTrans from adminSummary t3 inner JOIN ( select Date,min(minTrans) Min from adminSummary GROUP BY Date) t4 on t3.Date=t4.date and t3.minTrans=t4.Min) as B
+ON A.Date=B.Date
+ORDER BY `A`.`Date` DESC$$
+
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -31,6 +44,21 @@ SET time_zone = "+00:00";
 CREATE TABLE `admin` (
 `type` varchar(6)
 ,`name` varchar(20)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `adminSummary`
+-- (See below for the actual view)
+--
+CREATE TABLE `adminSummary` (
+`SID` int(11)
+,`Name` varchar(20)
+,`Date` varchar(10)
+,`no_of_orders` bigint(21)
+,`maxTrans` int(11)
+,`minTrans` int(11)
 );
 
 -- --------------------------------------------------------
@@ -51,6 +79,7 @@ CREATE TABLE `buyer` (
 
 INSERT INTO `buyer` (`Bid`, `Name`, `Location`) VALUES
 (12, 'Joe', 'Kolkata, Bengal'),
+(13, 'Rocky Bhai', 'Wakanda, Rio'),
 (1234, 'Allen', 'Bangalore, Karnataka');
 
 -- --------------------------------------------------------
@@ -93,7 +122,9 @@ CREATE TABLE `login` (
 
 INSERT INTO `login` (`Lid`, `Password`, `Type`) VALUES
 (12, '$2b$05$2/BwbCO0C0FJhNBf2UGjm.1CgsMGvYUzLizSZi.PCyJagUkZWdi8e', 'buyer'),
+(13, '$2b$05$aLXnzjC2jJKFt/yyXLHoOuWNeFIoqCyq1WgYofRRRPaGi/jXahZFC', 'buyer'),
 (22, '$2b$05$xj.BHAdkdiaOSFbJn3KZleFoNKfefI0BZSBwsxTHrUjnq17pDNFNu', 'seller'),
+(23, '$2b$05$OhWC95VPyTO0e5usMgzw0.OC7gfWanmPo.vNbYaJwrUio.utdaSve', 'seller'),
 (123, '$2b$05$iP/GKVwPRef82yPWnhV57eHF211LuS6xsgGakXi.jPjubfo.6FUUi', 'admin'),
 (1234, '$2b$05$Pj/2mE1D.aU7C/3UTJ6bZObU10O0CRasXIJ6b8QGHvgE38mYWhF/6', 'buyer'),
 (12345, '$2b$05$Loq4CgHtsv2nEmgKFuEosubGxhtn/oaxczZxPb9rk67/UnJLAUGEe', 'seller');
@@ -126,7 +157,15 @@ INSERT INTO `orders` (`Oid`, `Bid`, `Sid`, `Pid`, `Date`, `Price`) VALUES
 (17, 1234, 22, 18, '2019-11-28 16:45:19', 11999),
 (18, 1234, 22, 18, '2019-11-28 16:46:24', 11999),
 (19, 1234, 12345, 21, '2019-11-28 16:46:28', 100),
-(20, 1234, 22, 19, '2019-11-28 16:46:45', 42000);
+(20, 1234, 22, 19, '2019-11-28 16:46:45', 42000),
+(22, 1234, 12345, 24, '2019-11-28 16:59:04', 2000),
+(23, 1234, 12345, 27, '2019-11-29 01:40:18', 65000),
+(25, 13, 23, 31, '2019-11-29 01:44:09', 30000),
+(26, 1234, 12345, 29, '2019-11-29 04:21:41', 10000),
+(27, 1234, 22, 16, '2019-11-29 04:22:59', 19999),
+(28, 1234, 22, 18, '2019-12-01 09:51:59', 11999),
+(29, 1234, 12345, 21, '2019-12-01 09:52:04', 105),
+(30, 1234, 12345, 21, '2019-12-04 05:45:05', 105);
 
 --
 -- Triggers `orders`
@@ -160,16 +199,19 @@ INSERT INTO `products` (`Pid`, `Sid`, `Cid`, `Pname`, `Descripton`, `Price`, `Qu
 (13, 22, 200, 'Oneplus 7T', 'Nebula blue, 12GB RAM', 53999, 9),
 (14, 22, 203, 'Predator helios 300', 'GTX 1660 graphics card, 144Hz display', 78999, 3),
 (15, 22, 204, 'Audiotechnica', 'High end audio equipment.', 1500, 7),
-(16, 22, 202, 'PS4', '1TB storage, Sony\'s gaming station', 19999, 2),
+(16, 22, 202, 'PS4', '1TB storage, Sony\'s gaming station', 19999, 1),
 (17, 22, 201, 'Sony Bravia', 'Ultra HD curved screen.', 69999, 1),
-(18, 22, 200, 'Realme 3', 'Snapdragon 660, 6GB ram', 11999, 16),
+(18, 22, 200, 'Realme 3', 'Snapdragon 660, 6GB ram', 11999, 15),
 (19, 22, 201, 'Samsung QLED ', '55 inch, Ultra HD', 42000, 2),
 (20, 22, 203, 'HP Pavilion 15', 'GTX 1650, 8GB ram', 79999, 7),
-(21, 12345, 200, 'iPhone XS ', 'Last year\'s Apples phone', 102, 27),
-(24, 12345, 201, 'LG TV', 'Android TV', 2000, 12),
+(21, 12345, 200, 'iPhone XS ', 'Last year\'s iPhone', 105, 27),
+(24, 12345, 201, 'LG TV', 'Android TV', 2000, 11),
 (25, 12345, 203, 'Alienware', 'Best laptop to ever existed', 150000, 2),
-(27, 12345, 202, 'Google Stadia', 'Google way to go for gaming', 65000, 4),
-(28, 12345, 204, 'Skull Candy', 'Bass heavy', 12000, 20);
+(27, 12345, 202, 'Google Stadia', 'Google way to go for gaming', 65000, 3),
+(28, 12345, 204, 'Skull Candy', 'Bass heavy', 12000, 20),
+(29, 12345, 200, 'Redmi Note10', 'Xiaomi\'s new phone', 10000, 24),
+(30, 12345, 200, 'Oppo', 'Oppo\'s phone', 20000, 23),
+(31, 23, 202, 'XBox One S', 'Free Game bundle', 30000, 9);
 
 -- --------------------------------------------------------
 
@@ -189,6 +231,7 @@ CREATE TABLE `seller` (
 
 INSERT INTO `seller` (`Sid`, `Name`, `Contact`) VALUES
 (22, 'Robert', 98547612),
+(23, 'Tyrion', 112233),
 (12345, 'Abbas', 865426314);
 
 -- --------------------------------------------------------
@@ -199,6 +242,15 @@ INSERT INTO `seller` (`Sid`, `Name`, `Contact`) VALUES
 DROP TABLE IF EXISTS `admin`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `admin`  AS  select 'buyer' AS `type`,`buyer`.`Name` AS `name` from `buyer` union select 'seller' AS `seller`,`seller`.`Name` AS `name` from `seller` ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `adminSummary`
+--
+DROP TABLE IF EXISTS `adminSummary`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `adminSummary`  AS  select `o`.`Sid` AS `SID`,`s`.`Name` AS `Name`,date_format(`o`.`Date`,'%m-%d-%Y') AS `Date`,count(0) AS `no_of_orders`,max(`o`.`Price`) AS `maxTrans`,min(`o`.`Price`) AS `minTrans` from (`orders` `o` join `seller` `s`) where `s`.`Sid` = `o`.`Sid` group by `o`.`Sid`,date_format(`o`.`Date`,'%m-%d-%Y') order by 3 desc ;
 
 --
 -- Indexes for dumped tables
@@ -259,13 +311,13 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `Oid` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `Oid` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `Pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `Pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- Constraints for dumped tables

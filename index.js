@@ -321,7 +321,20 @@ app.post("/api/admin/del",jsonParser,(req,res)=>{
 	});
 });
 
+app.get("/api/adminSumm", (req, res) => {
+  pool.getConnection((error, connection) => {
+    if (error) throw error;
+    else {
+      connection.query("CALL `adminSumProc`();", (error, result, fields) => {
+        res.send(result);
+      });
+    }
+    connection.release();
+  });
+});
+
 app.get("/", (req, res) => res.send("Welcome to the Home Page"));
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 let hashed = "";

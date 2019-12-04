@@ -293,10 +293,6 @@ class EditableTable extends React.Component {
         newData[index].category = item.category;
         newData[index].key = item.key;
         updateObj = newData[index];
-        // console.log("row = " + JSON.stringify(row));
-        // console.log("item = " + JSON.stringify(item));
-        // console.log("newData[index] = " + JSON.stringify(newData[index]));
-        // console.log("updateObj = " + JSON.stringify(updateObj));
         fetch("/api/seller/update", {
           method: "POST",
           headers: {
@@ -425,7 +421,7 @@ class EditableTable extends React.Component {
               textAlign: "center"
             }}
           >
-            <h1>Seller Dashboard</h1>
+            <Title style={{ fontWeight: 430 }}>Seller Dashboard</Title>
             <Spin size="large" spinning={this.state.loading}>
               <Table
                 components={components}
@@ -437,6 +433,7 @@ class EditableTable extends React.Component {
                   onChange: this.cancel,
                   pageSize: 5
                 }}
+                style={{ background: "#FFFFFF", padding: 12, borderRadius: 7, marginBottom: 20 }}
               />
               <Button type="primary" onClick={this.show}>
                 Add product

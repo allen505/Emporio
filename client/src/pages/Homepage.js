@@ -8,6 +8,7 @@ import {
 	Button,
 	Row,
 	Col,
+	BackTop,
 	Carousel,
 	Dropdown,
 	Card
@@ -116,70 +117,80 @@ class Homepage extends React.Component {
 	}
 	render() {
 		return (
-			<Layout className="layout">
-				<Nav
-					product={this.state.productList}
-					loggedin={this.state.loggedin}
-				/>
-				<Content style={{ padding: "0 10px" }}>
-					<div align="center" style={{ padding: "10px" }}>
-						Categories :{" "}
-						<Dropdown.Button
-							overlay={this.menu}
-							trigger={["click"]}
-							icon={<Icon type="down" />}
-						>
-							{this.state.category}
-						</Dropdown.Button>
-					</div>
-					<div style={{ padding: 20 }}>
-						<Carousel autoplay style={{ padding: "10px 0" }}>
-							<div align="center">
-								<img
-									src={require("../Images/mobile.jpg")}
-									alt="Please display"
-									height="400"
-									width="1500"
-								/>
-							</div>
-							<div align="center">
-								<img
-									src={require("../Images/laptop.jpg")}
-									alt="Please display"
-									height="400"
-									width="1500"
-								/>
-							</div>
-							<div align="center">
-								<img
-									src={require("../Images/television.jpg")}
-									alt="Please display"
-									height="400"
-									width="1500"
-								/>
-							</div>
-							<div align="center">
-								<img
-									src={require("../Images/headphone.jpg")}
-									alt="Please display"
-									height="400"
-									width="1500"
-								/>
-							</div>
-							<div align="center">
-								<img
-									src={require("../Images/consoles.jpg")}
-									alt="Please display"
-									height="400"
-									width="1500"
-								/>
-							</div>
-						</Carousel>
-						<this.productArea />
-					</div>
-				</Content>
-			</Layout>
-		);
+      <Layout className="layout">
+        <BackTop>
+          <div
+            className="ant-back-top-inner"
+            style={{
+              padding: 21,
+              paddingRight: 34,
+              background: "	#C0C0C0",
+              borderRadius: 7
+            }}
+          >
+            <Icon type="up" />
+          </div>
+        </BackTop>
+        <Nav product={this.state.productList} loggedin={this.state.loggedin} />
+        <Content style={{ padding: "0 10px" }}>
+          <div align="center" style={{ padding: "10px" }}>
+            Categories :{" "}
+            <Dropdown.Button
+              overlay={this.menu}
+              trigger={["click"]}
+              icon={<Icon type="down" />}
+            >
+              {this.state.category}
+            </Dropdown.Button>
+          </div>
+          <div style={{ padding: 20 }}>
+            <Carousel autoplay style={{ padding: "10px 0" }}>
+              <div align="center">
+                <img
+                  src={require("../Images/mobile.jpg")}
+                  alt="Please display"
+                  height="400"
+                  width="1500"
+                />
+              </div>
+              <div align="center">
+                <img
+                  src={require("../Images/laptop.jpg")}
+                  alt="Please display"
+                  height="400"
+                  width="1500"
+                />
+              </div>
+              <div align="center">
+                <img
+                  src={require("../Images/television.jpg")}
+                  alt="Please display"
+                  height="400"
+                  width="1500"
+                />
+              </div>
+              <div align="center">
+                <img
+                  src={require("../Images/headphone.jpg")}
+                  alt="Please display"
+                  height="400"
+                  width="1500"
+                />
+              </div>
+              <div align="center">
+                <img
+                  src={require("../Images/consoles.jpg")}
+                  alt="Please display"
+                  height="400"
+                  width="1500"
+                />
+              </div>
+            </Carousel>
+            <this.productArea />
+          </div>
+        </Content>
+      </Layout>
+    );
 	}
 }
 export default Homepage;
