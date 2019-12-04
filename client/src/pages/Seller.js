@@ -15,7 +15,8 @@ import {
   Modal,
   Select,
   Upload,
-  Icon
+  Icon,
+  Tabs
 } from "antd";
 import Cookies from "universal-cookie";
 
@@ -25,6 +26,7 @@ const { Title } = Typography;
 const { Option } = Select;
 const { Header, Content, Footer } = Layout;
 const { TextArea } = Input;
+const { TabPane } = Tabs;
 const cookies = new Cookies();
 
 // const data = [];
@@ -97,7 +99,8 @@ class EditableTable extends React.Component {
       loading: true,
       visible: false,
       categories: [],
-      categoryid: {}
+      categoryid: {},
+      summary: []
     };
     try {
       this.state.auth = cookies.get("auth");
@@ -194,6 +197,28 @@ class EditableTable extends React.Component {
         }
       }
     ];
+    this.sumcolumn = [
+      {
+        title: "Buyer",
+        dataIndex: "bname",
+        width: "25%"
+      },
+      {
+        title: "Product name",
+        dataIndex: "pname",
+        width: "25%"
+      },
+      {
+        title: "Date",
+        dataIndex: "date",
+        width: "25%"
+      },
+      {
+        title: "Address",
+        dataIndex: "location",
+        width: "25%"
+      }
+    ];
     this.updateData();
   }
 
@@ -213,6 +238,29 @@ class EditableTable extends React.Component {
           categories: cate,
           categoryid: cid
         });
+      });
+
+      fetch("api/orders/summary", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8"
+        },
+        body: JSON.stringify({Sid:this.state.userid})
+      })
+      .then(res => res.json())
+      .then(resp => {
+        let tempdata = [];
+        for(let i = 0;i<resp.length;i++){
+          tempdata.push({
+            bname: resp[i].name,
+            pname: resp[i].pname,
+            date: resp[i].date,
+            location: resp[i].location
+          });
+        }
+        this.setState(() => ({
+          summary : tempdata
+        }))
       });
   };
 
@@ -429,6 +477,16 @@ class EditableTable extends React.Component {
             }}
           >
             <h1>Seller Dashboard</h1>
+             <Tabs defaultActivekey = "1">
+              <TabPane
+                tab={
+                  <span>
+                    <Icon type="unordered-list" />
+                    Product list
+                  </span>
+                }
+                key="1"
+              >
             <Spin size="large" spinning={this.state.loading}>
               <Table
                 components={components}
@@ -521,9 +579,27 @@ class EditableTable extends React.Component {
                 </Form>
               </Modal>
             </Spin>
+            </TabPane>
+            <TabPane
+              tab={
+                <span>
+                  <Icon type="history" />
+                  Purchase summary
+                </span>
+              }
+              key="2"
+            ><Spin size="large" spinning={this.state.loading}>
+              <Table 
+                bordered 
+                columns={this.sumcolumn} 
+                dataSource={this.state.summary} 
+                pagination={{pageSize:5}}/>
+                </Spin>
+            </TabPane>
+          </Tabs>
           </Content>
         </Layout>
-      </EditableContext.Provider>
+      </EditableContext.Provider> 
     );
   }
 }

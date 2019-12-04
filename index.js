@@ -159,6 +159,24 @@ app.post("/api/orders/buyer",jsonParser,(req,res)=>{
 	});
 });
 
+app.post("/api/orders/summary", jsonParser,(req,res) => {
+	let requestData = req.body;
+	pool.getConnection((err,connection) => {
+		if(err){
+			console.log(err)
+		} else {
+			connection.query(
+				`SELECT b.name, p.pname , DATE_FORMAT(Date,\'%m-%d-%Y\') as date,b.location from orders o, buyer b, products p where o.Pid=p.pid and o.bid = b.Bid and o.sid= ? order by date desc`,
+				[requestData.Sid],
+				(error,result,fields) => {
+					res.send(result);
+					connection.release();
+				}
+			);
+		}
+	});
+});
+
 app.post("/api/seller/prods", jsonParser, (req, res) => {
 	let requestData = req.body;
 
