@@ -353,7 +353,6 @@ class EditableTable extends React.Component {
             console.log(err);
           })
           .then(resp => {
-            console.log("Update response = " + JSON.stringify(resp));
             this.setState(() => ({
               loading: false
             }));
