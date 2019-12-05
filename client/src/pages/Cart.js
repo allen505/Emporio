@@ -1,10 +1,12 @@
+/* eslint-disable */
 import React from "react";
-import { Card, Icon, Button, Table,Layout,Spin } from "antd";
+import { Button, Table,Layout,Spin } from "antd";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 import Cookies from "universal-cookie"
 
 import Nav from "./Navigator";
+
 const { Header, Content, Footer } = Layout;
 
 const cookies = new Cookies();

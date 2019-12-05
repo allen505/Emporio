@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from "react";
 import { BrowserRouter as Link } from "react-router-dom";
 
@@ -14,13 +15,13 @@ import {
   Button,
   Modal,
   Select,
-  Upload,
   Icon,
   Tabs
 } from "antd";
 import Cookies from "universal-cookie";
 
 import Nav from "./Navigator";
+/* eslint-disable */
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -29,13 +30,12 @@ const { TextArea } = Input;
 const { TabPane } = Tabs;
 const cookies = new Cookies();
 
-// const data = [];
 
 const EditableContext = React.createContext();
 
-const TIME_OUT = 2000;
+// const TIME_OUT = 2000;
 
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ────────────────────────────────────────────────────────────────────────────────
 
 class EditableCell extends React.Component {
   getInput = () => {
@@ -86,7 +86,7 @@ class EditableCell extends React.Component {
   }
 }
 
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ────────────────────────────────────────────────────────────────────────────────
 
 class EditableTable extends React.Component {
   constructor(props) {
@@ -430,6 +430,10 @@ class EditableTable extends React.Component {
     });
   };
 
+  //
+  // ─── RENDER ─────────────────────────────────────────────────────────────────────
+  //
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const components = {
@@ -457,6 +461,8 @@ class EditableTable extends React.Component {
         })
       };
     });
+
+    // ─────────────────────────────────────────────────────────────────
 
     return (
       <EditableContext.Provider value={this.props.form}>
@@ -610,30 +616,6 @@ class EditableTable extends React.Component {
   }
 }
 
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 const Seller = Form.create()(EditableTable);
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-// class Seller extends React.Component {
-// 	constructor(props) {
-// 		super(props);
-// 		this.state = { userid: null };
-// 		try {
-// 			this.state.userid = props.location.state.id;
-// 		} catch (e) {
-// 			// this.props.history.push("/accessdenied");
-// 		}
-// 	}
-
-// 	render() {
-// 		return (
-// 			<div>
-// 				<p>This is the Sellers' page</p>
-// 			</div>
-// 		);
-// 	}
-// }
 
 export default Seller;

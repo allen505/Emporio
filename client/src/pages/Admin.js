@@ -1,20 +1,14 @@
+/* eslint-disable */
 import React, { Profiler } from "react";
 import { Link } from "react-router-dom";
 
 import {
   Typography,
-  Form,
-  Tooltip,
   Icon,
-  Menu,
-  Input,
-  Select,
   Row,
   Col,
   Radio,
-  Button,
   Layout,
-  message,
   List,
   Table,
   Popconfirm,
@@ -33,7 +27,7 @@ class Admin extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // loading : true
+      loading : true,
       radioState: "buyer",
       auth: false,
       currentMenu: "users",
@@ -61,6 +55,9 @@ class Admin extends React.Component {
   };
 
   datafetch = () => {
+    this.setState({
+      loading: true
+    });
     fetch("/api/admin")
       .then(res => {
         return res.json();
@@ -76,6 +73,7 @@ class Admin extends React.Component {
           }
         });
         this.setState({
+          loading: false,
           blist: buyerlist,
           slist: sellerlist
         });
@@ -104,6 +102,9 @@ class Admin extends React.Component {
   };
 
   componentDidMount() {
+    this.setState({
+      loading: true
+    });
     this.datafetch();
     fetch("/api/adminSumm")
       .then(res => {
@@ -121,10 +122,9 @@ class Admin extends React.Component {
             minTrans: "₹ " + summ.minTrans
           });
         });
-        console.log(data);
-        console.log(tmpSumm);
         this.setState({
-          summary: tmpSumm
+          summary: tmpSumm,
+          loading:false
         });
       });
   }
@@ -185,6 +185,10 @@ class Admin extends React.Component {
     }
   };
 
+//
+// ─── RENDER ─────────────────────────────────────────────────────────────────────
+//
+
   render() {
     // setTimeout(() => {
     // 	this.setState(() => ({
@@ -234,6 +238,8 @@ class Admin extends React.Component {
         ]
       }
     ];
+
+    // ─────────────────────────────────────────────────────────────────
 
     return (
       <Layout className="layout" style={{ minHeight: "100vh" }}>

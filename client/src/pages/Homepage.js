@@ -1,19 +1,17 @@
+/* eslint-disable */
 import React from "react";
 import {
 	Menu,
 	Icon,
 	Typography,
 	Layout,
-	Input,
-	Button,
-	Row,
-	Col,
 	BackTop,
 	Carousel,
-	Dropdown,
-	Card
+	Dropdown
 } from "antd";
+
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+
 import Cookies from "universal-cookie";
 
 import Cards from "./Cards";

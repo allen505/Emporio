@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {
 	Form,
 	Tooltip,
@@ -13,6 +14,7 @@ import {
 	message,
 	InputNumber
 } from "antd";
+
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { Redirect } from "react-router";
 

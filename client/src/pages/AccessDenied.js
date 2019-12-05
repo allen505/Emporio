@@ -1,6 +1,6 @@
+/* eslint-disable */
 import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-
 import { Result, Button } from "antd";
 
 const AccessDenied = () => {

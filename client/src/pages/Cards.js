@@ -1,16 +1,13 @@
+/* eslint-disable */
 import React from "react";
 import {
   Card,
-  Icon,
   Button,
   Result,
-  Popover,
   Modal,
-  Alert,
-  Row,
-  Col,
   message
 } from "antd";
+
 import {
   BrowserRouter as Router,
   Route,
@@ -18,6 +15,7 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
+
 import Cookies from "universal-cookie";
 
 const cookies = new Cookies();

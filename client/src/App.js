@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from "react";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
@@ -5,6 +6,7 @@ import { Button, Layout } from "antd";
 import "./App.css";
 
 import routes from "./routing";
+
 
 const Homepage1 = () => {
 	return (
