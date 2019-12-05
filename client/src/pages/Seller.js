@@ -470,7 +470,7 @@ class EditableTable extends React.Component {
             }}
           >
             <h1>Seller Dashboard</h1>
-             <Tabs defaultActivekey = "1">
+            <Tabs defaultActivekey="1">
               <TabPane
                 tab={
                   <span>
@@ -480,120 +480,132 @@ class EditableTable extends React.Component {
                 }
                 key="1"
               >
-            <Spin size="large" spinning={this.state.loading}>
-              <Table
-                components={components}
-                bordered
-                dataSource={this.state.data}
-                columns={columns}
-                rowClassName="editable-row"
-                pagination={{
-                  onChange: this.cancel,
-                  pageSize: 5
-                }}
-                style={{ background: "#FFFFFF", padding: 12, borderRadius: 7, marginBottom: 20 }}
-              />
-              <Button type="primary" onClick={this.show}>
-                Add product
-              </Button>
-              <Modal
-                title="Product Input"
-                visible={this.state.visible}
-                // onOk={this.handleSubmit}
-                onCancel={this.handleCancel}
-                // okButtonProps={{visible:false}}
-                footer={null}
-              >
-                <Form
-                  {...formItemLayout}
-                  onSubmit={this.handleSubmit}
-                  layout="horizontal"
-                >
-                  <Form.Item label="Name">
-                    {getFieldDecorator("name", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Please enter Product Name"
-                        }
-                      ]
-                    })(<Input />)}
-                  </Form.Item>
-                  <Form.Item label="Category" hasFeedback>
-                    {getFieldDecorator("category", {
-                      rules: [
-                        {
-                          required: false,
-                          message: "Please select Category"
-                        }
-                      ]
-                    })(
-                      <Select placeholder="Please select category">
-                        {this.state.categories.map(category => (
-                          <Option value={category}>{category}</Option>
-                        ))}
-                      </Select>
-                    )}
-                  </Form.Item>
-                  <Form.Item label="Description">
-                    {getFieldDecorator("description", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Please enter Description"
-                        }
-                      ]
-                    })(<TextArea />)}
-                  </Form.Item>
-                  <Form.Item label="Quantity">
-                    {getFieldDecorator("quantity", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Enter Quantity"
-                        }
-                      ]
-                    })(<InputNumber min={1} />)}
-                  </Form.Item>
-                  <Form.Item label="Price">
-                    {getFieldDecorator("price", {
-                      rules: [
-                        {
-                          required: true,
-                          message: "Enter Price"
-                        }
-                      ]
-                    })(<InputNumber min={1} />)}
-                  </Form.Item>
-                  <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
-                    <Button type="primary" htmlType="submit">
-                      Submit
-                    </Button>
-                  </Form.Item>
-                </Form>
-              </Modal>
-            </Spin>
-            </TabPane>
-            <TabPane
-              tab={
-                <span>
-                  <Icon type="history" />
-                  Purchase summary
-                </span>
-              }
-              key="2"
-            ><Spin size="large" spinning={this.state.loading}>
-              <Table 
-                bordered 
-                columns={this.sumcolumn} 
-                dataSource={this.state.summary} 
-                pagination={{pageSize:5}}/>
+                <Spin size="large" spinning={this.state.loading}>
+                  <Table
+                    components={components}
+                    bordered
+                    dataSource={this.state.data}
+                    columns={columns}
+                    rowClassName="editable-row"
+                    pagination={{
+                      onChange: this.cancel,
+                      pageSize: 5
+                    }}
+                    style={{
+                      background: "#FFFFFF",
+                      padding: 12,
+                      borderRadius: 7,
+                      marginBottom: 20
+                    }}
+                  />
+                  <Button type="primary" onClick={this.show}>
+                    Add product
+                  </Button>
+                  <Modal
+                    title="Product Input"
+                    visible={this.state.visible}
+                    // onOk={this.handleSubmit}
+                    onCancel={this.handleCancel}
+                    // okButtonProps={{visible:false}}
+                    footer={null}
+                  >
+                    <Form
+                      {...formItemLayout}
+                      onSubmit={this.handleSubmit}
+                      layout="horizontal"
+                    >
+                      <Form.Item label="Name">
+                        {getFieldDecorator("name", {
+                          rules: [
+                            {
+                              required: true,
+                              message: "Please enter Product Name"
+                            }
+                          ]
+                        })(<Input />)}
+                      </Form.Item>
+                      <Form.Item label="Category" hasFeedback>
+                        {getFieldDecorator("category", {
+                          rules: [
+                            {
+                              required: false,
+                              message: "Please select Category"
+                            }
+                          ]
+                        })(
+                          <Select placeholder="Please select category">
+                            {this.state.categories.map(category => (
+                              <Option value={category}>{category}</Option>
+                            ))}
+                          </Select>
+                        )}
+                      </Form.Item>
+                      <Form.Item label="Description">
+                        {getFieldDecorator("description", {
+                          rules: [
+                            {
+                              required: true,
+                              message: "Please enter Description"
+                            }
+                          ]
+                        })(<TextArea />)}
+                      </Form.Item>
+                      <Form.Item label="Quantity">
+                        {getFieldDecorator("quantity", {
+                          rules: [
+                            {
+                              required: true,
+                              message: "Enter Quantity"
+                            }
+                          ]
+                        })(<InputNumber min={1} />)}
+                      </Form.Item>
+                      <Form.Item label="Price">
+                        {getFieldDecorator("price", {
+                          rules: [
+                            {
+                              required: true,
+                              message: "Enter Price"
+                            }
+                          ]
+                        })(<InputNumber min={1} />)}
+                      </Form.Item>
+                      <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
+                        <Button type="primary" htmlType="submit">
+                          Submit
+                        </Button>
+                      </Form.Item>
+                    </Form>
+                  </Modal>
                 </Spin>
-            </TabPane>
-          </Tabs>
+              </TabPane>
+              <TabPane
+                tab={
+                  <span>
+                    <Icon type="history" />
+                    Purchase summary
+                  </span>
+                }
+                key="2"
+              >
+                <Spin size="large" spinning={this.state.loading}>
+                  <Table
+                    bordered
+                    columns={this.sumcolumn}
+                    dataSource={this.state.summary}
+                    pagination={{ pageSize: 5 }}
+                    style={{
+                      background: "#FFFFFF",
+                      padding: 12,
+                      borderRadius: 7
+                    }}
+                  />
+                </Spin>
+              </TabPane>
+            </Tabs>
           </Content>
         </Layout>
-      </EditableContext.Provider> 
+      </EditableContext.Provider>
     );
   }
 }

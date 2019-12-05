@@ -17,7 +17,8 @@ import {
   message,
   List,
   Table,
-  Popconfirm
+  Popconfirm,
+  Tabs
 } from "antd";
 import Cookies from "universal-cookie";
 
@@ -25,6 +26,7 @@ import Nav from "./Navigator";
 
 const { Title } = Typography;
 const { Header, Content, Footer } = Layout;
+const { TabPane } = Tabs;
 const cookies = new Cookies();
 
 class Admin extends React.Component {
@@ -57,31 +59,6 @@ class Admin extends React.Component {
       radioState: selected.target.value
     });
   };
-
-  componentDidMount() {
-    fetch("/api/adminSumm")
-      .then(res => {
-        return res.json();
-      })
-      .then(data => {
-        let tmpSumm = [];
-        data = data[0];
-        data.map(summ => {
-          tmpSumm.push({
-            date: summ.Date,
-            maxName: summ.maxName,
-            maxTrans: "₹ " + summ.maxTrans,
-            minName: summ.minName,
-            minTrans: "₹ " + summ.minTrans
-          });
-        });
-        console.log(data);
-        console.log(tmpSumm);
-        this.setState({
-          summary: tmpSumm
-        });
-      });
-  }
 
   datafetch = () => {
     fetch("/api/admin")
@@ -126,15 +103,35 @@ class Admin extends React.Component {
       });
   };
 
-  menuClick = e => {
-    this.setState({
-      currentMenu: e.key
-    });
-  };
+  componentDidMount() {
+    this.datafetch();
+    fetch("/api/adminSumm")
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        let tmpSumm = [];
+        data = data[0];
+        data.map(summ => {
+          tmpSumm.push({
+            date: summ.Date,
+            maxName: summ.maxName,
+            maxTrans: "₹ " + summ.maxTrans,
+            minName: summ.minName,
+            minTrans: "₹ " + summ.minTrans
+          });
+        });
+        console.log(data);
+        console.log(tmpSumm);
+        this.setState({
+          summary: tmpSumm
+        });
+      });
+  }
 
   adminlist = e => {
     // const {loading} = this.state
-    this.datafetch();
+
     if (e.value == "seller") {
       return (
         <List
@@ -188,97 +185,6 @@ class Admin extends React.Component {
     }
   };
 
-  menulist = e => {
-    if (this.state.currentMenu == "users") {
-      return (
-        <div>
-          <Title style={{ fontWeight: 430 }}>User List</Title>
-          <Row type="flex" align="center">
-            <Col
-              span={8}
-              style={{
-                padding: "60px",
-                backgroundColor: "#ffffff",
-                borderRadius: "15px"
-              }}
-            >
-              <Radio.Group
-                defaultValue="buyer"
-                buttonStyle="solid"
-                style={{ margin: "15px" }}
-                onChange={this.radioChange}
-              >
-                <Radio.Button value="buyer">Buyer</Radio.Button>
-                <Radio.Button value="seller">Seller</Radio.Button>
-              </Radio.Group>
-              <this.adminlist value={this.state.radioState} />
-            </Col>
-          </Row>
-        </div>
-      );
-    } else {
-      const columns = [
-        {
-          title: "Date",
-          dataIndex: "date",
-          key: "date",
-          width: "20%"
-        },
-        {
-          title: "Maximum",
-          children: [
-            {
-              title: "Seller name",
-              dataIndex: "maxName",
-              key: "maxName",
-              width: "10%"
-            },
-            {
-              title: "Transaction",
-              dataIndex: "maxTrans",
-              key: "maxTrans",
-              width: "10%"
-            }
-          ]
-        },
-        {
-          title: "Minimum",
-          children: [
-            {
-              title: "Seller name",
-              dataIndex: "minName",
-              key: "minName",
-              width: "10%"
-            },
-            {
-              title: "Transaction",
-              dataIndex: "minTrans",
-              key: "minTrans",
-              width: "10%"
-            }
-          ]
-        }
-      ];
-
-      return (
-        <div>
-          <Title style={{ fontWeight: 430 }}>Transactions</Title>
-          <Row>
-            <Col>
-              <Table
-                columns={columns}
-                dataSource={this.state.summary}
-                bordered
-                size="middle"
-                style={{ background: "#FFFFFF", padding: 12, borderRadius: 7 }}
-              />
-            </Col>
-          </Row>
-        </div>
-      );
-    }
-  };
-
   render() {
     // setTimeout(() => {
     // 	this.setState(() => ({
@@ -286,23 +192,52 @@ class Admin extends React.Component {
     // 	}))
     // },100);
 
+    const columns = [
+      {
+        title: "Date",
+        dataIndex: "date",
+        key: "date",
+        width: "20%"
+      },
+      {
+        title: "Maximum",
+        children: [
+          {
+            title: "Seller name",
+            dataIndex: "maxName",
+            key: "maxName",
+            width: "10%"
+          },
+          {
+            title: "Transaction",
+            dataIndex: "maxTrans",
+            key: "maxTrans",
+            width: "10%"
+          }
+        ]
+      },
+      {
+        title: "Minimum",
+        children: [
+          {
+            title: "Seller name",
+            dataIndex: "minName",
+            key: "minName",
+            width: "10%"
+          },
+          {
+            title: "Transaction",
+            dataIndex: "minTrans",
+            key: "minTrans",
+            width: "10%"
+          }
+        ]
+      }
+    ];
+
     return (
       <Layout className="layout" style={{ minHeight: "100vh" }}>
         <Nav loggedin={true} />
-        <Menu
-          onClick={this.menuClick}
-          selectedKeys={[this.state.currentMenu]}
-          mode="horizontal"
-        >
-          <Menu.Item key="users">
-            <Icon type="user" />
-            Users
-          </Menu.Item>
-          <Menu.Item key="transactions">
-            <Icon type="transaction" />
-            Transactions
-          </Menu.Item>
-        </Menu>
         <Content
           style={{
             padding: "75px 50px",
@@ -310,8 +245,62 @@ class Admin extends React.Component {
             textAlign: "center"
           }}
         >
-          {/* <Title level={3}>"With great power comes great responsibilty"</Title> */}
-          <this.menulist />
+          <Tabs defaultActiveKey="1" size="large">
+            <TabPane
+              tab={
+                <span>
+                  <Icon type="user" />
+                  User list
+                </span>
+              }
+              key="1"
+            >
+              <Title style={{ fontWeight: 430 }}>User List</Title>
+              <Row type="flex" align="center">
+                <Col
+                  span={8}
+                  style={{
+                    padding: "60px",
+                    backgroundColor: "#ffffff",
+                    borderRadius: "15px"
+                  }}
+                >
+                  <Radio.Group
+                    defaultValue="buyer"
+                    buttonStyle="solid"
+                    style={{ margin: "15px" }}
+                    onChange={this.radioChange}
+                  >
+                    <Radio.Button value="buyer">Buyer</Radio.Button>
+                    <Radio.Button value="seller">Seller</Radio.Button>
+                  </Radio.Group>
+                  <this.adminlist value={this.state.radioState} />
+                </Col>
+              </Row>
+            </TabPane>
+            <TabPane
+              tab={
+                <span>
+                  <Icon type="transaction" />
+                  Transactions
+                </span>
+              }
+              key="2"
+            >
+              <Title style={{ fontWeight: 430 }}>Transactions</Title>
+              <Table
+                columns={columns}
+                dataSource={this.state.summary}
+                bordered
+                size="middle"
+                style={{
+                  background: "#FFFFFF",
+                  padding: 12,
+                  borderRadius: 7
+                }}
+              />
+            </TabPane>
+          </Tabs>
         </Content>
       </Layout>
     );
