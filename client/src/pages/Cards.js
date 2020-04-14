@@ -64,7 +64,7 @@ class Cards extends React.Component {
   };
 
   buyproduct = (Sid, e, Pname, Price) => {
-    if (this.state.userid != undefined) {
+    if (this.state.userid != undefined && this.state.current==1) {
       let order = {
         pid: e,
         bid: this.state.userid,
@@ -97,7 +97,8 @@ class Cards extends React.Component {
 
   handleCancel = () => {
     this.setState({
-      visible: false
+      visible: false,
+      current: 0
     });
   };
 
@@ -143,6 +144,9 @@ class Cards extends React.Component {
     this.setState({
       current:this.state.current + 1
     })
+    if(this.state.current==1){
+      this.buyproduct(this.state.Sid,this.state.Pid,this.state.Pname,this.state.price)
+    }
   }
 
   finalstep = step => {
@@ -180,7 +184,7 @@ class Cards extends React.Component {
       return(
         <div>
         <TextArea placeholder="Enter the delivery address"/>
-        <Button type="primary" onClick = {this.buyproduct(this.state.Sid,this.state.Pid,this.state.Pname,this.state.price),this.nextStep}>
+        <Button type="primary" onClick = {this.nextStep}>
         Next
         <Icon type="right" />
         </Button>
@@ -251,7 +255,7 @@ class Cards extends React.Component {
                 type="primary"
                 block
                 onClick={e => {
-                  this.success();
+                  this.success(prod.Pname);
                   this.setState({
                     Sid: prod.Sid,
                     Pid: e.target.value,
