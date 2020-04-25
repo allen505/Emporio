@@ -13,26 +13,42 @@ Emporio is a modern online shopping experience. The main objective of this proje
 
 ## Screenshots
 
-### Homepage
+#### Homepage
 ![Homepage](Screenshots/Homepage.png)
 
-### Buyer homepage when logged in
+---
+
+#### Buyer homepage when logged in
 ![Buyer homepage when logged in](Screenshots/Buyer_Homepage.png)
 
-### Buyer on successful purchase
+---
+
+#### Buyer on successful purchase
 ![Buyer on successful purchase](Screenshots/Buyer_Purchase.png)
 
-### Seller Dashboard
+---
+
+#### Seller Dashboard
 ![Seller Dashboard](Screenshots/SellerDashboard.png)
 
-### Seller Add Product
+---
+
+#### Seller Add Product
 ![Seller Add Product](Screenshots/Seller_AddProduct.png)
 
-### Admin Dashboard
+---
+
+#### Admin Dashboard
 ![Admin Dashboard](Screenshots/Admin_UsersPage.png)
 
-### Admin Transactions View
+---
+
+#### Admin Transactions View
 ![Admin Transactions View](Screenshots/Admin_TransactionsPage.png)
+
+---
+
+---
 
 
 ## Credits
