@@ -4,7 +4,7 @@ Emporio is a modern online shopping experience. The main objective of this proje
 
 
 ## Implementation details
-- [React JS](reactjs.org) is a JS library used to build the frontend of this project
+- [React JS](https://reactjs.org) is a JS library used to build the frontend of this project
 - [Ant design](https://ant.design/)  for the design language
 - [Express Js](https://expressjs.com/) for middle ware
 - [mysql driver](https://www.npmjs.com/package/mysql)
